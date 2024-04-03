@@ -1,14 +1,24 @@
+import express from 'express';
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import planeteRoutes from './routes/planeteRoutes.js';
+import personnageRoutes from './routes/personnageRoutes.js';
+
+dotenv.config();
+
+const app = express();
+const port = process.env.PORT;
 
 
-const connectToMongo = async () => {
-  try {
-    await mongoose.connect('mongodb+srv://lesplanetesdenerimo:zRAsOi24i5jFazEp@nerimo.cmrqurt.mongodb.net/nerimo?retryWrites=true&w=majority&appName=Nerimo');
-    console.log('Connexion à la base de donnée réussie');
+mongoose.connect(process.env.MONGODB_URI);
+mongoose.connection.on('connected', () => {
+  console.log('Connexion à la base de donnée réussie');
+});
 
-  } catch (error) {
-    console.error('Erreur de connexion à la base de donnée', error);
-  }
-};
 
-connectToMongo();
+app.use(express.json());
+app.use('/api/planete', planeteRoutes);
+app.use('/api/personnage', personnageRoutes);
+app.listen(port, () => {
+  console.log(`Serveur démarré sur le port ${port}`);
+});

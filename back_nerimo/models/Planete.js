@@ -11,5 +11,5 @@ const planeteSchema = new mongoose.Schema({
     }
   });
   
-  const Planete = mongoose.model("Planete", planeteSchema, "planete");
+  const Planete = mongoose.model("planete", planeteSchema, "planete");
   export default Planete;
