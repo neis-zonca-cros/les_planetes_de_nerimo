@@ -9,7 +9,7 @@ const personnageSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    nom_histoire: {
+    nomHistoire: {
         type: String,
         required: true
     },
