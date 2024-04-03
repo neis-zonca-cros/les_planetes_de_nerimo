@@ -11,35 +11,37 @@ const sessionSchema = new mongoose.Schema({
     },
     utilisateurRef: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Utilisateur', 
+        ref: 'Utilisateur',
         required: true
     },
     planeteRef: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Planete', 
+        ref: 'Planete',
         required: true
     },
     personnageRef: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Personnage', 
+        ref: 'Personnage',
         required: true
-    }
-});
+    },
+},
+    { timestamps: true }
+);
 
 sessionSchema.virtual('utilisateur', {
-    ref: 'Utilisateur', 
+    ref: 'Utilisateur',
     localField: 'utilisateurRef',
     foreignField: '_id',
 });
 
 sessionSchema.virtual('planete', {
-    ref: 'Planete', 
+    ref: 'Planete',
     localField: 'planeteRef',
     foreignField: '_id',
 });
 
 sessionSchema.virtual('personnage', {
-    ref: 'Personnage', 
+    ref: 'Personnage',
     localField: 'personnageRef',
     foreignField: '_id',
 });
