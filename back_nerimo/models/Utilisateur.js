@@ -9,6 +9,7 @@ const utilisateurSchema = new mongoose.Schema({
         type: String,
         required: true,
         match: /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
+        unique: true,
     },
     mdp: {
         type: String,
