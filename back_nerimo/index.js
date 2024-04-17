@@ -5,6 +5,7 @@ import planeteRoutes from './routes/planeteRoutes.js';
 import personnageRoutes from './routes/personnageRoutes.js';
 import utilisateurRoutes from './routes/utilisateurRoutes.js';
 import { verifierToken } from './middlewares/verifierToken.js';
+import sessionRoutes from './routes/sessionRoutes.js';
 
 // Connexion MongoDB
 async function connexionMongo() {
@@ -38,6 +39,7 @@ function configurationApp() {
   app.use('/api/planete', planeteRoutes());
   app.use('/api/personnage', personnageRoutes());
   app.use('/api/utilisateur', utilisateurRoutes());
+  app.use('/api/session', sessionRoutes());
 
   
   app.listen(port, (err) => {
