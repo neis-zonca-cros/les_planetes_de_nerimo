@@ -27,6 +27,33 @@ export async function getPersonnages(req, res) {
   }
 }
 
+export async function getPersonnage(req, res) {
+  try {
+    const personnageGet = await Personnage.findById(req.params.id).populate("planeteRef").exec();
+    res.status(200).json({ message: 'Liste des personnages', data: personnageGet });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+export async function updatePersonnage(req, res) {
+  try {
+    const personnageId = req.params.id;
+    const updatedFields = req.body; 
+
+    const personnage = await Personnage.findByIdAndUpdate(personnageId, updatedFields, { new: true });
+
+    if (!personnage) {
+      return res.status(404).json({ message: "Personnage non trouvé" });
+    }
+
+    res.status(200).json({ message: 'Personnage mis à jour', data: personnage });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+
 export async function deletePersonnage(req, res) {
   try {
     const deletedPersonnage = await Personnage.findByIdAndDelete(req.params.id);

@@ -52,3 +52,46 @@ export async function getUtilisateurs(req, res) {
       res.status(500).json({ error: error.message });
     }
   }
+
+export async function getUtilisateur(req, res) {
+  try {
+    const utilisateurGet = await Utilisateur.findById(req.params.id);
+    res.status(200).json({ message: 'Paramètre d/un utilisateur', data: utilisateurGet });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+export async function updateUtilisateur(req, res) {
+  try {
+    const utilisateurId = req.params.id;
+    const updatedFields = req.body; 
+
+    if (updatedFields.mdp) {
+      const salt = await bcrypt.genSalt(10);
+      updatedFields.mdp = await bcrypt.hash(updatedFields.mdp, salt);
+    }
+
+    const utilisateur = await Utilisateur.findByIdAndUpdate(utilisateurId, updatedFields, { new: true });
+
+    if (!utilisateur) {
+      return res.status(404).json({ message: "Utilisateur non trouvé" });
+    }
+
+    res.status(200).json({ message: 'Utilisateur mis à jour', data: utilisateur });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+export async function deleteUtilisateur(req, res) {
+  try {
+    const deletedUtilisateur = await Utilisateur.findByIdAndDelete(req.params.id);
+    if (!deletedUtilisateur) {
+      return res.status(404).json({ message: "Utilisateur non trouvé" });
+    }
+    res.status(200).json({ message: "Utilisateur supprimé", data: deletedUtilisateur });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}

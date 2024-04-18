@@ -1,12 +1,23 @@
 import express from 'express';
-import { createPlanete, getPlanetes } from '../controllers/planeteController.js';
+import { createPlanete, deletePlanete, getPlanete, getPlanetes, updatePlanete } from '../controllers/planeteController.js';
+import { verifierToken } from '../middlewares/verifierToken.js';
 
 
 const planeteRoutes = () => {
     const router = express.Router();
 
-    router.post('/', createPlanete);
+    //Routes protégées par le Token
+    router.use(verifierToken);
+
+    router.post('/creer', createPlanete);
+
     router.get('/', getPlanetes);
+    router.get('/:id', getPlanete);
+
+    router.put('/:id', updatePlanete);
+
+    router.delete('/:id', deletePlanete);
+
 
     return router;
 };

@@ -1,11 +1,19 @@
 import express from 'express';
-import { createPersonnage, getPersonnages, deletePersonnage } from '../controllers/personnageController.js';
+import { createPersonnage, getPersonnages, getPersonnage, deletePersonnage, updatePersonnage } from '../controllers/personnageController.js';
 
 const personnageRoutes = () => {
     const router = express.Router();
 
-    router.post('/', createPersonnage);
+    //Routes protégées par le Token
+    router.use(verifierToken);
+
+    router.post('/creer', createPersonnage);
+
     router.get('/', getPersonnages);
+    router.get('/:id', getPersonnage);
+
+    router.put('/:id', updatePersonnage);
+
     router.delete('/:id', deletePersonnage);
 
     return router;
