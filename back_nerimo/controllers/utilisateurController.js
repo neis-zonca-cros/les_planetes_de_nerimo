@@ -25,13 +25,25 @@ export async function connexionUtilisateur(req, res) {
           return res.status(401).json({ message: 'Email invalide' });
       }
 
-      const passwordMatch = await bcrypt.compare(mdp, utilisateur.mdp);
-      console.log(passwordMatch);
+        // Vérifier si le compte est bloqué
+        if (utilisateur.dateBlocageConnexion && (Date.now() - utilisateur.dateBlocageConnexion) < 300000) { 
+          return res.status(401).json({ message: 'Compte bloqué. Réessayez après 5 minutes.' });
+      }
 
+      const passwordMatch = await bcrypt.compare(mdp, utilisateur.mdp);
 
       if (!passwordMatch) {
-          return res.status(401).json({ message: 'Mot de passe invalide' });
+        utilisateur.tentativeConnexion += 1;
+        if (utilisateur.tentativeConnexion >= 5) {
+            utilisateur.dateBlocageConnexion = new Date();
+        }
+        await utilisateur.save();
+        return res.status(401).json({ message: 'Mot de passe invalide' });
       }
+
+      utilisateur.tentativeConnexion = 0;
+      utilisateur.dateBlocageConnexion = null;
+      await utilisateur.save();
       const token = jwt.sign(
         { userId: utilisateur._id, email: utilisateur.email },
         process.env.JWT_SECRET,
@@ -76,6 +88,13 @@ export async function updateUtilisateur(req, res) {
 
     if (!utilisateur) {
       return res.status(404).json({ message: "Utilisateur non trouvé" });
+    }
+
+    if (updatedFields.mdp) {
+      utilisateur.tentativeConnexion = 0;
+      utilisateur.dateBlocageConnexion = null;
+      utilisateur.derniereMAJMdp = Date.now();
+      await utilisateur.save();
     }
 
     res.status(200).json({ message: 'Utilisateur mis à jour', data: utilisateur });
