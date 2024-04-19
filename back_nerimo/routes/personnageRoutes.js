@@ -1,5 +1,6 @@
 import express from 'express';
 import { createPersonnage, getPersonnages, getPersonnage, deletePersonnage, updatePersonnage } from '../controllers/personnageController.js';
+import { verifierToken } from '../middlewares/verifierToken.js';
 
 const personnageRoutes = () => {
     const router = express.Router();

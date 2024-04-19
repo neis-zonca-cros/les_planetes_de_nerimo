@@ -14,7 +14,7 @@ export function verifierToken(req, res, next) {
   }
   
   const token = tokenParts[1];
-  console.log(token);
+  // console.log(token);
 
   if (!token) {
     return res.status(401).json({ message: 'Token manquant' });

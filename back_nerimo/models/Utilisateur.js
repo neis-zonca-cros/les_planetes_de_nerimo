@@ -23,6 +23,10 @@ const utilisateurSchema = new mongoose.Schema({
         type: Number, 
         default: 0,
     },
+    dateBlocageConnexion: { 
+        type: Date, 
+        default: null 
+    },
     derniereMAJMdp: {
         type: Date,
         default: Date.now(),

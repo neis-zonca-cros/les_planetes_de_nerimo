@@ -4,7 +4,6 @@ import dotenv from 'dotenv';
 import planeteRoutes from './routes/planeteRoutes.js';
 import personnageRoutes from './routes/personnageRoutes.js';
 import utilisateurRoutes from './routes/utilisateurRoutes.js';
-import { verifierToken } from './middlewares/verifierToken.js';
 import sessionRoutes from './routes/sessionRoutes.js';
 
 // Connexion MongoDB
