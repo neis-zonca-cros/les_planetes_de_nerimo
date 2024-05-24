@@ -8,6 +8,7 @@ export async function createUtilisateur(req, res) {
         const hashedPassword = await bcrypt.hash(req.body.mdp, 10);
         req.body.mdp = hashedPassword;
         const utilisateur = new Utilisateur(req.body);
+        //retaper le mot de passe et comparer 
         await utilisateur.save();
         res.status(201).json({ message: 'Utilisateur créé', data: utilisateur });
 
@@ -22,10 +23,9 @@ export async function connexionUtilisateur(req, res) {
       const utilisateur = await Utilisateur.findOne({ email });
 
       if (!utilisateur) {
-          return res.status(401).json({ message: 'Email invalide' });
+          return res.status(401).json({ message: 'Compte invalide' });
       }
 
-        // Vérifier si le compte est bloqué
         if (utilisateur.dateBlocageConnexion && (Date.now() - utilisateur.dateBlocageConnexion) < 300000) { 
           return res.status(401).json({ message: 'Compte bloqué. Réessayez après 5 minutes.' });
       }
@@ -38,14 +38,14 @@ export async function connexionUtilisateur(req, res) {
             utilisateur.dateBlocageConnexion = new Date();
         }
         await utilisateur.save();
-        return res.status(401).json({ message: 'Mot de passe invalide' });
+        return res.status(401).json({ message: 'Compte invalide' });
       }
 
       utilisateur.tentativeConnexion = 0;
       utilisateur.dateBlocageConnexion = null;
       await utilisateur.save();
       const token = jwt.sign(
-        { userId: utilisateur._id, email: utilisateur.email },
+        { userId: utilisateur._id, email: utilisateur.email, prenom: utilisateur.prenom, admin: utilisateur.admin },
         process.env.JWT_SECRET,
         { expiresIn: '1h' } 
       );
@@ -105,12 +105,20 @@ export async function updateUtilisateur(req, res) {
 
 export async function deleteUtilisateur(req, res) {
   try {
-    const deletedUtilisateur = await Utilisateur.findByIdAndDelete(req.params.id);
-    if (!deletedUtilisateur) {
+    const userId = req.params.id;
+
+    const userToDelete = await Utilisateur.findById(userId);
+
+    if (!userToDelete) {
       return res.status(404).json({ message: "Utilisateur non trouvé" });
     }
-    res.status(200).json({ message: "Utilisateur supprimé", data: deletedUtilisateur });
+
+    const deletedUtilisateur = await Utilisateur.findByIdAndDelete(userId);
+
+    return res.status(200).json({ message: "Utilisateur supprimé", data: deletedUtilisateur });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 }
+
+

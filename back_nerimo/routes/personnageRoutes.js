@@ -1,6 +1,8 @@
 import express from 'express';
 import { createPersonnage, getPersonnages, getPersonnage, deletePersonnage, updatePersonnage } from '../controllers/personnageController.js';
 import { verifierToken } from '../middlewares/verifierToken.js';
+import { verifierAdmin } from '../middlewares/verifierAdmin.js';
+import { verifierAdminOuThis } from '../middlewares/verifierAdminOuThis.js';
 
 const personnageRoutes = () => {
     const router = express.Router();
@@ -8,14 +10,14 @@ const personnageRoutes = () => {
     //Routes protégées par le Token
     router.use(verifierToken);
 
-    router.post('/creer', createPersonnage);
+    router.post('/creer', verifierAdmin, createPersonnage);
 
-    router.get('/', getPersonnages);
-    router.get('/:id', getPersonnage);
+    router.get('/', verifierAdminOuThis, getPersonnages);
+    router.get('/:id', verifierAdminOuThis, getPersonnage);
 
-    router.put('/:id', updatePersonnage);
+    router.put('/:id', verifierAdmin, updatePersonnage);
 
-    router.delete('/:id', deletePersonnage);
+    router.delete('/:id', verifierAdmin, deletePersonnage);
 
     return router;
 };

@@ -1,6 +1,6 @@
 import Session from '../models/Session.js';
 
-
+//mettre les sessions de l'utilisateur token id etc
 export async function createSession(req, res) {
     try {
 
@@ -12,6 +12,8 @@ export async function createSession(req, res) {
         res.status(500).json({ error: error.message });
     }
 }
+
+
 
 export async function getSessions(req, res) {
     try {

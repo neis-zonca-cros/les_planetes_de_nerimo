@@ -1,6 +1,8 @@
 import express from 'express';
 import { createUtilisateur, getUtilisateurs, getUtilisateur, connexionUtilisateur, updateUtilisateur, deleteUtilisateur } from "../controllers/utilisateurController.js";
 import { verifierToken } from '../middlewares/verifierToken.js';
+import { verifierAdminOuThis } from '../middlewares/verifierAdminOuThis.js';
+import { verifierAdmin } from '../middlewares/verifierAdmin.js';
 
 
 const utilisateurRoutes = () => {
@@ -12,13 +14,13 @@ const utilisateurRoutes = () => {
     //Routes protégées avec vérification du token !
     router.use(verifierToken);
 
-    router.get('/:id', getUtilisateur);
-    router.get('/', getUtilisateurs);
-
-    router.put('/:id', updateUtilisateur);
-
-    router.delete('/:id', deleteUtilisateur);
+    router.get('/:id', verifierAdminOuThis, getUtilisateur );
     
+    router.put('/:id', verifierAdminOuThis, updateUtilisateur );
+
+    router.delete('/:id', verifierAdminOuThis, deleteUtilisateur );
+
+    router.get('/', verifierAdmin, getUtilisateurs);
 
     return router;
 };
