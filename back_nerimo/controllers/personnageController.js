@@ -10,7 +10,7 @@ export async function createPersonnage(req, res) {
       if (!planete) {
         return res.status(404).json({ error: "Planète non trouvée" });
       }
-      console.log(planete);
+      // console.log(planete);
 
         const personnage = new Personnage({
           ...req.body,

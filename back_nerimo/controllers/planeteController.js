@@ -1,4 +1,4 @@
-import Personnage from '../models/Personnage.js';
+
 import Planete from '../models/Planete.js';
 
 export async function createPlanete(req, res) {

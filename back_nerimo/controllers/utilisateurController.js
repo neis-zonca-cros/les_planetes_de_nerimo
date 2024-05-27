@@ -63,6 +63,7 @@ export async function connexionUtilisateur(req, res) {
   }
 }
 
+//avec verifierAdmin
 export async function getUtilisateurs(req, res) {
     try {
       const utilisateurs = await Utilisateur.find();
@@ -104,40 +105,50 @@ export async function getUtilisateurs(req, res) {
 
 export async function updateUtilisateur(req, res) {
   try {
-    const utilisateurId = req.params.id;
-    const updatedFields = req.body; 
+      const utilisateurId = req.user.userId;
+      const utilisateur = req.user;
 
-    if (updatedFields.mdp) {
-      if (updatedFields.mdp !== updatedFields.mdp_repeat) {
-        return res.status(400).json({ error: "Les mots de passe ne correspondent pas" });
-      }
-      const salt = await bcrypt.genSalt(10);
-      updatedFields.mdp = await bcrypt.hash(updatedFields.mdp, salt);
-    }
+      const userId = req.params.id;
 
-    if (req.user.admin !== true && updatedFields.admin) {
-      return res.status(403).json({ error: "Pas autorisé" });
+      const updatedFields = req.body;
+
       
-    }
+      if (utilisateur.admin || userId === utilisateurId) {
+          
+          if (updatedFields.mdp) {
+              if (updatedFields.mdp !== updatedFields.mdp_repeat) {
+                  return res.status(400).json({ error: "Les mots de passe ne correspondent pas" });
+              }
+              const salt = await bcrypt.genSalt(10);
+              updatedFields.mdp = await bcrypt.hash(updatedFields.mdp, salt);
+          }
 
-    const utilisateur = await Utilisateur.findByIdAndUpdate(utilisateurId, updatedFields, { new: true });
+          if (!utilisateur.admin && updatedFields.admin) {
+              return res.status(403).json({ error: "Pas autorisé" });
+          }
 
-    if (!utilisateur) {
-      return res.status(404).json({ message: "Utilisateur non trouvé" });
-    }
+          const utilisateurUpdated = await Utilisateur.findByIdAndUpdate(userId, updatedFields, { new: true });
 
-    if (updatedFields.mdp) {
-      utilisateur.tentativeConnexion = 0;
-      utilisateur.dateBlocageConnexion = null;
-      utilisateur.derniereMAJMdp = Date.now();
-      await utilisateur.save();
-    }
+          if (!utilisateurUpdated) {
+              return res.status(404).json({ message: "Utilisateur non trouvé" });
+          }
 
-    res.status(200).json({ message: 'Utilisateur mis à jour', data: utilisateur });
+          if (updatedFields.mdp) {
+              utilisateurUpdated.tentativeConnexion = 0;
+              utilisateurUpdated.dateBlocageConnexion = null;
+              utilisateurUpdated.derniereMAJMdp = Date.now();
+              await utilisateurUpdated.save();
+          }
+
+          return res.status(200).json({ message: 'Utilisateur mis à jour', data: utilisateurUpdated });
+      } else {
+          return res.status(403).json({ error: "Pas autorisé" });
+      }
   } catch (error) {
-    res.status(500).json({ error: error.message });
+      res.status(500).json({ error: error.message });
   }
 }
+
 
 export async function deleteUtilisateur(req, res) {
   try {
@@ -145,16 +156,13 @@ export async function deleteUtilisateur(req, res) {
       const utilisateurId = req.user.userId;
       const utilisateur = req.user;
 
-      
       const userId = req.params.id;
-
       if (utilisateur.admin) {
           const userToDelete = await Utilisateur.findById(userId);
           if (!userToDelete) {
               return res.status(404).json({ message: "Utilisateur non trouvé" });
           }
 
-          
           await Session.deleteMany({ utilisateurRef: userId });
 
           
