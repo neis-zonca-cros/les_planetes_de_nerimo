@@ -3,8 +3,9 @@
 export async function verifierAdmin(req, res, next) {
     try {
         const currentUser = req.user;
-
+        // console.log(currentUser.admin)
         if (currentUser.admin) {
+            
             next(); 
         } else {
             return res.status(403).json({ message: 'Erreur, Vous n\'êtes pas autorisé à effectuer cette action' });

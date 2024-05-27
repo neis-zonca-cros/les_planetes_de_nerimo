@@ -1,14 +1,21 @@
 import Utilisateur from "../models/Utilisateur.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import Session from "../models/Session.js";
 
 
 export async function createUtilisateur(req, res) {
     try {
+      if (req.body.mdp !== req.body.mdp_repeat) {
+        return res.status(400).json({ error: "Les mots de passe ne correspondent pas" });
+    }
+    
         const hashedPassword = await bcrypt.hash(req.body.mdp, 10);
         req.body.mdp = hashedPassword;
         const utilisateur = new Utilisateur(req.body);
-        //retaper le mot de passe et comparer 
+        if(req.body.admin === true) {
+          return res.status(403).json({ error: "Permission refusée de créer un utilisateur administrateur" });
+        }
         await utilisateur.save();
         res.status(201).json({ message: 'Utilisateur créé', data: utilisateur });
 
@@ -65,14 +72,35 @@ export async function getUtilisateurs(req, res) {
     }
   }
 
-export async function getUtilisateur(req, res) {
-  try {
-    const utilisateurGet = await Utilisateur.findById(req.params.id);
-    res.status(200).json({ message: 'Paramètre d/un utilisateur', data: utilisateurGet });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+  export async function getUtilisateur(req, res) {
+    try {
+       
+        const utilisateurId = req.user.userId;
+        const utilisateur = req.user;
+
+        if (utilisateur.admin) {
+            const utilisateurGet = await Utilisateur.findById(req.params.id);
+            if (!utilisateurGet) {
+                return res.status(404).json({ message: "Utilisateur non trouvé" });
+            }
+            return res.status(200).json({ message: 'Paramètre d\'un utilisateur', data: utilisateurGet });
+        }
+        
+        if (req.params.id === utilisateurId || utilisateur.admin) {
+            const utilisateurGet = await Utilisateur.findById(utilisateurId);
+            if (!utilisateurGet) {
+                return res.status(404).json({ message: "Utilisateur non trouvé" });
+            }
+            return res.status(200).json({ message: 'Paramètre d\'un utilisateur', data: utilisateurGet });
+        }
+
+        return res.status(403).json({ message: "Vous n'êtes pas autorisé à accéder à cet utilisateur" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 }
+
+
 
 export async function updateUtilisateur(req, res) {
   try {
@@ -80,8 +108,16 @@ export async function updateUtilisateur(req, res) {
     const updatedFields = req.body; 
 
     if (updatedFields.mdp) {
+      if (updatedFields.mdp !== updatedFields.mdp_repeat) {
+        return res.status(400).json({ error: "Les mots de passe ne correspondent pas" });
+      }
       const salt = await bcrypt.genSalt(10);
       updatedFields.mdp = await bcrypt.hash(updatedFields.mdp, salt);
+    }
+
+    if (req.user.admin !== true && updatedFields.admin) {
+      return res.status(403).json({ error: "Pas autorisé" });
+      
     }
 
     const utilisateur = await Utilisateur.findByIdAndUpdate(utilisateurId, updatedFields, { new: true });
@@ -105,20 +141,41 @@ export async function updateUtilisateur(req, res) {
 
 export async function deleteUtilisateur(req, res) {
   try {
-    const userId = req.params.id;
+  
+      const utilisateurId = req.user.userId;
+      const utilisateur = req.user;
 
-    const userToDelete = await Utilisateur.findById(userId);
+      
+      const userId = req.params.id;
 
-    if (!userToDelete) {
-      return res.status(404).json({ message: "Utilisateur non trouvé" });
-    }
+      if (utilisateur.admin) {
+          const userToDelete = await Utilisateur.findById(userId);
+          if (!userToDelete) {
+              return res.status(404).json({ message: "Utilisateur non trouvé" });
+          }
 
-    const deletedUtilisateur = await Utilisateur.findByIdAndDelete(userId);
+          
+          await Session.deleteMany({ utilisateurRef: userId });
 
-    return res.status(200).json({ message: "Utilisateur supprimé", data: deletedUtilisateur });
+          
+          const deletedUtilisateur = await Utilisateur.findByIdAndDelete(userId);
+          return res.status(200).json({ message: "Utilisateur supprimé", data: deletedUtilisateur });
+      }
+      
+
+      if (userId === utilisateurId) {
+          await Session.deleteMany({ utilisateurRef: utilisateurId });
+
+          const deletedUtilisateur = await Utilisateur.findByIdAndDelete(utilisateurId);
+          return res.status(200).json({ message: "Utilisateur supprimé", data: deletedUtilisateur });
+      }
+
+      return res.status(403).json({ message: "Vous n'êtes pas autorisé à supprimer cet utilisateur" });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+      res.status(500).json({ error: error.message });
   }
 }
+
+
 
 

@@ -3,13 +3,19 @@ import Planete from '../models/Planete.js';
 
 export async function createPersonnage(req, res) {
     try {
-        const planeteExiste = await Planete.exists({ _id: req.body.planeteRef });
+      const { planeteRef } = req.body;
+      
 
-        if (!planeteExiste) {
-            return res.status(400).json({ message: 'La planète spécifiée n\'existe pas.' });
-        }
+      const planete = await Planete.findById(planeteRef);
+      if (!planete) {
+        return res.status(404).json({ error: "Planète non trouvée" });
+      }
+      console.log(planete);
 
-        const personnage = new Personnage(req.body);
+        const personnage = new Personnage({
+          ...req.body,
+          planeteRef: planete._id
+        });
         await personnage.save();
         res.status(201).json({ message: 'Personnage créée', data: personnage });
 

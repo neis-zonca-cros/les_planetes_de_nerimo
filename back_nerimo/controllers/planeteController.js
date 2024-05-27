@@ -1,7 +1,11 @@
+import Personnage from '../models/Personnage.js';
 import Planete from '../models/Planete.js';
 
 export async function createPlanete(req, res) {
   try {
+
+
+
     const planete = new Planete(req.body);
     await planete.save();
     res.status(201).json({ message: 'Planète créée', data: planete });

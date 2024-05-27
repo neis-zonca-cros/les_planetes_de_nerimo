@@ -2,7 +2,7 @@ import express from 'express';
 import { createPersonnage, getPersonnages, getPersonnage, deletePersonnage, updatePersonnage } from '../controllers/personnageController.js';
 import { verifierToken } from '../middlewares/verifierToken.js';
 import { verifierAdmin } from '../middlewares/verifierAdmin.js';
-import { verifierAdminOuThis } from '../middlewares/verifierAdminOuThis.js';
+
 
 const personnageRoutes = () => {
     const router = express.Router();
@@ -12,8 +12,8 @@ const personnageRoutes = () => {
 
     router.post('/creer', verifierAdmin, createPersonnage);
 
-    router.get('/', verifierAdminOuThis, getPersonnages);
-    router.get('/:id', verifierAdminOuThis, getPersonnage);
+    router.get('/', getPersonnages);
+    router.get('/:id', getPersonnage);
 
     router.put('/:id', verifierAdmin, updatePersonnage);
 
