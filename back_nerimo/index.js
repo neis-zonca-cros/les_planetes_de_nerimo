@@ -9,9 +9,8 @@ import sessionRoutes from './routes/sessionRoutes.js';
 // Connexion MongoDB
 async function connexionMongo() {
   try {
-    const mongoUri = process.env.NODE_ENV === 'test' ? process.env.MONGODB_TEST : process.env.MONGODB_URI;
-    await mongoose.connect(mongoUri);
-    console.log('Connexion à la base de données réussie !');
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log(`Connexion à la base de données réussie sur l/'environnement ${process.env.NODE_ENV}`);
   } catch (error) {
     console.error('Erreur lors de la connexion à la base de données:', error.message);
     process.exit(1); 
@@ -20,7 +19,10 @@ async function connexionMongo() {
 
 // Configuration dotenv pour l'API
 function configurationDotenv() {
-  const result = dotenv.config();
+  
+  const env = process.env.NODE_ENV || 'development';
+  const envFile = env === 'test' ? '.env.test' : '.env';
+  const result = dotenv.config({ path: envFile });
   if (result.error) {
     console.error('Erreur lors de la configuration de dotenv:', result.error.message);
     process.exit(1); 
@@ -30,7 +32,7 @@ function configurationDotenv() {
 // Configuration de l'APP avec les routes
 function configurationApp() {
   const app = express();
-  const port = process.env.NODE_ENV === 'test' ? process.env.PORT_TEST : process.env.PORT;  
+  const port = process.env.PORT;  
   
   app.use(express.json());
   
