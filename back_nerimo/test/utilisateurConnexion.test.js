@@ -31,7 +31,7 @@ afterAll(async () => {
 });
 
 describe('POST /api/utilisateur/connexion', () => {
-  it('Retourner une erreur 401 si le mail est invalide', async () => {
+  it('post/utilisateur/connexion: retourne une erreur 401 si le mail est invalide', async () => {
     const response = await request(app)
       .post('/api/utilisateur/connexion')
       .send({ email: 'invalid@example.com', mdp: 'password' });
@@ -40,7 +40,7 @@ describe('POST /api/utilisateur/connexion', () => {
     expect(response.body.message).toBe('Compte invalide');
   });
 
-  it('Retourne une erreur 401 sur le mdp est invalide', async () => {
+  it('post/utilisateur/connexion: retourne une erreur 401 sur le mdp est invalide', async () => {
     const utilisateur = new Utilisateur({
     prenom:'Néïs test',
       email: 'valid@example.com',
@@ -57,7 +57,7 @@ describe('POST /api/utilisateur/connexion', () => {
     expect(response.body.message).toBe('Compte invalide');
   });
 
-  it('Retourne 200 si tout est ok pour la connexion utilisateur', async () => {
+  it('post/utilisateur/connexion: retourne 200 si tout est ok pour la connexion utilisateur', async () => {
     const utilisateur = new Utilisateur({
         prenom:"Néïs",
       email: 'valid@example.com',
@@ -78,7 +78,7 @@ describe('POST /api/utilisateur/connexion', () => {
     expect(decoded.email).toBe(utilisateur.email);
   });
 
-  it('Retourne une erreur 401 si le compte est bloqué', async () => {
+  it('post/utilisateur/connexion: retourne une erreur 401 si le compte est bloqué', async () => {
     const utilisateur = new Utilisateur({
         prenom:'Néïs',
       email: 'valid@example.com',

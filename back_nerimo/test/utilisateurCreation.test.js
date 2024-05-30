@@ -4,7 +4,6 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import utilisateurRoutes from '../routes/utilisateurRoutes.js';
 import Utilisateur from '../models/Utilisateur.js'; 
 import sinon from 'sinon';
@@ -34,7 +33,7 @@ afterAll(async () => {
 describe('POST /api/utilisateur/creer', () => {
 
   
-    it('Retourne 403 si lutilisateur se met en admin à la création de son compte', async () => {
+    it('post/utilisateur/creer: renvoi 403 si lutilisateur se met en admin à la création de son compte', async () => {
         const response = await request(app)
           .post('/api/utilisateur/creer')
           .send({ email: 'valid@example.com', mdp: 'validpassword', mdp_repeat:'validpassword', prenom: 'Néïs', admin: true });
@@ -44,7 +43,7 @@ describe('POST /api/utilisateur/creer', () => {
       });
 
 
-      it('Renvoi une erreur 500 si le mdp ne se hash pas', async () => {
+      it('post/utilisateur/creer: renvoi une erreur 500 si le mdp ne se hash pas', async () => {
         
         const bcryptStub = sinon.stub(bcrypt, 'hash').rejects(new Error('Erreur de hachage'));
       
@@ -59,7 +58,7 @@ describe('POST /api/utilisateur/creer', () => {
         bcryptStub.restore();
       });
 
-      it('Renvoie une erreur 500 si le mail nest pas au bon format', async () => {
+      it('post/utilisateur/creer: renvoie une erreur 500 si le mail nest pas au bon format', async () => {
         const response = await request(app)
           .post('/api/utilisateur/creer')
           .send({ email: 'invalid_email', mdp: 'validpassword', mdp_repeat: 'validpassword', prenom: 'Néïs', admin: false });
@@ -68,7 +67,7 @@ describe('POST /api/utilisateur/creer', () => {
         
       });
   
-      it('Retourne 201 si la création du compte est ok avec hash du mdp', async () => {
+      it('post/utilisateur/creer: retourne 201 si la création du compte est ok avec hash du mdp', async () => {
         const email = 'valid@example.com';
         const password = 'password';
         const response = await request(app)

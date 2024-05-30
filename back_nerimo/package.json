@@ -6,7 +6,9 @@
   "scripts": {
     "start": "NODE_ENV=production nodemon index.js",
     "test:connexion": "NODE_ENV=test vitest test/utilisateurConnexion.test.js",
-    "test:creation": "NODE_ENV=test vitest test/utilisateurCreation.test.js"
+    "test:creation": "NODE_ENV=test vitest test/utilisateurCreation.test.js",
+    "test:utilisateurgud":"NODE_ENV=test vitest test/utilisateurGetUpDel.test.js",
+    "test": "npm-run-all test:*"
   },
   "keywords": [],
   "author": "",
