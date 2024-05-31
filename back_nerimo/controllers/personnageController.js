@@ -36,7 +36,7 @@ export async function getPersonnages(req, res) {
 export async function getPersonnage(req, res) {
   try {
     const personnageGet = await Personnage.findById(req.params.id).populate("planeteRef").exec();
-    res.status(200).json({ message: 'Liste des personnages', data: personnageGet });
+    res.status(200).json({ message: 'Paramètre du personnage', data: personnageGet });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

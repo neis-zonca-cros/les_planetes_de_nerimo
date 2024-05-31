@@ -115,7 +115,9 @@ describe('GET /api/utilisateur', () => {
         expect(response.status).toBe(200);
         expect(response.body.message).toBe("Paramètre d\'un utilisateur");
       });
+});
 
+describe('DEL /api/utilisateur', () => {
       it('del/utilisateur/{id}: retourne 200 si ladmin veut supprimer un non admin', async () => {
         const response = await request(app)
           .delete(`/api/utilisateur/${nonAdminId}`)
@@ -154,7 +156,9 @@ describe('GET /api/utilisateur', () => {
        
         
       });
+    });
 
+    describe('PUT /api/utilisateur', () => {
       it('put/utilisateur/{id}: retourne 200 si ladmin update un autre utilisateur', async () => {
         const response = await request(app)
           .put(`/api/utilisateur/${nonAdminId}`)
@@ -208,4 +212,5 @@ describe('GET /api/utilisateur', () => {
         expect(response.status).toBe(400);
         expect(response.body.error).toBe('Les mots de passe ne correspondent pas');
       });
-  });
+
+    });
