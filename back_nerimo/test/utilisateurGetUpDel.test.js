@@ -49,7 +49,6 @@ beforeEach(async () => {
     admin: true,
   });
   const admin = await adminUser.save();
-
   adminId = admin._id;
 
   tokenAdmin = jwt.sign(
