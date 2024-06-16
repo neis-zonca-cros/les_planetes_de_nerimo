@@ -5,22 +5,19 @@ import { lightTheme } from "@/themes/light";
 import { Text, View, useColorScheme } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import fetchFonts from './fetchs/fetchFont';
+import { useFonts } from 'expo-font';
 
 const Stack = createStackNavigator();
 
 export default function Index() {
-  const [dataLoaded, setDataLoaded] = useState(false);
+  const [fontsLoaded] = useFonts({
+    'brother': require('@/assets/fonts/brother.ttf'),
+  });
 
-  if (!dataLoaded) {
-    return (
-      <AppLoading
-        startAsync={fetchFonts}
-        onFinish={() => setDataLoaded(true)}
-        onError={console.warn}
-      />
-    );
+  if (!fontsLoaded) {
+    return <AppLoading />;
   }
+
   return (
     <NavigationContainer independent={true}>
       <Stack.Navigator>
@@ -38,10 +35,11 @@ export default function Index() {
 
 function HomeScreen() {
   const theme = useColorScheme() === 'dark' ? darkTheme : lightTheme;
+  
 
   return (
     <View style={theme.container}>
-      <Text style={theme.text}>Bienvenue sur les planètes de Nérimo !</Text>
+      <Text style={theme.textLarge}>Bienvenue sur les planètes de Nérimo !</Text>
     </View>
   );
 }
