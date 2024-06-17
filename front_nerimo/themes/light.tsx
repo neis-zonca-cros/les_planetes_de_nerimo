@@ -11,10 +11,10 @@ export const lightTheme = StyleSheet.create({
     fontSize: 24,
     color: '#23363E',
   },
-  textLarge: {
+  titre: {
     justifyContent: 'flex-start',
     textAlign: 'center',  
-    fontFamily: 'brother',
+    fontFamily: 'brotherBold',
     fontSize: 40,
     color: '#23363E',
     textTransform: 'uppercase',
@@ -22,6 +22,17 @@ export const lightTheme = StyleSheet.create({
     paddingHorizontal: 30,
     lineHeight: 80,
   
+  },
+  iconeContainer: { 
+    alignItems: 'center',
+    justifyContent: 'center',
+    
+
+  },
+  iconeColor: {
+    color: '#23363E',
+   
+
   },
  
 });
