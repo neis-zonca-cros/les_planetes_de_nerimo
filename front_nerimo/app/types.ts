@@ -1,7 +1,9 @@
 export type RootStackParamList = {
     Bienvenue: undefined;
-    Connexion: undefined;
+    AccueilAvantConnexion: undefined;
     MenuInitial: undefined;
+    SeConnecter: undefined;
+    AccueilApresConnexion: undefined;
 
   };
   

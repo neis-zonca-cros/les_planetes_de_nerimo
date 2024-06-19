@@ -7,9 +7,12 @@ import { useFonts } from "expo-font";
 import Bienvenue from "./screens/Bienvenue";
 import { RootStackParamList } from "./types";
 import { ThemeProvider } from "@/themes/themeContext";
-import Connexion from "./screens/Connexion";
+import Connexion from "./screens/AccueilAvantConnexion";
 import MenuInitial from "./screens/MenuInitial";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import AccueilApresConnexion from "./screens/AccueilApresConnexion";
+import AccueilAvantConnexion from "./screens/AccueilAvantConnexion";
+import SeConnecter from "./screens/SeConnecter";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -34,13 +37,23 @@ export default function Index() {
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name="Connexion"
-              component={Connexion}
+              name="AccueilAvantConnexion"
+              component={AccueilAvantConnexion}
               options={{ headerShown: false }}
             />
             <Stack.Screen
               name="MenuInitial"
               component={MenuInitial}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="SeConnecter"
+              component={SeConnecter}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="AccueilApresConnexion"
+              component={AccueilApresConnexion}
               options={{ headerShown: false }}
             />
           </Stack.Navigator>

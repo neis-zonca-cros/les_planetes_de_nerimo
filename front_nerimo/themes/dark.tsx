@@ -26,7 +26,7 @@ export const darkTheme = StyleSheet.create({
     justifyContent: "flex-start",
     textAlign: "center",
     fontFamily: "brotherBold",
-    fontSize: 50,
+    fontSize: 40,
     color: "#FAE6BB",
     textTransform: "uppercase",
     paddingVertical: 40,
@@ -40,6 +40,49 @@ export const darkTheme = StyleSheet.create({
   iconeColor: {
     color: "#FAE6BB",
   },
+
+  textInput:{
+    color: "#FAE6BB",
+    fontFamily: "brotherBold",
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 10,
+    fontSize: 20,
+    
+
+   
+
+  },
+  input: {
+    height: 60,
+    borderRadius: 10,
+    borderColor: "#23363E",
+    backgroundColor: "#23363E",
+    borderWidth: 5,
+    marginBottom: 12,
+    paddingHorizontal: 8,
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgba(0, 0, 0, 0.5)',
+        shadowOffset: { width: 2, height: 5 },
+        shadowOpacity: 0.8,
+        shadowRadius: 1,
+      },
+      android: {
+        elevation: 5,
+      },
+    }),
+  },
+  errorText: {
+    fontFamily:"brotherBold",
+    textTransform: "uppercase",
+    fontSize: 15,
+    color: "#FFAD80",
+    paddingBottom:10,
+  },
+
+
+
 
   iconeShadow: {
     ...Platform.select({

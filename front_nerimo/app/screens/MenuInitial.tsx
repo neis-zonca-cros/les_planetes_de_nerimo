@@ -49,6 +49,7 @@ const MenuInitial: React.FC = () => {
   };
 
   const connexionTouched = () => {
+    navigation.navigate('SeConnecter')
     console.log("Bouton se connecter touché");
   };
 
@@ -80,7 +81,7 @@ const MenuInitial: React.FC = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.iconContainer}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={connexionTouched}>
           <View style={theme.iconeShadow}>
             <ConnexionRondIcon
               width={120}

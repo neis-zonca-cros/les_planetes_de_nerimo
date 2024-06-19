@@ -5,20 +5,20 @@ import { RootStackParamList } from "../types";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTheme } from "@/themes/themeContext";
 import { useNavigation } from "@react-navigation/native";
-import { ConnexionIcon } from "@/themes/icones/connexionIcon";
 import { darkTheme } from "@/themes/dark";
 import { CompteIcon } from "@/themes/icones/compteIcon";
+import { ConnexionIcon } from "@/themes/icones/connexionIcon";
 
-type ConnexionScreen = StackNavigationProp<RootStackParamList, "Connexion">;
-const Connexion: React.FC = () => {
-  const navigation = useNavigation<ConnexionScreen>();
+type AccueilAvantConnexionScreen = StackNavigationProp<RootStackParamList, "AccueilAvantConnexion">;
+const AccueilAvantConnexion: React.FC = () => {
+  const navigation = useNavigation<AccueilAvantConnexionScreen>();
   const { theme, toggleTheme } = useTheme();
   const iconeDroitePress = () => {
     navigation.navigate("MenuInitial");
     console.log("bouton 2 pressé");
   };
 
-  const connexionTouched = () => {
+  const AccueilAvantConnexionTouched = () => {
     console.log("Bouton se connecter touché");
   };
 
@@ -35,7 +35,7 @@ const Connexion: React.FC = () => {
       />
 
       <View style={styles.bottomIconsContainer}>
-        <TouchableOpacity onPress={connexionTouched} style={styles.icon}>
+        <TouchableOpacity onPress={AccueilAvantConnexionTouched} style={styles.icon}>
           <View style={theme.iconeShadow}>
           <ConnexionIcon
             width={250}
@@ -69,4 +69,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Connexion;
+export default AccueilAvantConnexion;

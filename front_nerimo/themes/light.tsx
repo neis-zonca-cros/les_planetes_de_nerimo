@@ -26,7 +26,7 @@ export const lightTheme = StyleSheet.create({
     justifyContent: "flex-start",
     textAlign: "center",
     fontFamily: "brotherBold",
-    fontSize: 50,
+    fontSize: 40,
     color: "#23363E",
     textTransform: "uppercase",
     paddingVertical: 40,
@@ -39,6 +39,43 @@ export const lightTheme = StyleSheet.create({
   iconeColor: {
     color: "#23363E",
   },
+  textInput:{
+    color: "#23363E",
+    fontFamily: "brotherBold",
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 10,
+    fontSize: 20,
+
+  },
+  input: {
+    height: 60,
+    borderRadius: 10,
+    borderColor: "#FAE6BB",
+    backgroundColor: "#FAE6BB",
+    borderWidth: 5,
+    marginBottom: 12,
+    paddingHorizontal: 8,
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgba(205, 133, 63, 0.5)',
+        shadowOffset: { width: 2, height: 5 },
+        shadowOpacity: 0.5,
+        shadowRadius: 1,
+      },
+      android: {
+        elevation: 5,
+      },
+    }),
+  },
+  errorText: {
+    fontFamily:"brotherBold",
+    textTransform: "uppercase",
+    fontSize: 15,
+    color: "#825C6E",
+    paddingBottom:10,
+  },
+
   iconeShadow: {
     ...Platform.select({
       ios: {
@@ -74,4 +111,5 @@ export const lightTheme = StyleSheet.create({
     color: "#23363E",
     padding: 10,
   },
+
 });

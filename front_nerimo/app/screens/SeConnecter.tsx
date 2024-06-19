@@ -1,0 +1,131 @@
+// screens/LoginScreen.js
+import React from "react";
+import {
+  View,
+  TextInput,
+  Button,
+  StyleSheet,
+  Text,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import { RootStackParamList } from "../types";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { useNavigation } from "@react-navigation/native";
+import { useTheme } from "@/themes/themeContext";
+import { ConnexionIcon } from "@/themes/icones/connexionIcon";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { darkTheme } from "@/themes/dark";
+
+type SeConnecterScreen = StackNavigationProp<RootStackParamList, "SeConnecter">;
+
+const SeConnecter: React.FC = () => {
+  const navigation = useNavigation<SeConnecterScreen>();
+  const { theme } = useTheme();
+  const loginValidationSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("Email invalide")
+      .required("Oups, tu as oublié de mettre ton email !"),
+    password: Yup.string()
+      
+      .required("Oups, tu as oublié de mettre ton mot de passe !"),
+  });
+
+  const handleLogin = (values: { email: string; password: string }) => {
+    console.log("Email:", values.email);
+    console.log("Password:", values.password);
+
+    navigation.navigate("AccueilApresConnexion");
+  };
+
+  return (
+    <View style={theme.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
+      >
+
+        <View style={styles.container}>
+        <Text style={theme.menu}>SE CONNECTER</Text>
+          <Formik
+            initialValues={{ email: "", password: "" }}
+            validationSchema={loginValidationSchema}
+            onSubmit={handleLogin}
+          >
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              errors,
+              touched,
+            }) => (
+              <>
+              <View style={theme.input} >
+                <TextInput
+                  style={theme.textInput}
+                  placeholder="E-MAIL"
+                  placeholderTextColor={theme === darkTheme ? "#FAE6BB" : "#23363E"}
+                  onChangeText={handleChange("email")}
+                  onBlur={handleBlur("email")}
+                  value={values.email}
+                  keyboardType="email-address"
+                /></View>
+                {errors.email && touched.email && (
+                  <Text style={theme.errorText}>{errors.email}</Text>
+                )}
+                 <View style={theme.input} >
+                <TextInput style={theme.textInput} 
+                  placeholder="MOT DE PASSE"
+                  placeholderTextColor={theme === darkTheme ? "#FAE6BB" : "#23363E"}
+                  onChangeText={handleChange("password")}
+                  onBlur={handleBlur("password")}
+                  value={values.password}
+                  secureTextEntry
+                /></View>
+                {errors.password && touched.password && (
+                  <Text style={theme.errorText}>{errors.password}</Text>
+                )}
+                <TouchableOpacity
+                  onPress={handleSubmit as any}
+                  style={styles.icon}
+                >
+                  <View style={theme.iconeShadow}>
+                    <ConnexionIcon
+                      width={250}
+                      fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
+                      background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
+                    />
+                  </View>
+                </TouchableOpacity>
+              </>
+            )}
+          </Formik>
+        </View>
+      </KeyboardAvoidingView>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: 16,
+  },
+  errorText: {
+    fontFamily:"brotherBold",
+    textTransform: "uppercase",
+    fontSize: 15,
+    color: "#622929",
+    paddingBottom:10,
+  },
+  icon: {
+    alignItems: "center",
+    paddingVertical: 20,
+  },
+});
+
+export default SeConnecter;
