@@ -3,30 +3,28 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { RootStackParamList } from "../types";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { useTheme } from '@/themes/themeContext';
-import { useNavigation } from '@react-navigation/native';
+import { useTheme } from "@/themes/themeContext";
+import { useNavigation } from "@react-navigation/native";
 import { ConnexionIcon } from "@/themes/icones/connexionIcon";
 import { darkTheme } from "@/themes/dark";
 import { CompteIcon } from "@/themes/icones/compteIcon";
-
 
 type ConnexionScreen = StackNavigationProp<RootStackParamList, "Connexion">;
 const Connexion: React.FC = () => {
   const navigation = useNavigation<ConnexionScreen>();
   const { theme, toggleTheme } = useTheme();
   const iconeDroitePress = () => {
-    navigation.navigate('MenuInitial');
+    navigation.navigate("MenuInitial");
     console.log("bouton 2 pressé");
   };
 
   const connexionTouched = () => {
-    console.log('Bouton se connecter touché');
+    console.log("Bouton se connecter touché");
   };
 
   const compteTouched = () => {
-    console.log('bouton créer un compte touché');
+    console.log("bouton créer un compte touché");
   };
-
 
   return (
     <View style={theme.container}>
@@ -35,14 +33,23 @@ const Connexion: React.FC = () => {
         iconeDroiteNom="planet-outline"
         iconeDroiteAction={iconeDroitePress}
       />
-     
+
       <View style={styles.bottomIconsContainer}>
-     <TouchableOpacity onPress={connexionTouched} style={styles.icon}>
-      <ConnexionIcon width={250} fill={theme === darkTheme ? '#FFAD80' : '#825C6E'} /> 
-      </TouchableOpacity>
-      <TouchableOpacity onPress={compteTouched} style={styles.icon}>
-      <CompteIcon width={250} fill={theme === darkTheme ? '#FFCD69' : '#E7A74F'} />
-      </TouchableOpacity>
+        <TouchableOpacity onPress={connexionTouched} style={styles.icon}>
+          <View style={theme.iconeShadow}>
+          <ConnexionIcon
+            width={250}
+            fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
+            background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
+          /></View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={compteTouched} style={styles.icon}>
+          <View style={theme.iconeShadow}>
+          <CompteIcon
+            width={250}
+            fill={theme === darkTheme ? "#FFCD69" : "#E7A74F"} background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
+          /></View>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -50,16 +57,16 @@ const Connexion: React.FC = () => {
 
 const styles = StyleSheet.create({
   bottomIconsContainer: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
-    alignItems: 'center', 
-    marginBottom: 50, 
+    alignItems: "center",
+    marginBottom: 50,
   },
   icon: {
-    paddingVertical:5,
-  }
+    paddingVertical: 5,
+  },
 });
 
-export default Connexion; 
+export default Connexion;

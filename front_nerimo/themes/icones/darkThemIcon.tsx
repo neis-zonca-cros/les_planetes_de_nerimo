@@ -2,11 +2,11 @@ import * as React from "react";
 import Svg, { G, Circle, Path, Defs } from "react-native-svg";
 import { IconProps } from "@/themes/icones/iconProps";
 
-const DarkThemeIcon: React.FC<IconProps> = ({ width }) => (
-  <Svg width={width} height={width * (264/264)} viewBox="0 0 264 264" fill="none">
+const DarkThemeIcon: React.FC<IconProps> = ({ width, background }) => (
+  <Svg width={width} height={width * (264/264)} viewBox="0 0 264 264" fill={background}>
     <G filter="url(#filter0_d_149_1089)">
       <G filter="url(#filter1_d_149_1089)">
-        <Circle cx={132} cy={128} r={124} stroke="#FAE6BB" strokeWidth={6} />
+        <Circle cx={132} cy={128} r={124} stroke="#FAE6BB" strokeWidth={4} />
       </G>
       <G filter="url(#filter2_b_149_1089)">
         <Path

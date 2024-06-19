@@ -4,14 +4,14 @@ import {IconProps} from '@/themes/icones/iconProps'
 
 
 
-const LightThemeIcon: React.FC<IconProps> = ({ width }) => (
-  <Svg width={width} height={width * (264/264)} fill="none" viewBox="0 0 264 264">
+const LightThemeIcon: React.FC<IconProps> = ({ width, background }) => (
+  <Svg width={width} height={width * (264/264)} fill={background} viewBox="0 0 264 264">
   <G filter="url(#filter0_d_149_1103)">
       <G filter="url(#filter1_d_149_1103)">
         <Path
           d="M256 128.076C256 196.604 200.481 252.153 132 252.153C63.5189 252.153 8 196.604 8 128.076C8 59.5487 63.5189 4 132 4C200.481 4 256 59.5487 256 128.076Z"
           stroke="#23363E"
-          strokeWidth={6}
+          strokeWidth={4}
          
         />
       </G>
