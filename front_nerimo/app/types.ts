@@ -4,6 +4,7 @@ export type RootStackParamList = {
     MenuInitial: undefined;
     SeConnecter: undefined;
     AccueilApresConnexion: undefined;
+    CreerUnCompte: undefined;
 
   };
   

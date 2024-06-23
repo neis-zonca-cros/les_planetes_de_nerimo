@@ -19,23 +19,29 @@ import { useTheme } from "@/themes/themeContext";
 import { ConnexionIcon } from "@/themes/icones/connexionIcon";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { darkTheme } from "@/themes/dark";
+import { CompteIcon } from "@/themes/icones/compteIcon";
 import TopBar from "@/components/navigation/TopBar";
 import useGoBack from "@/components/navigation/useGoBack";
 
-type SeConnecterScreen = StackNavigationProp<RootStackParamList, "SeConnecter">;
+type CreerUnCompteScreen = StackNavigationProp<RootStackParamList, "CreerUnCompte">;
 
-const SeConnecter: React.FC = () => {
-  const navigation = useNavigation<SeConnecterScreen>();
+const CreerUnCompte: React.FC = () => {
+  const navigation = useNavigation<CreerUnCompteScreen>();
   const { theme } = useTheme();
   const goBack = useGoBack();
-  const loginValidationSchema = Yup.object().shape({
+  const signUpValidationSchema = Yup.object().shape({
+    firstName: Yup.string()
+      .required("Oups, tu as oublié de mettre ton prénom !"),
     email: Yup.string()
       .email("Email invalide")
       .required("Oups, tu as oublié de mettre ton email !"),
     password: Yup.string()
-      
       .required("Oups, tu as oublié de mettre ton mot de passe !"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref('password'), undefined], "Les mots de passe ne correspondent pas")
+      .required("Oups, tu as oublié de répéter ton mot de passe !"),
   });
+  
 
   const handleLogin = (values: { email: string; password: string }) => {
     console.log("Email:", values.email);
@@ -43,7 +49,6 @@ const SeConnecter: React.FC = () => {
 
     navigation.navigate("AccueilApresConnexion");
   };
-
 
   return (
     <ScrollView contentContainerStyle={theme.container}>
@@ -57,12 +62,11 @@ const SeConnecter: React.FC = () => {
         style={styles.container}
       >
 
-
         <View style={styles.container}>
-        <Text style={theme.titreMedium}>Rentrer dans le monde de Nérimo</Text>
+        <Text style={theme.titreMedium}>S'inscrire</Text>
           <Formik
-            initialValues={{ email: "", password: "" }}
-            validationSchema={loginValidationSchema}
+            initialValues={{ firstName:"", email: "", password: "", confirmPassword:"" }}
+            validationSchema={signUpValidationSchema}
             onSubmit={handleLogin}
           >
             {({
@@ -74,6 +78,19 @@ const SeConnecter: React.FC = () => {
               touched,
             }) => (
               <>
+                 <View style={theme.input} >
+                <TextInput
+                  style={theme.textInput}
+                  placeholder="PRÉNOM"
+                  placeholderTextColor={theme === darkTheme ? "#FAE6BB" : "#23363E"}
+                  onChangeText={handleChange("firstName")}
+                  onBlur={handleBlur("firstName")}
+                  value={values.firstName}
+        
+                /></View>
+                {errors.firstName && touched.firstName && (
+                  <Text style={theme.errorText}>{errors.firstName}</Text>
+                )}
               <View style={theme.input} >
                 <TextInput
                   style={theme.textInput}
@@ -99,12 +116,24 @@ const SeConnecter: React.FC = () => {
                 {errors.password && touched.password && (
                   <Text style={theme.errorText}>{errors.password}</Text>
                 )}
+                                 <View style={theme.input} >
+                <TextInput style={theme.textInput} 
+                  placeholder="RÉPETEZ LE MOT DE PASSE"
+                  placeholderTextColor={theme === darkTheme ? "#FAE6BB" : "#23363E"}
+                  onChangeText={handleChange("confirmPassword")}
+                  onBlur={handleBlur("confirmPassword")}
+                  value={values.confirmPassword}
+                  secureTextEntry
+                /></View>
+                {errors.confirmPassword && touched.confirmPassword && (
+                  <Text style={theme.errorText}>{errors.confirmPassword}</Text>
+                )}
                 <TouchableOpacity
                   onPress={handleSubmit as any}
                   style={styles.icon}
                 >
                   <View style={theme.iconeShadow}>
-                    <ConnexionIcon
+                    <CompteIcon
                       width={250}
                       fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
                       background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
@@ -139,4 +168,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SeConnecter;
+export default CreerUnCompte;

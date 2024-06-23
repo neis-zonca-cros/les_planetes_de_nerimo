@@ -12,18 +12,27 @@ export function TabBarIcon({ style, ...rest }: ComponentProps<typeof Ionicons>) 
 
 interface TopBarProps {
   titre: string;
+  iconeAvantTitre?:ComponentProps<typeof Ionicons>['name'] | null;
+  iconeAvantTitreAction?: () => void;
   iconeGaucheNom?: ComponentProps<typeof Ionicons>['name'] | null;
   iconeGaucheAction?: () => void;
   iconeDroiteNom?: ComponentProps<typeof Ionicons>['name'] | null;
   iconeDroiteAction?: () => void;
 }
 
-const TopBar: React.FC<TopBarProps> = ({ titre, iconeGaucheNom, iconeGaucheAction, iconeDroiteNom, iconeDroiteAction }) => {
+const TopBar: React.FC<TopBarProps> = ({ titre, iconeGaucheNom, iconeGaucheAction, iconeDroiteNom, iconeDroiteAction, iconeAvantTitre, iconeAvantTitreAction }) => {
   const { theme } = useTheme();
 
   return (
     <View style={theme.containerTopBar}>
-      <Text style={theme.titreTopBar}>{titre}</Text>
+      <View style={theme.iconsTopBar}>
+        {iconeAvantTitre ? (
+        <TouchableOpacity onPress={iconeAvantTitreAction}>
+          <TabBarIcon name={iconeAvantTitre} style={theme.iconTopBar} />
+
+        </TouchableOpacity>
+      ) : null}
+      <Text style={theme.titreLargeTopBar}>{titre}</Text></View>
       <View style={theme.iconsTopBar}>
       {iconeGaucheNom ? (
         <TouchableOpacity onPress={iconeGaucheAction}>

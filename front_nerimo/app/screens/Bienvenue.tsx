@@ -19,9 +19,9 @@ const Bienvenue: React.FC = () => {
 
   return (
     <View style={theme.container}>
-      <Text style={theme.titre}>Bienvenue sur les planètes de Nérimo !</Text>
+      <Text style={theme.titreLarge}>Bienvenue sur les planètes de Nérimo !</Text>
       <TouchableOpacity
-        onPress={() => navigation.replace("AccueilAvantConnexion")}
+        onPress={() => navigation.navigate("AccueilAvantConnexion")}
         style={theme.iconeContainer}
       >
         <View style={theme.iconeShadow}>

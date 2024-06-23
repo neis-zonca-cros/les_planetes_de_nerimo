@@ -5,13 +5,7 @@ export const darkTheme = StyleSheet.create({
     flex: 1,
     backgroundColor: "#23363E",
   },
-  text: {
-    textAlign: "center",
-    fontFamily: "brother",
-    fontSize: 24,
-    color: "#FAE6BB",
-  },
-  titre: {
+  titreLarge: {
     justifyContent: "flex-start",
     textAlign: "center",
     fontFamily: "brotherBold",
@@ -22,15 +16,27 @@ export const darkTheme = StyleSheet.create({
     paddingHorizontal: 30,
     lineHeight: 80,
   },
-  menu: {
+  titreMedium: {
     justifyContent: "flex-start",
     textAlign: "center",
     fontFamily: "brotherBold",
-    fontSize: 40,
+    fontSize: 30,
+    lineHeight: 50,
     color: "#FAE6BB",
     textTransform: "uppercase",
     paddingVertical: 40,
   },
+  titreSmall : {
+    textAlign: "center",
+    fontFamily: "brotherBold",
+    fontSize: 16,
+    color: "#FAE6BB",
+    textTransform: "uppercase",
+    paddingVertical:10,
+
+  },
+
+
   iconeContainer: {
     alignItems: "center",
     justifyContent: "center",
@@ -40,18 +46,27 @@ export const darkTheme = StyleSheet.create({
   iconeColor: {
     color: "#FAE6BB",
   },
+  iconeShadow: {
+    ...Platform.select({
+      ios: {
+        shadowColor: "rgba(0, 0, 0, 0.5)",
+        shadowOffset: { width: 2, height: 5 },
+        shadowOpacity: 0.8,
+        shadowRadius: 1,
+      },
+      android: {
+        elevation: 5,
+      },
+    }),
+  },
 
-  textInput:{
+  textInput: {
     color: "#FAE6BB",
     fontFamily: "brotherBold",
     alignItems: "center",
     justifyContent: "center",
     marginVertical: 10,
     fontSize: 20,
-    
-
-   
-
   },
   input: {
     height: 60,
@@ -63,7 +78,7 @@ export const darkTheme = StyleSheet.create({
     paddingHorizontal: 8,
     ...Platform.select({
       ios: {
-        shadowColor: 'rgba(0, 0, 0, 0.5)',
+        shadowColor: "rgba(0, 0, 0, 0.5)",
         shadowOffset: { width: 2, height: 5 },
         shadowOpacity: 0.8,
         shadowRadius: 1,
@@ -74,38 +89,28 @@ export const darkTheme = StyleSheet.create({
     }),
   },
   errorText: {
-    fontFamily:"brotherBold",
+    fontFamily: "brotherBold",
     textTransform: "uppercase",
     fontSize: 15,
     color: "#FFAD80",
-    paddingBottom:10,
+    paddingBottom: 10,
   },
 
-
-
-
-  iconeShadow: {
-    ...Platform.select({
-      ios: {
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.8,
-        shadowRadius: 1,
-      },
-      android: {
-        elevation: 5,
-      },
-    }),
-  },
 
   containerTopBar: {
     flexDirection: "row",
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 100, // Ajuste cette valeur selon la hauteur de ta TopBar
+    zIndex: 1,
     justifyContent: "space-between",
     alignItems: "center",
     padding: 16,
     backgroundColor: "#23363E",
   },
-  titreTopBar: {
+  titreLargeTopBar: {
     padding: 10,
     fontSize: 20,
     fontFamily: "brother",

@@ -13,6 +13,7 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import AccueilApresConnexion from "./screens/AccueilApresConnexion";
 import AccueilAvantConnexion from "./screens/AccueilAvantConnexion";
 import SeConnecter from "./screens/SeConnecter";
+import CreerUnCompte from "./screens/CreerUnCompte";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -49,6 +50,11 @@ export default function Index() {
             <Stack.Screen
               name="SeConnecter"
               component={SeConnecter}
+              options={{ headerShown: false }}
+            />
+                        <Stack.Screen
+              name="CreerUnCompte"
+              component={CreerUnCompte}
               options={{ headerShown: false }}
             />
             <Stack.Screen

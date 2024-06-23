@@ -17,6 +17,9 @@ import { AProposIcon } from "@/themes/icones/aProposIcon";
 import { lightTheme } from "@/themes/light";
 import LightThemeIcon from "@/themes/icones/lightThemIcon";
 import { DarkThemeIcon } from "@/themes/icones/darkThemIcon";
+import useGoBack from "@/components/navigation/useGoBack";
+import useGoToConnect from "@/components/navigation/useGoToConnect";
+import useGoToCreerUnCompte from "@/components/navigation/useGoToCreerCompte";
 
 type MenuInitialScreen = StackNavigationProp<RootStackParamList, "MenuInitial">;
 
@@ -25,6 +28,9 @@ const MenuInitial: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
   const scrollY = useSharedValue(0);
   const routesLength = useNavigationState((state) => state.routes.length);
+  const goBack = useGoBack();
+  const goSeConnecter = useGoToConnect();
+  const goCreerUnCompte = useGoToCreerUnCompte();
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event) => {
@@ -39,24 +45,6 @@ const MenuInitial: React.FC = () => {
     },
   });
 
-  const iconeDroitePress = () => {
-    if (routesLength > 1) {
-      navigation.goBack();
-    } else {
-      console.warn("pas d'écran pour revenir en arrière");
-    }
-    console.log("Bouton fermer pressé");
-  };
-
-  const connexionTouched = () => {
-    navigation.navigate('SeConnecter')
-    console.log("Bouton se connecter touché");
-  };
-
-  const compteTouched = () => {
-    console.log("Bouton créer un compte touché");
-  };
-
   return (
     <Animated.ScrollView
       style={theme.container}
@@ -65,13 +53,14 @@ const MenuInitial: React.FC = () => {
     >
       <TopBar
         titre=""
-        iconeDroiteNom="close-outline"
-        iconeDroiteAction={iconeDroitePress}
+        iconeAvantTitre="arrow-back"
+        iconeAvantTitreAction={goBack}
       />
-      <Text style={theme.menu}>MENU</Text>
+      <View style={styles.container}>
+      <Text style={theme.titreMedium}>MENU</Text>
       <View style={styles.row}>
         <View style={styles.iconContainer}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={goCreerUnCompte}>
           <View style={theme.iconeShadow}>
             <CompteRondIcon
               width={120}
@@ -81,7 +70,7 @@ const MenuInitial: React.FC = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.iconContainer}>
-          <TouchableOpacity onPress={connexionTouched}>
+          <TouchableOpacity onPress={goSeConnecter}>
           <View style={theme.iconeShadow}>
             <ConnexionRondIcon
               width={120}
@@ -111,6 +100,7 @@ const MenuInitial: React.FC = () => {
               background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
             /></View>
           </TouchableOpacity>
+          </View>
         </View>
       </View>
     </Animated.ScrollView>
@@ -122,6 +112,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    paddingTop:100,
+    paddingHorizontal: 16,
   },
   row: {
     flexDirection: "row",

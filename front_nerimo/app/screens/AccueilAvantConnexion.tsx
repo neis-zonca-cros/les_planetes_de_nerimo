@@ -8,22 +8,24 @@ import { useNavigation } from "@react-navigation/native";
 import { darkTheme } from "@/themes/dark";
 import { CompteIcon } from "@/themes/icones/compteIcon";
 import { ConnexionIcon } from "@/themes/icones/connexionIcon";
+import useGoBack from "@/components/navigation/useGoBack";
+import useGoToConnect from "@/components/navigation/useGoToConnect";
+import useGoToCreerUnCompte from "@/components/navigation/useGoToCreerCompte";
 
 type AccueilAvantConnexionScreen = StackNavigationProp<RootStackParamList, "AccueilAvantConnexion">;
 const AccueilAvantConnexion: React.FC = () => {
   const navigation = useNavigation<AccueilAvantConnexionScreen>();
   const { theme, toggleTheme } = useTheme();
+  const goSeConnecter = useGoToConnect();
+  const goCreerUnCompte = useGoToCreerUnCompte();
+
   const iconeDroitePress = () => {
     navigation.navigate("MenuInitial");
     console.log("bouton 2 pressé");
   };
 
-  const AccueilAvantConnexionTouched = () => {
-    console.log("Bouton se connecter touché");
-  };
-
-  const compteTouched = () => {
-    console.log("bouton créer un compte touché");
+  const mdpOublie = () => {
+    console.log("bouton mdp oublié touché");
   };
 
   return (
@@ -35,7 +37,7 @@ const AccueilAvantConnexion: React.FC = () => {
       />
 
       <View style={styles.bottomIconsContainer}>
-        <TouchableOpacity onPress={AccueilAvantConnexionTouched} style={styles.icon}>
+        <TouchableOpacity onPress={goSeConnecter} style={styles.icon}>
           <View style={theme.iconeShadow}>
           <ConnexionIcon
             width={250}
@@ -43,13 +45,14 @@ const AccueilAvantConnexion: React.FC = () => {
             background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
           /></View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={compteTouched} style={styles.icon}>
+        <TouchableOpacity onPress={goCreerUnCompte} style={styles.icon}>
           <View style={theme.iconeShadow}>
           <CompteIcon
             width={250}
             fill={theme === darkTheme ? "#FFCD69" : "#E7A74F"} background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
           /></View>
         </TouchableOpacity>
+        <Text onPress={mdpOublie} style={theme.titreSmall}>Mot de passe oublié ?</Text>
       </View>
     </View>
   );

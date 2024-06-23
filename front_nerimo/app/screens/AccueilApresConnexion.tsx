@@ -19,7 +19,7 @@ const AccueilApresConnexion: React.FC = () => {
 
   return (
     <View style={theme.container}>
-      <Text style={theme.titre}>Bienvenue, tu es connectée ! !</Text>
+      <Text style={theme.titreMedium}>Bienvenue, tu es connectée ! !</Text>
 
     </View>
   );

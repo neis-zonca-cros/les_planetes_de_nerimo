@@ -5,13 +5,7 @@ export const lightTheme = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FAE6BB",
   },
-  text: {
-    textAlign: "center",
-    fontFamily: "brother",
-    fontSize: 24,
-    color: "#23363E",
-  },
-  titre: {
+  titreLarge: {
     justifyContent: "flex-start",
     textAlign: "center",
     fontFamily: "brotherBold",
@@ -22,15 +16,27 @@ export const lightTheme = StyleSheet.create({
     paddingHorizontal: 30,
     lineHeight: 80,
   },
-  menu: {
+  titreMedium: {
     justifyContent: "flex-start",
     textAlign: "center",
     fontFamily: "brotherBold",
-    fontSize: 40,
+    fontSize: 30,
+    lineHeight: 50,
     color: "#23363E",
     textTransform: "uppercase",
     paddingVertical: 40,
   },
+  titreSmall : {
+    textAlign: "center",
+    fontFamily: "brotherBold",
+    fontSize: 16,
+    color: "#23363E",
+    textTransform: "uppercase",
+    paddingVertical:10,
+
+  },
+
+
   iconeContainer: {
     alignItems: "center",
     justifyContent: "center",
@@ -39,6 +45,21 @@ export const lightTheme = StyleSheet.create({
   iconeColor: {
     color: "#23363E",
   },
+  iconeShadow: {
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgba(205, 133, 63, 0.5)',
+        shadowOffset: { width: 2, height: 5 },
+        shadowOpacity: 0.5,
+        shadowRadius: 1,
+      },
+      android: {
+        elevation: 5,
+      },
+    }),
+  },
+
+
   textInput:{
     color: "#23363E",
     fontFamily: "brotherBold",
@@ -76,28 +97,21 @@ export const lightTheme = StyleSheet.create({
     paddingBottom:10,
   },
 
-  iconeShadow: {
-    ...Platform.select({
-      ios: {
-        shadowColor: "#23363E",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 1,
-      },
-      android: {
-        elevation: 5,
-      },
-    }),
-  },
 
   containerTopBar: {
     flexDirection: "row",
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 100, 
+    zIndex: 1,
     justifyContent: "space-between",
     alignItems: "center",
     padding: 16,
     backgroundColor: "#FAE6BB",
   },
-  titreTopBar: {
+  titreLargeTopBar: {
     padding: 10,
     fontSize: 20,
     color: "#23363E",
