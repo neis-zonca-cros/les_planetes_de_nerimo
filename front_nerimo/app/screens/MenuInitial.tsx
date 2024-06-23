@@ -1,11 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import Animated, {
-  runOnJS,
-  useAnimatedScrollHandler,
-  useSharedValue,
-} from "react-native-reanimated";
-import { useNavigation, useNavigationState } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../types";
 import { useTheme } from "@/themes/themeContext";
@@ -27,8 +22,6 @@ type MenuInitialScreen = StackNavigationProp<RootStackParamList, "MenuInitial">;
 const MenuInitial: React.FC = () => {
   const navigation = useNavigation<MenuInitialScreen>();
   const { theme, toggleTheme } = useTheme();
-  const scrollY = useSharedValue(0);
-  const routesLength = useNavigationState((state) => state.routes.length);
   const goBack = useGoBack();
   const goSeConnecter = useGoToConnect();
   const goCreerUnCompte = useGoToCreerUnCompte();

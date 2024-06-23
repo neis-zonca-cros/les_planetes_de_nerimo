@@ -1,4 +1,3 @@
-// src/Index.tsx
 import React from "react";
 import AppLoading from "expo-app-loading";
 import { NavigationContainer } from "@react-navigation/native";
@@ -7,13 +6,13 @@ import { useFonts } from "expo-font";
 import Bienvenue from "./screens/Bienvenue";
 import { RootStackParamList } from "./types";
 import { ThemeProvider } from "@/themes/themeContext";
-import Connexion from "./screens/AccueilAvantConnexion";
 import MenuInitial from "./screens/MenuInitial";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import AccueilApresConnexion from "./screens/AccueilApresConnexion";
 import AccueilAvantConnexion from "./screens/AccueilAvantConnexion";
 import SeConnecter from "./screens/SeConnecter";
 import CreerUnCompte from "./screens/CreerUnCompte";
+import MenuUtilisateur from "./screens/MenuUtilisateur";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -52,7 +51,7 @@ export default function Index() {
               component={SeConnecter}
               options={{ headerShown: false }}
             />
-                        <Stack.Screen
+            <Stack.Screen
               name="CreerUnCompte"
               component={CreerUnCompte}
               options={{ headerShown: false }}
@@ -60,6 +59,11 @@ export default function Index() {
             <Stack.Screen
               name="AccueilApresConnexion"
               component={AccueilApresConnexion}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="MenuUtilisateur"
+              component={MenuUtilisateur}
               options={{ headerShown: false }}
             />
           </Stack.Navigator>

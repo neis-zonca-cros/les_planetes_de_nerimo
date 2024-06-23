@@ -48,7 +48,7 @@ const TopBar: React.FC<TopBarProps> = ({
             <TabBarIcon name={iconeAvantTitre} style={theme.iconTopBar} />
           </TouchableOpacity>
         ) : null}
-         <View style={theme.textContainerTopBar}>
+        <View style={theme.textContainerTopBar}>
           <Text style={theme.titreLargeTopBar}>{titre}</Text>
           <Text style={theme.titreLargeTopBar}>{prenom} </Text>
         </View>

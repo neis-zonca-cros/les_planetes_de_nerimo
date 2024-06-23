@@ -12,7 +12,10 @@ import useGoBack from "@/components/navigation/useGoBack";
 import useGoToConnect from "@/components/navigation/useGoToConnect";
 import useGoToCreerUnCompte from "@/components/navigation/useGoToCreerCompte";
 
-type AccueilAvantConnexionScreen = StackNavigationProp<RootStackParamList, "AccueilAvantConnexion">;
+type AccueilAvantConnexionScreen = StackNavigationProp<
+  RootStackParamList,
+  "AccueilAvantConnexion"
+>;
 const AccueilAvantConnexion: React.FC = () => {
   const navigation = useNavigation<AccueilAvantConnexionScreen>();
   const { theme, toggleTheme } = useTheme();
@@ -39,20 +42,25 @@ const AccueilAvantConnexion: React.FC = () => {
       <View style={styles.bottomIconsContainer}>
         <TouchableOpacity onPress={goSeConnecter} style={styles.icon}>
           <View style={theme.iconeShadow}>
-          <ConnexionIcon
-            width={250}
-            fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
-            background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
-          /></View>
+            <ConnexionIcon
+              width={250}
+              fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
+              background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
+            />
+          </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={goCreerUnCompte} style={styles.icon}>
           <View style={theme.iconeShadow}>
-          <CompteIcon
-            width={250}
-            fill={theme === darkTheme ? "#FFCD69" : "#E7A74F"} background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
-          /></View>
+            <CompteIcon
+              width={250}
+              fill={theme === darkTheme ? "#FFCD69" : "#E7A74F"}
+              background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
+            />
+          </View>
         </TouchableOpacity>
-        <Text onPress={mdpOublie} style={theme.titreSmall}>Mot de passe oublié ?</Text>
+        <Text onPress={mdpOublie} style={theme.titreSmall}>
+          Mot de passe oublié ?
+        </Text>
       </View>
     </View>
   );
