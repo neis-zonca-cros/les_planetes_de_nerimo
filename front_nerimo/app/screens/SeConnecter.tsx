@@ -1,4 +1,3 @@
-// screens/LoginScreen.js
 import React from "react";
 import {
   View,
@@ -32,9 +31,9 @@ const SeConnecter: React.FC = () => {
     email: Yup.string()
       .email("Email invalide")
       .required("Oups, tu as oublié de mettre ton email !"),
-    password: Yup.string()
-      
-      .required("Oups, tu as oublié de mettre ton mot de passe !"),
+    password: Yup.string().required(
+      "Oups, tu as oublié de mettre ton mot de passe !"
+    ),
   });
 
   const handleLogin = (values: { email: string; password: string }) => {
@@ -44,10 +43,9 @@ const SeConnecter: React.FC = () => {
     navigation.navigate("AccueilApresConnexion");
   };
 
-
   return (
-    <ScrollView contentContainerStyle={theme.container}>
-            <TopBar
+    <View style={theme.container}>
+      <TopBar
         titre=""
         iconeAvantTitre="arrow-back"
         iconeAvantTitreAction={goBack}
@@ -56,10 +54,8 @@ const SeConnecter: React.FC = () => {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}
       >
-
-
-        <View style={styles.container}>
-        <Text style={theme.titreMedium}>Rentrer dans le monde de Nérimo</Text>
+        <ScrollView contentContainerStyle={theme.scrollViewContent}>
+          <Text style={theme.titreMedium}>Rentrer dans le monde de Nérimo</Text>
           <Formik
             initialValues={{ email: "", password: "" }}
             validationSchema={loginValidationSchema}
@@ -74,28 +70,35 @@ const SeConnecter: React.FC = () => {
               touched,
             }) => (
               <>
-              <View style={theme.input} >
-                <TextInput
-                  style={theme.textInput}
-                  placeholder="E-MAIL"
-                  placeholderTextColor={theme === darkTheme ? "#FAE6BB" : "#23363E"}
-                  onChangeText={handleChange("email")}
-                  onBlur={handleBlur("email")}
-                  value={values.email}
-                  keyboardType="email-address"
-                /></View>
+                <View style={theme.input}>
+                  <TextInput
+                    style={theme.textInput}
+                    placeholder="E-MAIL"
+                    placeholderTextColor={
+                      theme === darkTheme ? "#FAE6BB" : "#23363E"
+                    }
+                    onChangeText={handleChange("email")}
+                    onBlur={handleBlur("email")}
+                    value={values.email}
+                    keyboardType="email-address"
+                  />
+                </View>
                 {errors.email && touched.email && (
                   <Text style={theme.errorText}>{errors.email}</Text>
                 )}
-                 <View style={theme.input} >
-                <TextInput style={theme.textInput} 
-                  placeholder="MOT DE PASSE"
-                  placeholderTextColor={theme === darkTheme ? "#FAE6BB" : "#23363E"}
-                  onChangeText={handleChange("password")}
-                  onBlur={handleBlur("password")}
-                  value={values.password}
-                  secureTextEntry
-                /></View>
+                <View style={theme.input}>
+                  <TextInput
+                    style={theme.textInput}
+                    placeholder="MOT DE PASSE"
+                    placeholderTextColor={
+                      theme === darkTheme ? "#FAE6BB" : "#23363E"
+                    }
+                    onChangeText={handleChange("password")}
+                    onBlur={handleBlur("password")}
+                    value={values.password}
+                    secureTextEntry
+                  />
+                </View>
                 {errors.password && touched.password && (
                   <Text style={theme.errorText}>{errors.password}</Text>
                 )}
@@ -114,9 +117,9 @@ const SeConnecter: React.FC = () => {
               </>
             )}
           </Formik>
-        </View>
+        </ScrollView>
       </KeyboardAvoidingView>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -125,13 +128,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     paddingHorizontal: 16,
-  },
-  errorText: {
-    fontFamily:"brotherBold",
-    textTransform: "uppercase",
-    fontSize: 15,
-    color: "#622929",
-    paddingBottom:10,
   },
   icon: {
     alignItems: "center",

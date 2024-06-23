@@ -5,6 +5,13 @@ export const lightTheme = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FAE6BB",
   },
+  scrollViewContent: {
+    flexGrow: 1,
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    justifyContent: "center", 
+  },
+
   titreLarge: {
     justifyContent: "flex-start",
     textAlign: "center",
@@ -17,14 +24,16 @@ export const lightTheme = StyleSheet.create({
     lineHeight: 80,
   },
   titreMedium: {
-    justifyContent: "flex-start",
+    alignItems: "center",
+    justifyContent: "center", 
     textAlign: "center",
     fontFamily: "brotherBold",
+    paddingBottom:20,
     fontSize: 30,
     lineHeight: 50,
     color: "#23363E",
     textTransform: "uppercase",
-    paddingVertical: 40,
+  
   },
   titreSmall : {
     textAlign: "center",
@@ -111,11 +120,16 @@ export const lightTheme = StyleSheet.create({
     padding: 16,
     backgroundColor: "#FAE6BB",
   },
+  textContainerTopBar:{
+    flexDirection: "column",
+    alignItems: "center",
+
+  },
   titreLargeTopBar: {
-    padding: 10,
+    padding: 5,
     fontSize: 20,
     color: "#23363E",
-    fontFamily: "brother",
+    fontFamily: "brotherBold",
     textTransform: "uppercase",
   },
   iconsTopBar: {
