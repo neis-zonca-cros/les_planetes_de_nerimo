@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   TextInput,
-  Button,
   StyleSheet,
   Text,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -21,27 +21,29 @@ import { darkTheme } from "@/themes/dark";
 import TopBar from "@/components/navigation/TopBar";
 import useGoBack from "@/components/navigation/useGoBack";
 
+
 type SeConnecterScreen = StackNavigationProp<RootStackParamList, "SeConnecter">;
 
 const SeConnecter: React.FC = () => {
   const navigation = useNavigation<SeConnecterScreen>();
   const { theme } = useTheme();
   const goBack = useGoBack();
+  
   const loginValidationSchema = Yup.object().shape({
     email: Yup.string()
       .email("Email invalide")
       .required("Oups, tu as oublié de mettre ton email !"),
-    password: Yup.string().required(
+    mdp: Yup.string().required(
       "Oups, tu as oublié de mettre ton mot de passe !"
     ),
   });
 
-  const handleLogin = (values: { email: string; password: string }) => {
-    console.log("Email:", values.email);
-    console.log("Password:", values.password);
 
-    navigation.navigate("AccueilApresConnexion");
+  const handleLogin = () => {
+    navigation.navigate('AccueilApresConnexion')
   };
+
+  
 
   return (
     <View style={theme.container}>
@@ -57,7 +59,7 @@ const SeConnecter: React.FC = () => {
         <ScrollView contentContainerStyle={theme.scrollViewContent}>
           <Text style={theme.titreMedium}>Rentrer dans le monde de Nérimo</Text>
           <Formik
-            initialValues={{ email: "", password: "" }}
+            initialValues={{ email: "", mdp: "" }}
             validationSchema={loginValidationSchema}
             onSubmit={handleLogin}
           >
@@ -93,14 +95,14 @@ const SeConnecter: React.FC = () => {
                     placeholderTextColor={
                       theme === darkTheme ? "#FAE6BB" : "#23363E"
                     }
-                    onChangeText={handleChange("password")}
-                    onBlur={handleBlur("password")}
-                    value={values.password}
+                    onChangeText={handleChange("mdp")}
+                    onBlur={handleBlur("mdp")}
+                    value={values.mdp}
                     secureTextEntry
                   />
                 </View>
-                {errors.password && touched.password && (
-                  <Text style={theme.errorText}>{errors.password}</Text>
+                {errors.mdp && touched.mdp && (
+                  <Text style={theme.errorText}>{errors.mdp}</Text>
                 )}
                 <TouchableOpacity
                   onPress={handleSubmit as any}

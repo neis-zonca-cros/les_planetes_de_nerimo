@@ -14,7 +14,7 @@ interface SessionProps {
   onPress?: () => void;
 }
 
-const Session: React.FC<SessionProps> = ({
+const SessionComposant: React.FC<SessionProps> = ({
   prenom,
   planeteNom,
   personnageNom,
@@ -49,4 +49,4 @@ const Session: React.FC<SessionProps> = ({
   );
 };
 
-export default Session;
+export default SessionComposant;
