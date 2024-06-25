@@ -1,4 +1,3 @@
-
 const API_BASE_URL = "http://192.168.1.12:3000/api";
 
 interface FetchOptions extends RequestInit {
@@ -6,7 +5,10 @@ interface FetchOptions extends RequestInit {
   body?: any;
 }
 
-async function apiFetch<T>(endpoint: string, options: FetchOptions = {}): Promise<T> {
+async function apiFetch<T>(
+  endpoint: string,
+  options: FetchOptions = {}
+): Promise<T> {
   const url = `${API_BASE_URL}/${endpoint}`;
   const defaultOptions: RequestInit = {
     headers: {
@@ -21,7 +23,7 @@ async function apiFetch<T>(endpoint: string, options: FetchOptions = {}): Promis
     const response = await fetch(url, defaultOptions);
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || 'Network response was not ok');
+      throw new Error(errorData.message || "Network response was not ok");
     }
     return await response.json();
   } catch (error) {

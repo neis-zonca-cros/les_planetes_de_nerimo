@@ -1,5 +1,5 @@
 import express from 'express';
-import { createPersonnage, getPersonnages, getPersonnage, deletePersonnage, updatePersonnage } from '../controllers/personnageController.js';
+import { createPersonnage, getPersonnages, getPersonnage, deletePersonnage, updatePersonnage, getPersonnagesParPlanetes } from '../controllers/personnageController.js';
 import { verifierToken } from '../middlewares/verifierToken.js';
 import { verifierAdmin } from '../middlewares/verifierAdmin.js';
 
@@ -13,6 +13,7 @@ const personnageRoutes = () => {
     router.post('/creer', verifierAdmin, createPersonnage);
 
     router.get('/', getPersonnages);
+    router.get('/:planeteId', getPersonnagesParPlanetes);
     router.get('/:id', getPersonnage);
 
     router.put('/:id', verifierAdmin, updatePersonnage);

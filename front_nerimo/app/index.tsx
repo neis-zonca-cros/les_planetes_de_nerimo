@@ -13,6 +13,9 @@ import AccueilAvantConnexion from "./screens/AccueilAvantConnexion";
 import SeConnecter from "./screens/SeConnecter";
 import CreerUnCompte from "./screens/CreerUnCompte";
 import MenuUtilisateur from "./screens/MenuUtilisateur";
+import CreerSessionPrenom from "./screens/CreerSessionPrenom";
+import ChoisirPlanete from "./screens/ChoisirPlanete";
+import ChoisirPersonnage from "./screens/ChoisirPersonnage";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -64,6 +67,21 @@ export default function Index() {
             <Stack.Screen
               name="MenuUtilisateur"
               component={MenuUtilisateur}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="CreerSessionPrenom"
+              component={CreerSessionPrenom}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="ChoisirPlanete"
+              component={ChoisirPlanete}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="ChoisirPersonnage"
+              component={ChoisirPersonnage}
               options={{ headerShown: false }}
             />
           </Stack.Navigator>

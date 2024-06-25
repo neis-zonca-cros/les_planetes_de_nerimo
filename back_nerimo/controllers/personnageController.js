@@ -33,6 +33,22 @@ export async function getPersonnages(req, res) {
   }
 }
 
+export async function getPersonnagesParPlanetes(req, res) {
+  try {
+    const { planeteId } = req.params; 
+
+    const personnages = await Personnage.find({ "planeteRef": planeteId }).exec();
+
+    if (!personnages) {
+      return res.status(404).json({ error: "Aucun personnage trouvé pour cette planète" });
+    }
+
+    res.status(200).json({ message: 'Liste des personnages pour la planète sélectionnée', data: personnages });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
 export async function getPersonnage(req, res) {
   try {
     const personnageGet = await Personnage.findById(req.params.id).populate("planeteRef").exec();

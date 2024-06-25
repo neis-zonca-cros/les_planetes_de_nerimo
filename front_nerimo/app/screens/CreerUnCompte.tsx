@@ -51,7 +51,7 @@ const CreerUnCompte: React.FC = () => {
     console.log("Email:", values.email);
     console.log("Password:", values.password);
 
-    navigation.navigate("AccueilApresConnexion");
+    navigation.navigate("AccueilApresConnexion", { refresh: true });
   };
 
   return (

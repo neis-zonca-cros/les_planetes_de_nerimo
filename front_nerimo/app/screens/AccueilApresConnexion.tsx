@@ -1,50 +1,60 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { View, Text } from "react-native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../types";
 import { useTheme } from "@/themes/themeContext";
 import { ScrollView } from "react-native-gesture-handler";
 import TopBar from "@/components/navigation/TopBar";
-import Sessions from "@/components/collections/session";
+import Sessions from "@/components/session";
 import { getSessions } from "../fetchs/sessionFetch";
 import { Session } from "../fetchs/sessionFetch";
 import { getUtilisateur } from "../fetchs/utilisateurFetch";
+import { getPersonnageImageURI } from "@/components/imageSession";
 
-type AccueilApresConnexionScreen = StackNavigationProp<
+type AccueilApresConnexionScreenProp = StackNavigationProp<
   RootStackParamList,
   "AccueilApresConnexion"
 >;
 
 const AccueilApresConnexion: React.FC = () => {
-  const navigation = useNavigation<AccueilApresConnexionScreen>();
+  const navigation = useNavigation<AccueilApresConnexionScreenProp>();
   const { theme } = useTheme();
   const [sessions, setSessions] = useState<Session[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [prenom, setPrenom] = useState<string>("");
 
+  const fetchUtilisateurAndSessions = async () => {
+    try {
+      const utilisateur = await getUtilisateur();
+      setPrenom(utilisateur.prenom);
+
+      const fetchedSessions = await getSessions();
+      setSessions(fetchedSessions);
+    } catch (err) {
+      setError("Erreur lors de la récupération des données");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchUtilisateurAndSessions = async () => {
-      try {
-        const utilisateur = await getUtilisateur();
-        setPrenom(utilisateur.prenom);
-
-        const fetchedSessions = await getSessions();
-        setSessions(fetchedSessions);
-      } catch (err) {
-        setError("Erreur lors de la récupération des données");
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchUtilisateurAndSessions();
   }, []);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      if (navigation.isFocused()) {
+        fetchUtilisateurAndSessions();
+      }
+    }, [navigation])
+  );
+
   const addSession = () => {
     console.log("coucou");
+    navigation.navigate("CreerSessionPrenom");
   };
 
   const BoutonSession = () => {
@@ -82,6 +92,7 @@ const AccueilApresConnexion: React.FC = () => {
                 prenom={session.prenom}
                 planeteNom={session.planeteRef.nom}
                 personnageNom={session.personnageRef.nom}
+                imageSource={getPersonnageImageURI(session.personnageRef.nom)}
                 onPress={BoutonSession}
               />
             </View>
