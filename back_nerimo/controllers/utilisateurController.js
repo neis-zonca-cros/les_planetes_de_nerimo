@@ -57,7 +57,7 @@ export async function connexionUtilisateur(req, res) {
         { expiresIn: '1h' } 
       );
 
-      res.status(200).json({ message: 'Connexion réussie', token });
+      res.status(200).json({ message: 'Connexion réussie', userId: utilisateur._id, token });
   } catch (error) {
       res.status(500).json({ error: error.message });
   }

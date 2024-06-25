@@ -7,7 +7,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-
+  Alert,
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -20,7 +20,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { darkTheme } from "@/themes/dark";
 import TopBar from "@/components/navigation/TopBar";
 import useGoBack from "@/components/navigation/useGoBack";
-
+import login from "../fetchs/connexionFetch";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type SeConnecterScreen = StackNavigationProp<RootStackParamList, "SeConnecter">;
 
@@ -28,7 +29,23 @@ const SeConnecter: React.FC = () => {
   const navigation = useNavigation<SeConnecterScreen>();
   const { theme } = useTheme();
   const goBack = useGoBack();
-  
+
+  const handleLogin = async (values: { email: string; mdp: string }) => {
+    try {
+      const emailNormalized = values.email.toLowerCase();
+
+      const token = await login(emailNormalized, values.mdp);
+
+      navigation.navigate("AccueilApresConnexion");
+    } catch (error) {
+      console.error("Login error:", error);
+      Alert.alert(
+        "Login Error",
+        "Failed to log in. Please check your credentials."
+      );
+    }
+  };
+
   const loginValidationSchema = Yup.object().shape({
     email: Yup.string()
       .email("Email invalide")
@@ -37,13 +54,6 @@ const SeConnecter: React.FC = () => {
       "Oups, tu as oublié de mettre ton mot de passe !"
     ),
   });
-
-
-  const handleLogin = () => {
-    navigation.navigate('AccueilApresConnexion')
-  };
-
-  
 
   return (
     <View style={theme.container}>

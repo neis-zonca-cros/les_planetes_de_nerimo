@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../types";
@@ -11,6 +11,7 @@ import useGoBack from "@/components/navigation/useGoBack";
 import { ScrollView } from "react-native-gesture-handler";
 import { ProfilRondIcon } from "@/themes/icones/profilRondIcon";
 import { DeconnexionRondIcon } from "@/themes/icones/deconnexionRondIcon";
+import { logout } from "../fetchs/deconnexion";
 
 type MenuUtilisateurScreen = StackNavigationProp<
   RootStackParamList,
@@ -21,7 +22,14 @@ const MenuUtilisateur: React.FC = () => {
   const navigation = useNavigation<MenuUtilisateurScreen>();
   const { theme } = useTheme();
   const goBack = useGoBack();
-
+  const handleLogout = async () => {
+    try {
+      await logout(navigation, "Bienvenue");
+    } catch (error) {
+      console.error("Erreur lors de la déconnexion:", error);
+      Alert.alert("Erreur", "La déconnexion a échoué. Veuillez réessayer.");
+    }
+  };
   return (
     <View style={theme.container}>
       <TopBar
@@ -44,7 +52,7 @@ const MenuUtilisateur: React.FC = () => {
             </TouchableOpacity>
           </View>
           <View style={styles.iconContainer}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleLogout}>
               <View style={theme.iconeShadow}>
                 <DeconnexionRondIcon
                   width={120}

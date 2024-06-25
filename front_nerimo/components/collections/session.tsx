@@ -11,10 +11,12 @@ interface SessionProps {
   planeteNom?: string;
   textePersonnage?: string;
   personnageNom?: string;
+  
   onPress?: () => void;
 }
 
 const SessionComposant: React.FC<SessionProps> = ({
+  
   prenom,
   planeteNom,
   personnageNom,

@@ -42,6 +42,10 @@ export async function getSessions(req, res) {
       const sessions = await Session.find({ utilisateurRef: utilisateurId })
       .populate("planeteRef")
       .populate("personnageRef")
+      .populate({
+        path: 'utilisateurRef',
+        select: 'prenom' 
+      })
       .exec();
       res.status(200).json({ message: 'Liste des sessions', data: sessions });
     } catch (error) {

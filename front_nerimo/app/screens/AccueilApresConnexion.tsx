@@ -1,12 +1,15 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../types";
 import { useTheme } from "@/themes/themeContext";
 import { ScrollView } from "react-native-gesture-handler";
 import TopBar from "@/components/navigation/TopBar";
-import Session from "@/components/collections/session";
+import Sessions from "@/components/collections/session";
+import { getSessions } from "../fetchs/sessionFetch";
+import { Session } from "../fetchs/sessionFetch";
+import { getUtilisateur } from "../fetchs/utilisateurFetch";
 
 type AccueilApresConnexionScreen = StackNavigationProp<
   RootStackParamList,
@@ -16,28 +19,32 @@ type AccueilApresConnexionScreen = StackNavigationProp<
 const AccueilApresConnexion: React.FC = () => {
   const navigation = useNavigation<AccueilApresConnexionScreen>();
   const { theme } = useTheme();
+  const [sessions, setSessions] = useState<Session[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [prenom, setPrenom] = useState<string>("");
 
-  const [sessions, setSessions] = useState([
-    { id: 1, prenom: "John", nomPlanete: "Mars", nomPersonnage: "Martien" },
-    { id: 2, prenom: "Jane", nomPlanete: "Vénus", nomPersonnage: "Vénusienne" },
-    {
-      id: 3,
-      prenom: "Alice",
-      nomPlanete: "Jupiter",
-      nomPersonnage: "Jupitérienne",
-    },
-    { id: 4, prenom: "Bob", nomPlanete: "Saturne", nomPersonnage: "Saturnien" },
-    { id: 5, prenom: "Eve", nomPlanete: "Uranus", nomPersonnage: "Uranienne" },
-  ]);
+  useEffect(() => {
+    const fetchUtilisateurAndSessions = async () => {
+      try {
+        const utilisateur = await getUtilisateur();
+        setPrenom(utilisateur.prenom);
+
+        const fetchedSessions = await getSessions();
+        setSessions(fetchedSessions);
+      } catch (err) {
+        setError("Erreur lors de la récupération des données");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUtilisateurAndSessions();
+  }, []);
 
   const addSession = () => {
-    const newSession = {
-      id: sessions.length + 1,
-      prenom: "Nouveau",
-      nomPlanete: "Neptune",
-      nomPersonnage: "Neptunien",
-    };
-    setSessions([...sessions, newSession]);
+    console.log("coucou");
   };
 
   const BoutonSession = () => {
@@ -52,7 +59,7 @@ const AccueilApresConnexion: React.FC = () => {
     <View style={theme.container}>
       <TopBar
         titre="Bienvenue"
-        prenom="Mokala"
+        prenom={prenom}
         iconeDroiteNom="planet-outline"
         iconeDroiteAction={menuUtilisateur}
         iconeGaucheNom="add-outline"
@@ -60,18 +67,21 @@ const AccueilApresConnexion: React.FC = () => {
       />
 
       <ScrollView contentContainerStyle={theme.scrollViewContentForSession}>
-        {sessions.length === 0 ? (
+        {loading ? (
+          <Text style={theme.titreMedium}>Chargement...</Text>
+        ) : error ? (
+          <Text style={theme.titreMedium}>{error}</Text>
+        ) : sessions.length === 0 ? (
           <Text style={theme.titreMedium}>
             Pour commencer, ajoutez une session
           </Text>
         ) : (
-          sessions.map((session, index) => (
-            <View>
-              <Session
-                key={session.id}
+          sessions.map((session) => (
+            <View key={session._id}>
+              <Sessions
                 prenom={session.prenom}
-                planeteNom={session.nomPlanete}
-                personnageNom={session.nomPersonnage}
+                planeteNom={session.planeteRef.nom}
+                personnageNom={session.personnageRef.nom}
                 onPress={BoutonSession}
               />
             </View>
