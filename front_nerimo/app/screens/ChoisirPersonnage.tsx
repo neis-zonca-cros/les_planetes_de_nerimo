@@ -4,7 +4,6 @@ import {
   RouteProp,
   useNavigation,
   useRoute,
-  useFocusEffect,
 } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../types";

@@ -36,7 +36,7 @@ const SeConnecter: React.FC = () => {
 
       const token = await login(emailNormalized, values.mdp);
 
-      navigation.navigate("AccueilApresConnexion");
+      navigation.navigate("AccueilApresConnexion", { refresh: true });
     } catch (error) {
       console.error("Login error:", error);
       Alert.alert(
