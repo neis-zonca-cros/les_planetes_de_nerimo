@@ -108,21 +108,38 @@ export const lightTheme = StyleSheet.create({
   },
 
   listContainer:{
-    paddingHorizontal: 90,
+    width: 300,
     paddingVertical: 10,
     alignItems: 'center',
+    justifyContent: 'center',
     flexDirection: 'row',
-    borderWidth: 3,
-    borderColor: '#FAE6BB',
     marginVertical: 10,
     marginHorizontal: 50,
-    borderRadius: 50,
+    height: 80,
+    borderRadius: 10,
+    borderColor: "#FAE6BB",
+    backgroundColor: "#FAE6BB",
+    borderWidth: 5,
+    marginBottom: 12,
+    paddingHorizontal: 8,
+    ...Platform.select({
+      ios: {
+        shadowColor: "rgba(205, 133, 63, 0.5)",
+        shadowOffset: { width: 2, height: 5 },
+        shadowOpacity: 0.5,
+        shadowRadius: 1,
+      },
+      android: {
+        elevation: 5,
+      },
+    }),
 
   },
   listText: {
     fontSize: 20,
-    color: '#FAE6BB',
+    color: '#23363E',
     fontFamily: 'brotherBold',
+    textTransform: 'uppercase',
 
   },
 

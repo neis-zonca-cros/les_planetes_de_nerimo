@@ -42,3 +42,35 @@ export async function getSessions(): Promise<Session[]> {
     throw error;
   }
 }
+
+
+
+type DeleteSessionResponse = {
+  message: string;
+  data: Session;
+};
+
+
+export async function deleteSession(sessionId: string): Promise<Session> {
+  try {
+    const token = await AsyncStorage.getItem("token");
+    if (!token) {
+      throw new Error("Token non trouvé");
+    }
+
+    const response = await apiFetch<DeleteSessionResponse>(`session/${sessionId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("Réponse du backend après suppression de session :", response);
+    return response.data;
+  } catch (error) {
+    console.error("Erreur lors de la suppression de la session:", error);
+    throw error;
+  }
+}
+

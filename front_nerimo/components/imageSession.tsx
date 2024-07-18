@@ -8,6 +8,8 @@ export const getPersonnageImageURI = (personnageNom: any) => {
         return require("@/assets/images/klouki.png");
       case "Rourk":
         return require("@/assets/images/rourk.png");
+      case "Gloumars":
+        return require("@/assets/images/gloumars.png");
   
       default:
         return require("@/assets/images/escargot.png"); 

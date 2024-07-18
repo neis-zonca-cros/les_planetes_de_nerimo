@@ -46,10 +46,10 @@ const SessionComposant: React.FC<SessionProps> = ({
           </Text>
         </View>
         <Ionicons
-          name="arrow-forward-outline"
-          size={24}
+          name="play-outline"
+          size={36}
           color={theme === darkTheme ? "#FAE6BB" : "#23363E"}
-          style={{ marginLeft: "auto" }}
+          style={{ marginLeft: "auto", padding: 10 }}
         />
       </View>
     </TouchableOpacity>

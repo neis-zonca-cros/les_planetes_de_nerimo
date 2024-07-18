@@ -40,7 +40,8 @@ const ChoisirPlanete: React.FC = () => {
   };
 
   const renderItem = ({ item }: { item: Planete }) => (
-    <TouchableOpacity onPress={() => handleSelectPlanete(item._id)} style={{alignItems:'center'}}>
+    <TouchableOpacity onPress={() => handleSelectPlanete(item._id)} style={{ width: '100%', alignItems: 'center' }}>
+      
       <View style={theme.listContainer}>
         <Image
           source={getPlaneteImageURI(item.nom)}
