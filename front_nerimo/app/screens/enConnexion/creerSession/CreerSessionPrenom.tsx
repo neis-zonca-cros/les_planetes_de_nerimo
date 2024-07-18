@@ -47,7 +47,6 @@ const CreerSessionPrenom: React.FC = () => {
             theme === darkTheme ? "#FAE6BB" : "#23363E"
           }
         /></View>
-        {/* <Button title="Suivant" onPress={handleNext} /> */}
         <TouchableOpacity
         onPress={handleNext}
         style={theme.iconeContainer}
