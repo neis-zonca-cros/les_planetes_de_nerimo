@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../types";
+import { RootStackParamList } from "@/app/types";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/themes/themeContext";
 import LightThemeIcon from "@/themes/icones/lightThemIcon";

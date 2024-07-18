@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../types";
+import { RootStackParamList } from "@/app/types";
 import { useTheme } from "@/themes/themeContext";
 import TopBar from "@/components/navigation/TopBar";
 import { CompteRondIcon } from "@/themes/icones/compteRondIcon";

@@ -1,7 +1,7 @@
 import TopBar from "@/components/navigation/TopBar";
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { RootStackParamList } from "../types";
+import { RootStackParamList } from "@/app/types";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTheme } from "@/themes/themeContext";
 import { useNavigation } from "@react-navigation/native";

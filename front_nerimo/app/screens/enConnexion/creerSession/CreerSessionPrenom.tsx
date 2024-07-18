@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button } from "react-native";
+import { View, Text, TextInput, Button, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../types";
+import { RootStackParamList } from "@/app/types";
 import { useTheme } from "@/themes/themeContext";
 import { ScrollView } from "react-native-gesture-handler";
 import TopBar from "@/components/navigation/TopBar";
+import { darkTheme } from "@/themes/dark";
+import { Ionicons } from "@expo/vector-icons";
 
 type CreerSessionPrenomScreenProp = StackNavigationProp<
   RootStackParamList,
@@ -28,19 +30,36 @@ const CreerSessionPrenom: React.FC = () => {
   return (
     <View style={theme.container}>
       <TopBar
-        titre="Créer une session"
+        titre="Créer une"
+        prenom="session"
         iconeDroiteNom="planet-outline"
         iconeDroiteAction={() => navigation.navigate("MenuUtilisateur")}
       />
-      <ScrollView contentContainerStyle={theme.scrollViewContentForSession}>
-        <Text style={theme.titreMedium}>Entrez le prénom de la session :</Text>
+      <ScrollView contentContainerStyle={theme.scrollViewContent}>
+        <Text style={theme.titreMedium2}>Choisis ton prénom :</Text>
+        <View style={theme.input}>
         <TextInput
-          style={theme.input}
+          style={theme.textInput}
           value={prenom}
           onChangeText={setPrenom}
           placeholder="Prénom"
-        />
-        <Button title="Suivant" onPress={handleNext} />
+          placeholderTextColor={
+            theme === darkTheme ? "#FAE6BB" : "#23363E"
+          }
+        /></View>
+        {/* <Button title="Suivant" onPress={handleNext} /> */}
+        <TouchableOpacity
+        onPress={handleNext}
+        style={theme.iconeContainer}
+      >
+        <View style={theme.iconeShadow}>
+          <Ionicons
+            name="arrow-forward-circle"
+            size={80}
+            style={theme.iconeColor}
+          />
+        </View>
+      </TouchableOpacity>
       </ScrollView>
     </View>
   );

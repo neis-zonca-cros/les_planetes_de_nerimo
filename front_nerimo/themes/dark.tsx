@@ -38,6 +38,17 @@ export const darkTheme = StyleSheet.create({
     color: "#FAE6BB",
     textTransform: "uppercase",
   },
+    titreMedium2: {
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    fontFamily: "brotherBold",
+    paddingBottom: 20,
+    fontSize: 22,
+    lineHeight: 50,
+    color: "#FAE6BB",
+    textTransform: "uppercase",
+  },
   titreSmall: {
     textAlign: "center",
     fontFamily: "brotherBold",
@@ -159,7 +170,7 @@ export const darkTheme = StyleSheet.create({
     alignItems: "center",
   },
   titreLargeTopBar: {
-    padding: 5,
+    padding: 2,
     fontSize: 20,
     fontFamily: "brotherBold",
     color: "#FAE6BB",

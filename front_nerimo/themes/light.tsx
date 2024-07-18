@@ -38,6 +38,17 @@ export const lightTheme = StyleSheet.create({
     color: "#23363E",
     textTransform: "uppercase",
   },
+  titreMedium2: {
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    fontFamily: "brotherBold",
+    paddingBottom: 20,
+    fontSize: 22,
+    lineHeight: 50,
+    color: "#FAE6BB",
+    textTransform: "uppercase",
+  },
   titreSmall: {
     textAlign: "center",
     fontFamily: "brotherBold",
@@ -157,7 +168,7 @@ export const lightTheme = StyleSheet.create({
     alignItems: "center",
   },
   titreLargeTopBar: {
-    padding: 5,
+    padding: 2,
     fontSize: 20,
     color: "#23363E",
     fontFamily: "brotherBold",

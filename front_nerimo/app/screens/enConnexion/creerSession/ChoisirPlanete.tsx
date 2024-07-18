@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../types";
+import { RootStackParamList } from "@/app/types";
 import { useTheme } from "@/themes/themeContext";
 import { getPlanetes } from "@/app/fetchs/creerSessionFetch";
-import { Planete } from "../fetchs/creerSessionFetch";
+import { Planete } from "@/app/fetchs/creerSessionFetch";
 
 type ChoisirPlaneteScreenProp = StackNavigationProp<
   RootStackParamList,

@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../types";
+import { RootStackParamList } from "../../types";
 import { useTheme } from "@/themes/themeContext";
 import { ScrollView } from "react-native-gesture-handler";
 import TopBar from "@/components/navigation/TopBar";
 import Sessions from "@/components/session";
-import { getSessions } from "../fetchs/sessionFetch";
-import { Session } from "../fetchs/sessionFetch";
-import { getUtilisateur } from "../fetchs/utilisateurFetch";
+import { getSessions } from "../../fetchs/sessionFetch";
+import { Session } from "../../fetchs/sessionFetch";
+import { getUtilisateur } from "../../fetchs/utilisateurFetch";
 import { getPersonnageImageURI } from "@/components/imageSession";
 
 type AccueilApresConnexionScreenProp = StackNavigationProp<

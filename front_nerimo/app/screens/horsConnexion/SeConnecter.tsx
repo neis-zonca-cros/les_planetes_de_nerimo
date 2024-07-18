@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   TextInput,
@@ -7,52 +7,53 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Alert,
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { RootStackParamList } from "../types";
+import { RootStackParamList } from "@/app/types";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { useTheme } from "@/themes/themeContext";
+import { ConnexionIcon } from "@/themes/icones/connexionIcon";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { darkTheme } from "@/themes/dark";
-import { CompteIcon } from "@/themes/icones/compteIcon";
 import TopBar from "@/components/navigation/TopBar";
 import useGoBack from "@/components/navigation/useGoBack";
+import login from "@/app/fetchs/connexionFetch";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-type CreerUnCompteScreen = StackNavigationProp<
-  RootStackParamList,
-  "CreerUnCompte"
->;
+type SeConnecterScreen = StackNavigationProp<RootStackParamList, "SeConnecter">;
 
-const CreerUnCompte: React.FC = () => {
-  const navigation = useNavigation<CreerUnCompteScreen>();
+const SeConnecter: React.FC = () => {
+  const navigation = useNavigation<SeConnecterScreen>();
   const { theme } = useTheme();
   const goBack = useGoBack();
-  const signUpValidationSchema = Yup.object().shape({
-    firstName: Yup.string().required(
-      "Oups, tu as oublié de mettre ton prénom !"
-    ),
+
+  const handleLogin = async (values: { email: string; mdp: string }) => {
+    try {
+      const emailNormalized = values.email.toLowerCase();
+
+      const token = await login(emailNormalized, values.mdp);
+
+      navigation.navigate("AccueilApresConnexion", { refresh: true });
+    } catch (error) {
+      console.error("Login error:", error);
+      Alert.alert(
+        "Login Error",
+        "Failed to log in. Please check your credentials."
+      );
+    }
+  };
+
+  const loginValidationSchema = Yup.object().shape({
     email: Yup.string()
       .email("Email invalide")
       .required("Oups, tu as oublié de mettre ton email !"),
-    password: Yup.string().required(
+    mdp: Yup.string().required(
       "Oups, tu as oublié de mettre ton mot de passe !"
     ),
-    confirmPassword: Yup.string()
-      .oneOf(
-        [Yup.ref("password"), undefined],
-        "Les mots de passe ne correspondent pas"
-      )
-      .required("Oups, tu as oublié de répéter ton mot de passe !"),
   });
-
-  const handleLogin = (values: { email: string; password: string }) => {
-    console.log("Email:", values.email);
-    console.log("Password:", values.password);
-
-    navigation.navigate("AccueilApresConnexion", { refresh: true });
-  };
 
   return (
     <View style={theme.container}>
@@ -66,15 +67,10 @@ const CreerUnCompte: React.FC = () => {
         style={styles.container}
       >
         <ScrollView contentContainerStyle={theme.scrollViewContent}>
-          <Text style={theme.titreMedium}>S'inscrire</Text>
+          <Text style={theme.titreMedium}>Rentrer dans le monde de Nérimo</Text>
           <Formik
-            initialValues={{
-              firstName: "",
-              email: "",
-              password: "",
-              confirmPassword: "",
-            }}
-            validationSchema={signUpValidationSchema}
+            initialValues={{ email: "", mdp: "" }}
+            validationSchema={loginValidationSchema}
             onSubmit={handleLogin}
           >
             {({
@@ -86,21 +82,6 @@ const CreerUnCompte: React.FC = () => {
               touched,
             }) => (
               <>
-                <View style={theme.input}>
-                  <TextInput
-                    style={theme.textInput}
-                    placeholder="PRÉNOM"
-                    placeholderTextColor={
-                      theme === darkTheme ? "#FAE6BB" : "#23363E"
-                    }
-                    onChangeText={handleChange("firstName")}
-                    onBlur={handleBlur("firstName")}
-                    value={values.firstName}
-                  />
-                </View>
-                {errors.firstName && touched.firstName && (
-                  <Text style={theme.errorText}>{errors.firstName}</Text>
-                )}
                 <View style={theme.input}>
                   <TextInput
                     style={theme.textInput}
@@ -124,37 +105,21 @@ const CreerUnCompte: React.FC = () => {
                     placeholderTextColor={
                       theme === darkTheme ? "#FAE6BB" : "#23363E"
                     }
-                    onChangeText={handleChange("password")}
-                    onBlur={handleBlur("password")}
-                    value={values.password}
+                    onChangeText={handleChange("mdp")}
+                    onBlur={handleBlur("mdp")}
+                    value={values.mdp}
                     secureTextEntry
                   />
                 </View>
-                {errors.password && touched.password && (
-                  <Text style={theme.errorText}>{errors.password}</Text>
-                )}
-                <View style={theme.input}>
-                  <TextInput
-                    style={theme.textInput}
-                    placeholder="RÉPETEZ LE MOT DE PASSE"
-                    placeholderTextColor={
-                      theme === darkTheme ? "#FAE6BB" : "#23363E"
-                    }
-                    onChangeText={handleChange("confirmPassword")}
-                    onBlur={handleBlur("confirmPassword")}
-                    value={values.confirmPassword}
-                    secureTextEntry
-                  />
-                </View>
-                {errors.confirmPassword && touched.confirmPassword && (
-                  <Text style={theme.errorText}>{errors.confirmPassword}</Text>
+                {errors.mdp && touched.mdp && (
+                  <Text style={theme.errorText}>{errors.mdp}</Text>
                 )}
                 <TouchableOpacity
                   onPress={handleSubmit as any}
                   style={styles.icon}
                 >
                   <View style={theme.iconeShadow}>
-                    <CompteIcon
+                    <ConnexionIcon
                       width={250}
                       fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
                       background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
@@ -176,11 +141,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 16,
   },
-
   icon: {
     alignItems: "center",
     paddingVertical: 20,
   },
 });
 
-export default CreerUnCompte;
+export default SeConnecter;

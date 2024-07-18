@@ -6,7 +6,7 @@ import {
   useRoute,
 } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../types";
+import { RootStackParamList } from "@/app/types";
 import { useTheme } from "@/themes/themeContext";
 import {
   createSession,
