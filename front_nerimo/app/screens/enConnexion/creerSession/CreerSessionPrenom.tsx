@@ -36,13 +36,13 @@ const CreerSessionPrenom: React.FC = () => {
         iconeDroiteAction={() => navigation.navigate("MenuUtilisateur")}
       />
       <ScrollView contentContainerStyle={theme.scrollViewContent}>
-        <Text style={theme.titreMedium2}>Choisis ton prénom :</Text>
+        <Text style={theme.titreMedium}>C'est parti pour une nouvelle session !</Text>
         <View style={theme.input}>
         <TextInput
           style={theme.textInput}
           value={prenom}
           onChangeText={setPrenom}
-          placeholder="Prénom"
+          placeholder="Écris ton prénom ici"
           placeholderTextColor={
             theme === darkTheme ? "#FAE6BB" : "#23363E"
           }

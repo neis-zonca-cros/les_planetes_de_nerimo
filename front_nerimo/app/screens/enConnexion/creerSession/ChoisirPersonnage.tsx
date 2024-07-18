@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
-import {
-  RouteProp,
-  useNavigation,
-  useRoute,
-} from "@react-navigation/native";
+import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet } from "react-native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "@/app/types";
 import { useTheme } from "@/themes/themeContext";
-import {
-  createSession,
-  getPersonnagesByPlanete,
-  Personnage,
-} from "@/app/fetchs/creerSessionFetch";
+import { createSession, getPersonnagesByPlanete, Personnage } from "@/app/fetchs/creerSessionFetch";
+import TopBar from "@/components/navigation/TopBar";
+import { getPersonnageImageURI } from "@/components/imageSession";
 
 type ChoisirPersonnageScreenProp = StackNavigationProp<
   RootStackParamList,
@@ -69,20 +63,46 @@ const ChoisirPersonnage: React.FC = () => {
     }
   };
 
+  const renderItem = ({ item }: { item: Personnage }) => (
+    <TouchableOpacity onPress={() => handleSelectPersonnage(item._id)} style={{alignItems:'center'}}>
+      <View style={theme.listContainer}>
+        <Image
+          source={getPersonnageImageURI(item.nom)}
+          style={styles.icon}
+        />
+        <Text style={theme.listText}>{item.nom}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+
   return (
     <View style={theme.container}>
-      <Text style={theme.titreMedium}>Choisissez un personnage :</Text>
+      <TopBar
+        titre="Choisir une"
+        prenom="planète"
+        iconeDroiteNom="planet-outline"
+        iconeDroiteAction={() => navigation.navigate("MenuUtilisateur")}
+      />
       <FlatList
         data={personnages}
         keyExtractor={(item) => item._id}
-        renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => handleSelectPersonnage(item._id)}>
-            <Text>{item.nom}</Text>
-          </TouchableOpacity>
+        ListHeaderComponent={() => (
+          <Text style={theme.titreMedium}>Avec quel personnage ?</Text>
         )}
+        renderItem={renderItem}
+        contentContainerStyle={theme.scrollViewContent}
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  icon: {
+    width: 50,
+    height: 50,
+    marginRight: 20,
+    resizeMode: 'contain',
+  },
+});
 
 export default ChoisirPersonnage;

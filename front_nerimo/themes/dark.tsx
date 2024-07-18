@@ -38,17 +38,7 @@ export const darkTheme = StyleSheet.create({
     color: "#FAE6BB",
     textTransform: "uppercase",
   },
-    titreMedium2: {
-    alignItems: "center",
-    justifyContent: "center",
-    textAlign: "center",
-    fontFamily: "brotherBold",
-    paddingBottom: 20,
-    fontSize: 22,
-    lineHeight: 50,
-    color: "#FAE6BB",
-    textTransform: "uppercase",
-  },
+
   titreSmall: {
     textAlign: "center",
     fontFamily: "brotherBold",
@@ -83,10 +73,11 @@ export const darkTheme = StyleSheet.create({
 
   textInput: {
     color: "#FAE6BB",
+    textAlign:'center',
     fontFamily: "brotherBold",
     alignItems: "center",
     justifyContent: "center",
-    marginVertical: 10,
+    margin: 10,
     fontSize: 20,
   },
   input: {
@@ -115,6 +106,26 @@ export const darkTheme = StyleSheet.create({
     fontSize: 15,
     color: "#FFAD80",
     paddingBottom: 10,
+  },
+
+  listContainer:{
+    paddingHorizontal: 90,
+    paddingVertical: 10,
+    flexDirection: 'row',
+    borderWidth: 3,
+    borderColor: '#FAE6BB',
+    marginVertical: 10,
+    marginHorizontal: 50,
+    borderRadius: 50,
+    alignItems: 'center',
+    
+
+  },
+  listText: {
+    fontSize: 20,
+    color: '#FAE6BB',
+    fontFamily: 'brotherBold',
+
   },
 
   sessionContainer: {
@@ -170,7 +181,7 @@ export const darkTheme = StyleSheet.create({
     alignItems: "center",
   },
   titreLargeTopBar: {
-    padding: 2,
+    padding: 5,
     fontSize: 20,
     fontFamily: "brotherBold",
     color: "#FAE6BB",
