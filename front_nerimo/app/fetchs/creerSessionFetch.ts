@@ -91,7 +91,7 @@ export async function getPersonnagesByPlanete(
         },
       }
     );
-
+    console.log("Response from API: ", response);
     return response.data;
   } catch (error) {
     console.error("Erreur lors de la récupération des personnages:", error);

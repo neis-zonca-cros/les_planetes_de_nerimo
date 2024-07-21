@@ -28,6 +28,7 @@ const ChoisirPersonnage: React.FC = () => {
         if (planeteId) {
           const data = await getPersonnagesByPlanete(planeteId);
           setPersonnages(data);
+          console.log(planeteId);
         }
       } catch (error) {
         console.error("Erreur lors de la récupération des personnages:", error);
