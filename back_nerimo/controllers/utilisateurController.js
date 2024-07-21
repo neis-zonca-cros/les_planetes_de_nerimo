@@ -4,14 +4,14 @@ import jwt from "jsonwebtoken";
 import Session from "../models/Session.js";
 
 
-export async function createUtilisateur(req, res) {
+export async function creerUtilisateur(req, res) {
     try {
       if (req.body.mdp !== req.body.mdp_repeat) {
         return res.status(400).json({ error: "Les mots de passe ne correspondent pas" });
     }
     
-        const hashedPassword = await bcrypt.hash(req.body.mdp, 10);
-        req.body.mdp = hashedPassword;
+        const hasherMotDePasse = await bcrypt.hash(req.body.mdp, 10);
+        req.body.mdp = hasherMotDePasse;
         const utilisateur = new Utilisateur(req.body);
         if(req.body.admin === true) {
           return res.status(403).json({ error: "Permission refusée de créer un utilisateur administrateur" });
@@ -37,9 +37,9 @@ export async function connexionUtilisateur(req, res) {
           return res.status(401).json({ message: 'Compte bloqué. Réessayez après 5 minutes.' });
       }
 
-      const passwordMatch = await bcrypt.compare(mdp, utilisateur.mdp);
+      const comparerMotDePasse = await bcrypt.compare(mdp, utilisateur.mdp);
 
-      if (!passwordMatch) {
+      if (!comparerMotDePasse) {
         utilisateur.tentativeConnexion += 1;
         if (utilisateur.tentativeConnexion >= 5) {
             utilisateur.dateBlocageConnexion = new Date();
@@ -64,7 +64,7 @@ export async function connexionUtilisateur(req, res) {
 }
 
 //avec verifierAdmin
-export async function getUtilisateurs(req, res) {
+export async function recupererTousLesUtilisateurs(req, res) {
     try {
       const utilisateurs = await Utilisateur.find();
       res.status(200).json({ message: 'Liste des utilisateurs', data: utilisateurs });
@@ -73,26 +73,26 @@ export async function getUtilisateurs(req, res) {
     }
   }
 
-  export async function getUtilisateur(req, res) {
+  export async function recupererUnUtilisateur(req, res) {
     try {
        
         const utilisateurId = req.user.userId;
         const utilisateur = req.user;
 
         if (utilisateur.admin) {
-            const utilisateurGet = await Utilisateur.findById(req.params.id);
-            if (!utilisateurGet) {
+            const recupererUtilisateur = await Utilisateur.findById(req.params.id);
+            if (!recupererUtilisateur) {
                 return res.status(404).json({ message: "Utilisateur non trouvé" });
             }
-            return res.status(200).json({ message: 'Paramètre d\'un utilisateur', data: utilisateurGet });
+            return res.status(200).json({ message: 'Paramètre d\'un utilisateur', data: recupererUtilisateur });
         }
         
         if (req.params.id === utilisateurId || utilisateur.admin) {
-            const utilisateurGet = await Utilisateur.findById(utilisateurId);
-            if (!utilisateurGet) {
+            const recupererUnUtilisateur = await Utilisateur.findById(utilisateurId);
+            if (!recupererUnUtilisateur) {
                 return res.status(404).json({ message: "Utilisateur non trouvé" });
             }
-            return res.status(200).json({ message: 'Paramètre d\'un utilisateur', data: utilisateurGet });
+            return res.status(200).json({ message: 'Paramètre d\'un utilisateur', data: recupererUnUtilisateur });
         }
 
         return res.status(403).json({ message: "Vous n'êtes pas autorisé à accéder à cet utilisateur" });
@@ -103,44 +103,44 @@ export async function getUtilisateurs(req, res) {
 
 
 
-export async function updateUtilisateur(req, res) {
+export async function modifierUtilisateur(req, res) {
   try {
       const utilisateurId = req.user.userId;
       const utilisateur = req.user;
 
       const userId = req.params.id;
 
-      const updatedFields = req.body;
+      const miseAJour = req.body;
 
       
       if (utilisateur.admin || userId === utilisateurId) {
           
-          if (updatedFields.mdp) {
-              if (updatedFields.mdp !== updatedFields.mdp_repeat) {
+          if (miseAJour.mdp) {
+              if (miseAJour.mdp !== miseAJour.mdp_repeat) {
                   return res.status(400).json({ error: "Les mots de passe ne correspondent pas" });
               }
-              const salt = await bcrypt.genSalt(10);
-              updatedFields.mdp = await bcrypt.hash(updatedFields.mdp, salt);
+              const salage = await bcrypt.genSalt(10);
+              miseAJour.mdp = await bcrypt.hash(miseAJour.mdp, salage);
           }
 
-          if (!utilisateur.admin && updatedFields.admin) {
+          if (!utilisateur.admin && miseAJour.admin) {
               return res.status(403).json({ error: "Pas autorisé" });
           }
 
-          const utilisateurUpdated = await Utilisateur.findByIdAndUpdate(userId, updatedFields, { new: true });
+          const utilisateurMAJ = await Utilisateur.findByIdAndUpdate(userId, miseAJour, { new: true });
 
-          if (!utilisateurUpdated) {
+          if (!utilisateurMAJ) {
               return res.status(404).json({ message: "Utilisateur non trouvé" });
           }
 
-          if (updatedFields.mdp) {
-              utilisateurUpdated.tentativeConnexion = 0;
-              utilisateurUpdated.dateBlocageConnexion = null;
-              utilisateurUpdated.derniereMAJMdp = Date.now();
-              await utilisateurUpdated.save();
+          if (miseAJour.mdp) {
+              utilisateurMAJ.tentativeConnexion = 0;
+              utilisateurMAJ.dateBlocageConnexion = null;
+              utilisateurMAJ.derniereMAJMdp = Date.now();
+              await utilisateurMAJ.save();
           }
 
-          return res.status(200).json({ message: 'Utilisateur mis à jour', data: utilisateurUpdated });
+          return res.status(200).json({ message: 'Utilisateur mis à jour', data: utilisateurMAJ });
       } else {
           return res.status(403).json({ error: "Pas autorisé" });
       }
@@ -150,28 +150,28 @@ export async function updateUtilisateur(req, res) {
 }
 
 
-export async function deleteUtilisateur(req, res) {
+export async function supprimerUtilisateur(req, res) {
   try {
   
       const utilisateurId = req.user.userId;
       const utilisateur = req.user;
 
-      const userId = req.params.id;
+      const utillisateurIdParam = req.params.id;
       if (utilisateur.admin) {
-          const userToDelete = await Utilisateur.findById(userId);
-          if (!userToDelete) {
+          const chercherUtilisateur = await Utilisateur.findById(utillisateurIdParam);
+          if (!chercherUtilisateur) {
               return res.status(404).json({ message: "Utilisateur non trouvé" });
           }
 
-          await Session.deleteMany({ utilisateurRef: userId });
+          await Session.deleteMany({ utilisateurRef: utillisateurIdParam });
 
           
-          const deletedUtilisateur = await Utilisateur.findByIdAndDelete(userId);
-          return res.status(200).json({ message: "Utilisateur supprimé", data: deletedUtilisateur });
+          const supprimerUnUtilisateur = await Utilisateur.findByIdAndDelete(utillisateurIdParam);
+          return res.status(200).json({ message: "Utilisateur supprimé", data: supprimerUnUtilisateur });
       }
       
 
-      if (userId === utilisateurId) {
+      if (utillisateurIdParam === utilisateurId) {
           await Session.deleteMany({ utilisateurRef: utilisateurId });
 
           const deletedUtilisateur = await Utilisateur.findByIdAndDelete(utilisateurId);

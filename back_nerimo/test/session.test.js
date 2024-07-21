@@ -21,6 +21,7 @@ app.use('/api/session', sessionRoutes());
 let tokenAdmin; 
 let tokenNonAdmin;
 let adminId; 
+let adminPrenom;
 let nonAdminId;
 let planeteId;
 let personnageId;
@@ -59,6 +60,7 @@ beforeEach(async () => {
   const admin = await adminUser.save();
 
   adminId = admin._id;
+  adminPrenom = admin.prenom;
 
   tokenAdmin = jwt.sign(
     { userId: admin._id, email: admin.email, admin: admin.admin },
@@ -148,7 +150,11 @@ describe('GET /api/session', () => {
         expect(response.body.message).toBe('Liste des sessions');
         expect(response.body.data).toHaveLength(2);
         expect(response.body.data[0]).toHaveProperty('_id', sessionAdmin.toString());
-        expect(response.body.data[0]).toHaveProperty('utilisateurRef', adminId.toString());
+        expect(response.body.data[0]).toHaveProperty('utilisateurRef', expect.objectContaining({
+          _id: adminId.toString(),
+          prenom: adminPrenom.toString(),
+      }));
+      
         expect(response.body.data[0]).toHaveProperty('planeteRef');
         expect(response.body.data[0].planeteRef).toHaveProperty('_id', planeteId.toString());
         expect(response.body.data[0]).toHaveProperty('personnageRef');

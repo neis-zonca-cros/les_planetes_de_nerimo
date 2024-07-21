@@ -1,5 +1,5 @@
 import express from 'express';
-import { createPersonnage, getPersonnages, getPersonnage, deletePersonnage, updatePersonnage, getPersonnagesParPlanetes } from '../controllers/personnageController.js';
+import { creerPersonnage, recupererTousLesPersonnages, recupererUnPersonnage, supprimerPersonnage, modifierPersonnage, recupererPersonnagesParPlanetes } from '../controllers/personnageController.js';
 import { verifierToken } from '../middlewares/verifierToken.js';
 import { verifierAdmin } from '../middlewares/verifierAdmin.js';
 
@@ -10,15 +10,17 @@ const personnageRoutes = () => {
     //Routes protégées par le Token
     router.use(verifierToken);
 
-    router.post('/creer', verifierAdmin, createPersonnage);
+    router.post('/creer', verifierAdmin, creerPersonnage);
 
-    router.get('/', getPersonnages);
-    router.get('/:planeteId', getPersonnagesParPlanetes);
-    router.get('/:id', getPersonnage);
+    router.get('/', recupererTousLesPersonnages);
+    router.get('/:planeteId', recupererPersonnagesParPlanetes);
+    router.get('/:id', recupererUnPersonnage);
+    
+    
 
-    router.put('/:id', verifierAdmin, updatePersonnage);
+    router.put('/:id', verifierAdmin, modifierPersonnage);
 
-    router.delete('/:id', verifierAdmin, deletePersonnage);
+    router.delete('/:id', verifierAdmin, supprimerPersonnage);
 
     return router;
 };

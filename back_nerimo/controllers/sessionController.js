@@ -3,7 +3,7 @@ import Planete from '../models/Planete.js';
 import Personnage from '../models/Personnage.js';
 
 
-export async function createSession(req, res) {
+export async function creerSession(req, res) {
     try {
         const utilisateurId = req.user.userId;
         // console.log(utilisateurId);
@@ -36,7 +36,7 @@ export async function createSession(req, res) {
 
 
 
-export async function getSessions(req, res) {
+export async function recupererToutesLesSessions(req, res) {
     try {
       const utilisateurId = req.user.userId;
       const sessions = await Session.find({ utilisateurRef: utilisateurId })
@@ -53,33 +53,33 @@ export async function getSessions(req, res) {
     }
   }
 
-  export async function getSession(req, res) {
+  export async function recupererUneSession(req, res) {
     try {
         const utilisateurId = req.user.userId;
 
-        const sessionGet = await Session.findOne({ _id: req.params.id, utilisateurRef: utilisateurId })
+        const recupererSession = await Session.findOne({ _id: req.params.id, utilisateurRef: utilisateurId })
                                          .populate("planeteRef")
                                          .populate("personnageRef")
                                          .exec();
 
-        if (!sessionGet) {
+        if (!recupererSession) {
             return res.status(404).json({ message: "Session non trouvée" });
         }
 
-        res.status(200).json({ message: 'Paramètre d\'une session', data: sessionGet });
+        res.status(200).json({ message: 'Paramètre d\'une session', data: recupererSession });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 }
 
-  export async function updateSession(req, res) {
+  export async function modifierSession(req, res) {
     try {
         const utilisateurId = req.user.userId;
 
         const sessionId = req.params.id;
-        const updatedFields = req.body; 
+        const miseAJour = req.body; 
 
-        const session = await Session.findOneAndUpdate({ _id: sessionId, utilisateurRef: utilisateurId }, updatedFields, { new: true });
+        const session = await Session.findOneAndUpdate({ _id: sessionId, utilisateurRef: utilisateurId }, miseAJour, { new: true });
 
         if (!session) {
             return res.status(404).json({ message: "Session non trouvée" });
@@ -91,17 +91,17 @@ export async function getSessions(req, res) {
     }
 }
 
-  export async function deleteSession(req, res) {
+  export async function supprimerSession(req, res) {
     try {
         const utilisateurId = req.user.userId;
 
-        const deletedSession = await Session.findOneAndDelete({ _id: req.params.id, utilisateurRef: utilisateurId });
+        const supprimerUneSession = await Session.findOneAndDelete({ _id: req.params.id, utilisateurRef: utilisateurId });
 
-        if (!deletedSession) {
+        if (!supprimerUneSession) {
             return res.status(404).json({ message: "Session non trouvée" });
         }
 
-        res.status(200).json({ message: "Session supprimée", data: deletedSession });
+        res.status(200).json({ message: "Session supprimée", data: supprimerUneSession });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

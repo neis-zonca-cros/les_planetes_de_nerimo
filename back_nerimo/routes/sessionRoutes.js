@@ -1,5 +1,5 @@
 import express from 'express';
-import { createSession, deleteSession, getSession, getSessions, updateSession } from '../controllers/sessionController.js';
+import { creerSession, supprimerSession, recupererUneSession, recupererToutesLesSessions, modifierSession } from '../controllers/sessionController.js';
 import { verifierToken } from '../middlewares/verifierToken.js';
 
 const sessionRoutes = () => {
@@ -7,14 +7,14 @@ const sessionRoutes = () => {
     //Routes protégées par le Token
     router.use(verifierToken);
 
-    router.post('/creer', createSession);
+    router.post('/creer', creerSession);
 
-    router.get('/', getSessions);
-    router.get('/:id', getSession);
+    router.get('/', recupererToutesLesSessions);
+    router.get('/:id', recupererUneSession);
 
-    router.put('/:id', updateSession);
+    router.put('/:id', modifierSession);
 
-    router.delete('/:id', deleteSession);
+    router.delete('/:id', supprimerSession);
 
     return router;
 };

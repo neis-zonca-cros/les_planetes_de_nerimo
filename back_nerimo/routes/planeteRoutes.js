@@ -1,5 +1,5 @@
 import express from 'express';
-import { createPlanete, deletePlanete, getPlanete, getPlanetes, updatePlanete } from '../controllers/planeteController.js';
+import { creerPlanete, supprimerPlanete, recupererUnePlanete, recupererToutesLesPlanetes, modifierPlanete } from '../controllers/planeteController.js';
 import { verifierToken } from '../middlewares/verifierToken.js';
 import { verifierAdmin } from '../middlewares/verifierAdmin.js';
 
@@ -10,14 +10,14 @@ const planeteRoutes = () => {
     //Routes protégées par le Token
     router.use(verifierToken);
 
-    router.post('/creer', verifierAdmin, createPlanete);
+    router.post('/creer', verifierAdmin, creerPlanete);
 
-    router.get('/', getPlanetes);
-    router.get('/:id', getPlanete);
+    router.get('/', recupererToutesLesPlanetes);
+    router.get('/:id', recupererUnePlanete);
 
-    router.put('/:id', verifierAdmin, updatePlanete);
+    router.put('/:id', verifierAdmin, modifierPlanete);
 
-    router.delete('/:id', verifierAdmin, deletePlanete);
+    router.delete('/:id', verifierAdmin, supprimerPlanete);
 
 
     return router;

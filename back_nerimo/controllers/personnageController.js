@@ -1,7 +1,7 @@
 import Personnage from '../models/Personnage.js';
 import Planete from '../models/Planete.js'; 
 
-export async function createPersonnage(req, res) {
+export async function creerPersonnage(req, res) {
     try {
       const { planeteRef } = req.body;
       
@@ -24,7 +24,7 @@ export async function createPersonnage(req, res) {
     }
 }
 
-export async function getPersonnages(req, res) {
+export async function recupererTousLesPersonnages(req, res) {
   try {
     const personnages = await Personnage.find().populate("planeteRef").exec();
     res.status(200).json({ message: 'Liste des personnages', data: personnages });
@@ -33,7 +33,7 @@ export async function getPersonnages(req, res) {
   }
 }
 
-export async function getPersonnagesParPlanetes(req, res) {
+export async function recupererPersonnagesParPlanetes(req, res) {
   try {
     const { planeteId } = req.params; 
 
@@ -49,21 +49,21 @@ export async function getPersonnagesParPlanetes(req, res) {
   }
 }
 
-export async function getPersonnage(req, res) {
+export async function recupererUnPersonnage(req, res) {
   try {
-    const personnageGet = await Personnage.findById(req.params.id).populate("planeteRef").exec();
-    res.status(200).json({ message: 'Paramètre du personnage', data: personnageGet });
+    const recupererPersonnage = await Personnage.findById(req.params.id).populate("planeteRef").exec();
+    res.status(200).json({ message: 'Paramètre du personnage', data: recupererPersonnage });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 }
 
-export async function updatePersonnage(req, res) {
+export async function modifierPersonnage(req, res) {
   try {
     const personnageId = req.params.id;
-    const updatedFields = req.body; 
+    const miseAJour = req.body; 
 
-    const personnage = await Personnage.findByIdAndUpdate(personnageId, updatedFields, { new: true });
+    const personnage = await Personnage.findByIdAndUpdate(personnageId, miseAJour, { new: true });
 
     if (!personnage) {
       return res.status(404).json({ message: "Personnage non trouvé" });
@@ -76,13 +76,13 @@ export async function updatePersonnage(req, res) {
 }
 
 
-export async function deletePersonnage(req, res) {
+export async function supprimerPersonnage(req, res) {
   try {
-    const deletedPersonnage = await Personnage.findByIdAndDelete(req.params.id);
-    if (!deletedPersonnage) {
+    const supprimerUnPersonnage = await Personnage.findByIdAndDelete(req.params.id);
+    if (!supprimerUnPersonnage) {
       return res.status(404).json({ message: "Personnage non trouvé" });
     }
-    res.status(200).json({ message: "Personnage supprimé", data: deletedPersonnage });
+    res.status(200).json({ message: "Personnage supprimé", data: supprimerUnPersonnage });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
