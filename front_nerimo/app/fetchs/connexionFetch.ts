@@ -3,7 +3,7 @@ import apiFetch from "./apiService";
 
 interface LoginResponse {
   token: string;
-  userId: string;
+  utilisateurId: string;
 }
 
 async function login(email: string, mdp: string): Promise<string> {
@@ -13,10 +13,10 @@ async function login(email: string, mdp: string): Promise<string> {
       body: { email, mdp },
     });
 
-    const { token, userId } = response;
+    const { token, utilisateurId } = response;
 
     await AsyncStorage.setItem("token", token);
-    await AsyncStorage.setItem("userId", userId);
+    await AsyncStorage.setItem("utilisateurId", utilisateurId);
 
     return token;
   } catch (error) {

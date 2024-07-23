@@ -10,7 +10,7 @@ export const logout = async (
 ) => {
   try {
     await AsyncStorage.removeItem("token");
-    await AsyncStorage.removeItem("userId");
+    await AsyncStorage.removeItem("utilisateurId");
 
     navigation.replace(routeName);
   } catch (error) {

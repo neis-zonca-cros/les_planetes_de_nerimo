@@ -7,10 +7,10 @@
     "start": "NODE_ENV=production nodemon index.js",
     "test:connexion": "NODE_ENV=test vitest test/utilisateurConnexion.test.js",
     "test:creation": "NODE_ENV=test vitest test/utilisateurCreation.test.js",
-    "test:utilisateurgud":"NODE_ENV=test vitest test/utilisateurGetUpDel.test.js",
-    "test:session":"NODE_ENV=test vitest test/session.test.js",
-    "test:planete":"NODE_ENV=test vitest test/planete.test.js",
-    "test:personnage":"NODE_ENV=test vitest test/personnage.test.js",
+    "test:utilisateurgud": "NODE_ENV=test vitest test/utilisateurGetUpDel.test.js",
+    "test:session": "NODE_ENV=test vitest test/session.test.js",
+    "test:planete": "NODE_ENV=test vitest test/planete.test.js",
+    "test:personnage": "NODE_ENV=test vitest test/personnage.test.js",
     "test": "npm-run-all test:*"
   },
   "keywords": [],
@@ -31,6 +31,7 @@
     "vitest": "^1.6.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.0",
+    "npm-run-all": "^4.1.5"
   }
 }

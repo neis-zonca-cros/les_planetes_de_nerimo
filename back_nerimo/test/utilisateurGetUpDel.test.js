@@ -34,7 +34,7 @@ beforeEach(async () => {
   utilisateurNonAdminId = utilisateurNonAdmin._id;
 
   tokenNonAdmin = jwt.sign(
-    { userId: utilisateurNonAdmin._id, email: utilisateurNonAdmin.email, admin: utilisateurNonAdmin.admin },
+    { utilisateurId: utilisateurNonAdmin._id, email: utilisateurNonAdmin.email, admin: utilisateurNonAdmin.admin },
     process.env.JWT_SECRET,
     { expiresIn: '1h' }
   );
@@ -49,7 +49,7 @@ beforeEach(async () => {
   utilisateurAdminId = utilisateurAdmin._id;
 
   tokenAdmin = jwt.sign(
-    { userId: utilisateurAdmin._id, email: utilisateurAdmin.email, admin: utilisateurAdmin.admin },
+    { utilisateurId: utilisateurAdmin._id, email: utilisateurAdmin.email, admin: utilisateurAdmin.admin },
     process.env.JWT_SECRET,
     { expiresIn: '1h' }
   );
@@ -82,7 +82,7 @@ describe('GET /api/utilisateur', () => {
     expect(response.body.message).toBe("Erreur, Vous n'êtes pas autorisé à effectuer cette action");
   });
 
-  it('get/utilisateur/{id}: Retourne 200 si lutilisateur est admin pour un get dun autre user', async () => {
+  it('get/utilisateur/{id}: Retourne 200 si lutilisateur est admin pour un get dun autre utilisateur', async () => {
     const response = await request(app)
       .get(`/api/utilisateur/${utilisateurNonAdminId}`)
       .set('Authorization', `Bearer ${tokenAdmin}`);
@@ -92,7 +92,7 @@ describe('GET /api/utilisateur', () => {
     expect(response.body.message).toBe("Paramètre d\'un utilisateur");
   });
 
-  it('get/utilisateur/{id}: Retourne erreur 403 si lutilisateur est non admin pour un get dun autre user', async () => {
+  it('get/utilisateur/{id}: Retourne erreur 403 si lutilisateur est non admin pour un get dun autre utilisateur', async () => {
     const response = await request(app)
       .get(`/api/utilisateur/${utilisateurAdminId}`)
       .set('Authorization', `Bearer ${tokenNonAdmin}`);
@@ -150,7 +150,7 @@ describe('PUT /api/utilisateur', () => {
 
   it('put/utilisateur/{id}: retourne 500 si admin veut update un utilisateur inexistant', async () => {
     const response = await request(app)
-      .put(`/api/utilisateur/nonexistentuserid`)
+      .put(`/api/utilisateur/utilisateurInexistant`)
       .set('Authorization', `Bearer ${tokenAdmin}`)
       .send({ prenom: 'Nouveau Prénom' });
 
@@ -202,7 +202,7 @@ describe('DEL /api/utilisateur', () => {
 
   it('del/utilisateur/{id}: retourne 500 si lutilisateur nexiste pas', async () => {
     const response = await request(app)
-      .delete(`/api/utilisateur/nonexistentuserid`)
+      .delete(`/api/utilisateur/utilisateurInexistant`)
       .set('Authorization', `Bearer ${tokenAdmin}`);
 
     expect(response.status).toBe(500);

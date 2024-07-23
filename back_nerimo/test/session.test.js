@@ -43,7 +43,7 @@ beforeEach(async () => {
   utilisateurNonAdminId = utilisateurNonAdmin._id;
 
   tokenNonAdmin = jwt.sign(
-    { userId: utilisateurNonAdmin._id, email: utilisateurNonAdmin.email, admin: utilisateurNonAdmin.admin },
+    { utilisateurId: utilisateurNonAdmin._id, email: utilisateurNonAdmin.email, admin: utilisateurNonAdmin.admin },
     process.env.JWT_SECRET,
     { expiresIn: '1h' }
   );
@@ -60,7 +60,7 @@ beforeEach(async () => {
   utilisateurAdminPrenom = utilisateurAdmin.prenom;
 
   tokenAdmin = jwt.sign(
-    { userId: utilisateurAdmin._id, email: utilisateurAdmin.email, admin: utilisateurAdmin.admin },
+    { utilisateurId: utilisateurAdmin._id, email: utilisateurAdmin.email, admin: utilisateurAdmin.admin },
     process.env.JWT_SECRET,
     { expiresIn: '1h' }
   );

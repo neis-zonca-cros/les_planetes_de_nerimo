@@ -1,5 +1,5 @@
 import express from 'express';
-import { creerPersonnage, recupererTousLesPersonnages, recupererUnPersonnage, supprimerPersonnage, modifierPersonnage, recupererPersonnagesParPlanetes } from '../controllers/personnageController.js';
+import { creerPersonnage, recupererTousLesPersonnages, supprimerPersonnage, modifierPersonnage, recupererPersonnagesParPlanetes } from '../controllers/personnageController.js';
 import { verifierToken } from '../middlewares/verifierToken.js';
 import { verifierAdmin } from '../middlewares/verifierAdmin.js';
 

@@ -13,16 +13,16 @@ interface UtilisateurResponse {
 export async function getUtilisateur(): Promise<UtilisateurResponse["data"]> {
   try {
     const token = await AsyncStorage.getItem("token");
-    const userId = await AsyncStorage.getItem("userId");
+    const utilisateurId = await AsyncStorage.getItem("utilisateurId");
     if (!token) {
       throw new Error("Token non trouvé");
     }
-    if (!userId) {
+    if (!utilisateurId) {
       throw new Error("ID utilisateur non trouvé");
     }
 
     const response = await apiFetch<UtilisateurResponse>(
-      `utilisateur/${userId}`,
+      `utilisateur/${utilisateurId}`,
       {
         method: "GET",
         headers: {

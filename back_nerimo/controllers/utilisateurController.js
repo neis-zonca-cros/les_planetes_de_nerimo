@@ -52,12 +52,12 @@ export async function connexionUtilisateur(req, res) {
       utilisateur.dateBlocageConnexion = null;
       await utilisateur.save();
       const token = jwt.sign(
-        { userId: utilisateur._id, email: utilisateur.email, prenom: utilisateur.prenom, admin: utilisateur.admin },
+        { utilisateurId: utilisateur._id, email: utilisateur.email, prenom: utilisateur.prenom, admin: utilisateur.admin },
         process.env.JWT_SECRET,
         { expiresIn: '1h' } 
       );
 
-      res.status(200).json({ message: 'Connexion réussie', userId: utilisateur._id, token });
+      res.status(200).json({ message: 'Connexion réussie', utilisateurId: utilisateur._id, token });
   } catch (error) {
       res.status(500).json({ error: error.message });
   }
@@ -76,7 +76,7 @@ export async function recupererTousLesUtilisateurs(req, res) {
   export async function recupererUnUtilisateur(req, res) {
     try {
        
-        const utilisateurId = req.user.userId;
+        const utilisateurId = req.user.utilisateurId;
         const utilisateur = req.user;
 
         if (utilisateur.admin) {
@@ -105,15 +105,15 @@ export async function recupererTousLesUtilisateurs(req, res) {
 
 export async function modifierUtilisateur(req, res) {
   try {
-      const utilisateurId = req.user.userId;
+      const utilisateurId = req.user.utilisateurId;
       const utilisateur = req.user;
 
-      const userId = req.params.id;
+      const utilisateurIdParam = req.params.id;
 
       const miseAJour = req.body;
 
       
-      if (utilisateur.admin || userId === utilisateurId) {
+      if (utilisateur.admin || utilisateurIdParam === utilisateurId) {
           
           if (miseAJour.mdp) {
               if (miseAJour.mdp !== miseAJour.mdp_repeat) {
@@ -127,7 +127,7 @@ export async function modifierUtilisateur(req, res) {
               return res.status(403).json({ error: "Pas autorisé" });
           }
 
-          const utilisateurMAJ = await Utilisateur.findByIdAndUpdate(userId, miseAJour, { new: true });
+          const utilisateurMAJ = await Utilisateur.findByIdAndUpdate(utilisateurIdParam, miseAJour, { new: true });
 
           if (!utilisateurMAJ) {
               return res.status(404).json({ message: "Utilisateur non trouvé" });
@@ -153,25 +153,25 @@ export async function modifierUtilisateur(req, res) {
 export async function supprimerUtilisateur(req, res) {
   try {
   
-      const utilisateurId = req.user.userId;
+      const utilisateurId = req.user.utilisateurId;
       const utilisateur = req.user;
 
-      const utillisateurIdParam = req.params.id;
+      const utilisateurIdParam = req.params.id;
       if (utilisateur.admin) {
-          const chercherUtilisateur = await Utilisateur.findById(utillisateurIdParam);
+          const chercherUtilisateur = await Utilisateur.findById(utilisateurIdParam);
           if (!chercherUtilisateur) {
               return res.status(404).json({ message: "Utilisateur non trouvé" });
           }
 
-          await Session.deleteMany({ utilisateurRef: utillisateurIdParam });
+          await Session.deleteMany({ utilisateurRef: utilisateurIdParam });
 
           
-          const supprimerUnUtilisateur = await Utilisateur.findByIdAndDelete(utillisateurIdParam);
+          const supprimerUnUtilisateur = await Utilisateur.findByIdAndDelete(utilisateurIdParam);
           return res.status(200).json({ message: "Utilisateur supprimé", data: supprimerUnUtilisateur });
       }
       
 
-      if (utillisateurIdParam === utilisateurId) {
+      if (utilisateurIdParam === utilisateurId) {
           await Session.deleteMany({ utilisateurRef: utilisateurId });
 
           const deletedUtilisateur = await Utilisateur.findByIdAndDelete(utilisateurId);

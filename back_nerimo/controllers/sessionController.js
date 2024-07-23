@@ -5,7 +5,7 @@ import Personnage from '../models/Personnage.js';
 
 export async function creerSession(req, res) {
     try {
-        const utilisateurId = req.user.userId;
+        const utilisateurId = req.user.utilisateurId;
         // console.log(utilisateurId);
         const { planeteRef } = req.body;
         const { personnageRef} = req.body;
@@ -38,7 +38,7 @@ export async function creerSession(req, res) {
 
 export async function recupererToutesLesSessions(req, res) {
     try {
-      const utilisateurId = req.user.userId;
+      const utilisateurId = req.user.utilisateurId;
       const sessions = await Session.find({ utilisateurRef: utilisateurId })
       .populate("planeteRef")
       .populate("personnageRef")
@@ -55,7 +55,7 @@ export async function recupererToutesLesSessions(req, res) {
 
   export async function recupererUneSession(req, res) {
     try {
-        const utilisateurId = req.user.userId;
+        const utilisateurId = req.user.utilisateurId;
 
         const recupererSession = await Session.findOne({ _id: req.params.id, utilisateurRef: utilisateurId })
                                          .populate("planeteRef")
@@ -74,7 +74,7 @@ export async function recupererToutesLesSessions(req, res) {
 
   export async function modifierSession(req, res) {
     try {
-        const utilisateurId = req.user.userId;
+        const utilisateurId = req.user.utilisateurId;
 
         const sessionId = req.params.id;
         const miseAJour = req.body; 
@@ -93,7 +93,7 @@ export async function recupererToutesLesSessions(req, res) {
 
   export async function supprimerSession(req, res) {
     try {
-        const utilisateurId = req.user.userId;
+        const utilisateurId = req.user.utilisateurId;
 
         const supprimerUneSession = await Session.findOneAndDelete({ _id: req.params.id, utilisateurRef: utilisateurId });
 
