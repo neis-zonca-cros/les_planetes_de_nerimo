@@ -7,7 +7,6 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
-import utilisateurRoutes from '../routes/utilisateurRoutes.js';
 import planeteRoutes from '../routes/planeteRoutes.js';
 import Planete from '../models/Planete.js';
 
@@ -18,8 +17,8 @@ app.use(express.json());
 app.use('/api/planete', planeteRoutes());
 let tokenAdmin; 
 let tokenNonAdmin;
-let adminId; 
-let nonAdminId;
+let utilisateurAdminId; 
+let utilisateurNonAdminId;
 let planeteId;
 
 beforeEach(async () => {
@@ -30,43 +29,42 @@ beforeEach(async () => {
 
   await Utilisateur.deleteMany({});
 
-  const nonAdminUser = new Utilisateur({
+  const nouvelleUtilisateurNonAdmin = new Utilisateur({
     prenom:"Non admin",
     email: 'nonadmin@example.com',
     mdp: await bcrypt.hash('motdepasse', 10),
     admin: false,
   });
-  const nonAdmin = await nonAdminUser.save();
-  nonAdminId = nonAdmin._id;
+  const utilisateurNonAdmin = await nouvelleUtilisateurNonAdmin.save();
+  utilisateurNonAdminId = utilisateurNonAdmin._id;
 
   tokenNonAdmin = jwt.sign(
-    { userId: nonAdmin._id, email: nonAdmin.email, admin: nonAdmin.admin },
+    { userId: utilisateurNonAdmin._id, email: utilisateurNonAdmin.email, admin: utilisateurNonAdmin.admin },
     process.env.JWT_SECRET,
     { expiresIn: '1h' }
   );
 
-  const adminUser = new Utilisateur({
+  const nouvelleUtilisateurAdmin = new Utilisateur({
     prenom: "Admin",
     email: 'admin@example.com',
     mdp: await bcrypt.hash('motdepasse', 10),
     admin: true,
   });
-  const admin = await adminUser.save();
-
-  adminId = admin._id;
+  const utilisateurAdmin = await nouvelleUtilisateurAdmin.save();
+  utilisateurAdminId = utilisateurAdmin._id;
 
   tokenAdmin = jwt.sign(
-    { userId: admin._id, email: admin.email, admin: admin.admin },
+    { userId: utilisateurAdmin._id, email: utilisateurAdmin.email, admin: utilisateurAdmin.admin },
     process.env.JWT_SECRET,
     { expiresIn: '1h' }
   );
 
-  const planete = new Planete({
+  const nouvellePlanete = new Planete({
     nom: "planete",
     description:"coucou planete",
   });
-  const planete1 = await planete.save(); 
-  planeteId = planete1._id;
+  const planete = await nouvellePlanete.save(); 
+  planeteId = planete._id;
 
 });
 
