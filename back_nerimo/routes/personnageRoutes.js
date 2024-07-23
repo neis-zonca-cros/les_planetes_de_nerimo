@@ -14,9 +14,6 @@ const personnageRoutes = () => {
 
     router.get('/', recupererTousLesPersonnages);
     router.get('/:planeteId', recupererPersonnagesParPlanetes);
-    router.get('/:id', recupererUnPersonnage);
-    
-    
 
     router.put('/:id', verifierAdmin, modifierPersonnage);
 

@@ -143,6 +143,42 @@ describe('POST /api/personnage/creer', () => {
   });
 });
 
+describe('GET /api/personnage', () => {
+  it('get/api/personnage : retourne 200 avec la liste des personnages', async () => {
+    const response = await request(app)
+      .get('/api/personnage')
+      .set('Authorization', `Bearer ${tokenNonAdmin}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Liste des personnages');
+    expect(response.body.data).toBeDefined();
+    expect(response.body.data.length).toBeGreaterThan(0);
+    expect(response.body.data[0].nom).toBe("Personnage test crée");
+    expect(response.body.data[0].description).toBe("description personnage");
+    expect(response.body.data[0].planeteRef).toBeDefined();
+
+  });
+
+  it('get/api/personnage : retourne 401 si token manquant', async () => {
+    const response = await request(app)
+      .get('/api/personnage')
+      .set('Authorization', `Bearer ${123}`);
+
+    expect(response.status).toBe(401);
+  });
+
+  it('get/api/personnage : retourne 200 avec la liste des personnages pour la planète sélectionnée', async () => {
+    const response = await request(app)
+      .get(`/api/personnage/${planeteId}`)
+      .set('Authorization', `Bearer ${tokenNonAdmin}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Liste des personnages pour la planète sélectionnée');
+    expect(response.body.data[0].nom).toBe("Personnage test crée");
+
+  });
+});
+
 describe('PUT /api/personnage/:id', () => {
   it('put/api/personnage/{id}: retourne 200 si lutilisateur est admin et que les champs sont correctement mis à jour', async () => {
     const response = await request(app)
@@ -211,38 +247,3 @@ describe('DELETE /api/personnage/:id', () => {
   });
 });
 
-describe('GET /api/personnage', () => {
-  it('get/api/personnage : retourne 200 avec la liste des personnages', async () => {
-    const response = await request(app)
-      .get('/api/personnage')
-      .set('Authorization', `Bearer ${tokenNonAdmin}`);
-
-    expect(response.status).toBe(200);
-    expect(response.body.message).toBe('Liste des personnages');
-    expect(response.body.data).toBeDefined();
-    expect(response.body.data.length).toBeGreaterThan(0);
-    expect(response.body.data[0].nom).toBe("Personnage test crée");
-    expect(response.body.data[0].description).toBe("description personnage");
-    expect(response.body.data[0].planeteRef).toBeDefined();
-
-  });
-
-  it('get/api/personnage : retourne 401 si token manquant', async () => {
-    const response = await request(app)
-      .get('/api/personnage')
-      .set('Authorization', `Bearer ${123}`);
-
-    expect(response.status).toBe(401);
-  });
-
-  it('get/api/personnage : retourne 200 avec la liste des personnages pour la planète sélectionnée', async () => {
-    const response = await request(app)
-      .get(`/api/personnage/${planeteId}`)
-      .set('Authorization', `Bearer ${tokenNonAdmin}`);
-
-    expect(response.status).toBe(200);
-    expect(response.body.message).toBe('Liste des personnages pour la planète sélectionnée');
-    expect(response.body.data[0].nom).toBe("Personnage test crée");
-
-  });
-});

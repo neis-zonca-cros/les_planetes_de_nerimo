@@ -14,202 +14,200 @@ dotenv.config({ path: '.env.test' });
 const app = express();
 app.use(express.json());
 app.use('/api/utilisateur', utilisateurRoutes());
-let tokenAdmin; 
+let tokenAdmin;
 let tokenNonAdmin;
-let adminId; 
-let nonAdminId;
+let utilisateurAdminId;
+let utilisateurNonAdminId;
 
 beforeEach(async () => {
-  await mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  await mongoose.connect(process.env.MONGODB_URI);
 
   await Utilisateur.deleteMany({});
 
-  const nonAdminUser = new Utilisateur({
-    prenom:"Non admin",
+  const nouvelUtilisateurNonAdmin = new Utilisateur({
+    prenom: "Non admin",
     email: 'nonadmin@example.com',
     mdp: await bcrypt.hash('motdepasse', 10),
     admin: false,
   });
-  const nonAdmin = await nonAdminUser.save();
-  nonAdminId = nonAdmin._id;
+  const utilisateurNonAdmin = await nouvelUtilisateurNonAdmin.save();
+  utilisateurNonAdminId = utilisateurNonAdmin._id;
 
   tokenNonAdmin = jwt.sign(
-    { userId: nonAdmin._id, email: nonAdmin.email, admin: nonAdmin.admin },
+    { userId: utilisateurNonAdmin._id, email: utilisateurNonAdmin.email, admin: utilisateurNonAdmin.admin },
     process.env.JWT_SECRET,
     { expiresIn: '1h' }
   );
 
-  const adminUser = new Utilisateur({
+  const nouvelUtilisateurAdmin = new Utilisateur({
     prenom: "Admin",
     email: 'admin@example.com',
     mdp: await bcrypt.hash('motdepasse', 10),
     admin: true,
   });
-  const admin = await adminUser.save();
-  adminId = admin._id;
+  const utilisateurAdmin = await nouvelUtilisateurAdmin.save();
+  utilisateurAdminId = utilisateurAdmin._id;
 
   tokenAdmin = jwt.sign(
-    { userId: admin._id, email: admin.email, admin: admin.admin },
+    { userId: utilisateurAdmin._id, email: utilisateurAdmin.email, admin: utilisateurAdmin.admin },
     process.env.JWT_SECRET,
     { expiresIn: '1h' }
   );
 });
 
 afterAll(async () => {
-    await Utilisateur.deleteMany({});
+  await Utilisateur.deleteMany({});
   await mongoose.disconnect();
 });
 
 describe('GET /api/utilisateur', () => {
-    it('get/utilisateur: retourne 200 si admin', async () => {
-    
-      const response = await request(app)
-        .get('/api/utilisateur')
-        .set('Authorization', `Bearer ${tokenAdmin}`);
-  
-      expect(response.status).toBe(200);
-      expect(response.body.message).toBe('Liste des utilisateurs');
-      expect(response.body.data).toBeDefined(); 
-    });
-  
-    it('get/utilisateur: retourne une erreur 403 si lutilisateur est non admin', async () => {
-      const response = await request(app)
-        .get('/api/utilisateur')
-        .set('Authorization', `Bearer ${tokenNonAdmin}`);
-  
-    
-      expect(response.status).toBe(403);
-      expect(response.body.message).toBe("Erreur, Vous n'êtes pas autorisé à effectuer cette action");
-    });
+  it('get/utilisateur: retourne 200 si admin', async () => {
 
-    it('get/utilisateur/{id}: Retourne 200 si lutilisateur est admin pour un get dun autre user', async () => {
-        const response = await request(app)
-          .get(`/api/utilisateur/${nonAdminId}`)
-          .set('Authorization', `Bearer ${tokenAdmin}`);
-    
-      
-        expect(response.status).toBe(200);
-        expect(response.body.message).toBe("Paramètre d\'un utilisateur");
-      });
+    const response = await request(app)
+      .get('/api/utilisateur')
+      .set('Authorization', `Bearer ${tokenAdmin}`);
 
-      it('get/utilisateur/{id}: Retourne erreur 403 si lutilisateur est non admin pour un get dun autre user', async () => {
-        const response = await request(app)
-          .get(`/api/utilisateur/${adminId}`)
-          .set('Authorization', `Bearer ${tokenNonAdmin}`);
-    
-      
-        expect(response.status).toBe(403);
-        expect(response.body.message).toBe("Vous n'êtes pas autorisé à accéder à cet utilisateur");
-      });
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Liste des utilisateurs');
+    expect(response.body.data).toBeDefined();
+  });
 
-      it('get/utilisateur/{id}: retourne 200 si lutilisateur se get lui même', async () => {
-        const response = await request(app)
-          .get(`/api/utilisateur/${nonAdminId}`)
-          .set('Authorization', `Bearer ${tokenNonAdmin}`);
-    
-      
-        expect(response.status).toBe(200);
-        expect(response.body.message).toBe("Paramètre d\'un utilisateur");
-      });
+  it('get/utilisateur: retourne une erreur 403 si lutilisateur est non admin', async () => {
+    const response = await request(app)
+      .get('/api/utilisateur')
+      .set('Authorization', `Bearer ${tokenNonAdmin}`);
+
+
+    expect(response.status).toBe(403);
+    expect(response.body.message).toBe("Erreur, Vous n'êtes pas autorisé à effectuer cette action");
+  });
+
+  it('get/utilisateur/{id}: Retourne 200 si lutilisateur est admin pour un get dun autre user', async () => {
+    const response = await request(app)
+      .get(`/api/utilisateur/${utilisateurNonAdminId}`)
+      .set('Authorization', `Bearer ${tokenAdmin}`);
+
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe("Paramètre d\'un utilisateur");
+  });
+
+  it('get/utilisateur/{id}: Retourne erreur 403 si lutilisateur est non admin pour un get dun autre user', async () => {
+    const response = await request(app)
+      .get(`/api/utilisateur/${utilisateurAdminId}`)
+      .set('Authorization', `Bearer ${tokenNonAdmin}`);
+
+
+    expect(response.status).toBe(403);
+    expect(response.body.message).toBe("Vous n'êtes pas autorisé à accéder à cet utilisateur");
+  });
+
+  it('get/utilisateur/{id}: retourne 200 si lutilisateur se get lui même', async () => {
+    const response = await request(app)
+      .get(`/api/utilisateur/${utilisateurNonAdminId}`)
+      .set('Authorization', `Bearer ${tokenNonAdmin}`);
+
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe("Paramètre d\'un utilisateur");
+  });
+});
+
+describe('PUT /api/utilisateur', () => {
+  it('put/utilisateur/{id}: retourne 200 si ladmin update un autre utilisateur', async () => {
+    const response = await request(app)
+      .put(`/api/utilisateur/${utilisateurNonAdminId}`)
+      .set('Authorization', `Bearer ${tokenAdmin}`)
+      .send({ prenom: 'Nouveau Prénom' });
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Utilisateur mis à jour');
+    expect(response.body.data).toBeDefined();
+    expect(response.body.data.prenom).toBe('Nouveau Prénom');
+  });
+
+  it('put/utilisateur/{id}: retourne 200 si un utilisateur se modifie lui même', async () => {
+    const response = await request(app)
+      .put(`/api/utilisateur/${utilisateurNonAdminId}`)
+      .set('Authorization', `Bearer ${tokenNonAdmin}`)
+      .send({ prenom: 'Nouveau Prénom' });
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Utilisateur mis à jour');
+    expect(response.body.data).toBeDefined();
+    expect(response.body.data.prenom).toBe('Nouveau Prénom');
+  });
+
+  it('put/utilisateur/{id}: retourne 403 si un non admin veut se rendre admin', async () => {
+    const response = await request(app)
+      .put(`/api/utilisateur/${utilisateurNonAdminId}`)
+      .set('Authorization', `Bearer ${tokenNonAdmin}`)
+      .send({ admin: true });
+
+    expect(response.status).toBe(403);
+    expect(response.body.error).toBe('Pas autorisé');
+  });
+
+  it('put/utilisateur/{id}: retourne 500 si admin veut update un utilisateur inexistant', async () => {
+    const response = await request(app)
+      .put(`/api/utilisateur/nonexistentuserid`)
+      .set('Authorization', `Bearer ${tokenAdmin}`)
+      .send({ prenom: 'Nouveau Prénom' });
+
+    expect(response.status).toBe(500);
+
+  });
+
+  it('put/utilisateur/{id}: retourne 400 si le mdp ne match pas', async () => {
+    const response = await request(app)
+      .put(`/api/utilisateur/${utilisateurNonAdminId}`)
+      .set('Authorization', `Bearer ${tokenNonAdmin}`)
+      .send({ mdp: 'newpassword', mdp_repeat: 'differentpassword' });
+
+    expect(response.status).toBe(400);
+    expect(response.body.error).toBe('Les mots de passe ne correspondent pas');
+  });
+
 });
 
 describe('DEL /api/utilisateur', () => {
-      it('del/utilisateur/{id}: retourne 200 si ladmin veut supprimer un non admin', async () => {
-        const response = await request(app)
-          .delete(`/api/utilisateur/${nonAdminId}`)
-          .set('Authorization', `Bearer ${tokenAdmin}`);
-    
-        expect(response.status).toBe(200);
-        expect(response.body.message).toBe('Utilisateur supprimé');
-        expect(response.body.data).toBeDefined(); 
-      });
-    
-      it('del/utilisateur/{id}: retourne 200 si un utilisateur veut se supprimer', async () => {
-        const response = await request(app)
-          .delete(`/api/utilisateur/${nonAdminId}`)
-          .set('Authorization', `Bearer ${tokenNonAdmin}`);
-    
-        expect(response.status).toBe(200);
-        expect(response.body.message).toBe('Utilisateur supprimé');
-        expect(response.body.data).toBeDefined(); 
-      });
-    
-      it('del/utilisateur/{id}: retourne 403 si non admin veut delete un autre utilisateur', async () => {
-        const response = await request(app)
-          .delete(`/api/utilisateur/${adminId}`)
-          .set('Authorization', `Bearer ${tokenNonAdmin}`);
-    
-        expect(response.status).toBe(403);
-        expect(response.body.message).toBe("Vous n'êtes pas autorisé à supprimer cet utilisateur");
-      });
-    
-      it('del/utilisateur/{id}: retourne 500 si lutilisateur nexiste pas', async () => {
-        const response = await request(app)
-          .delete(`/api/utilisateur/nonexistentuserid`)
-          .set('Authorization', `Bearer ${tokenAdmin}`);
-    
-        expect(response.status).toBe(500);
-       
-        
-      });
-    });
+  it('del/utilisateur/{id}: retourne 200 si ladmin veut supprimer un non admin', async () => {
+    const response = await request(app)
+      .delete(`/api/utilisateur/${utilisateurNonAdminId}`)
+      .set('Authorization', `Bearer ${tokenAdmin}`);
 
-    describe('PUT /api/utilisateur', () => {
-      it('put/utilisateur/{id}: retourne 200 si ladmin update un autre utilisateur', async () => {
-        const response = await request(app)
-          .put(`/api/utilisateur/${nonAdminId}`)
-          .set('Authorization', `Bearer ${tokenAdmin}`)
-          .send({ prenom: 'Nouveau Prénom' });
-    
-        expect(response.status).toBe(200);
-        expect(response.body.message).toBe('Utilisateur mis à jour');
-        expect(response.body.data).toBeDefined(); 
-        expect(response.body.data.prenom).toBe('Nouveau Prénom'); 
-      });
-    
-      it('put/utilisateur/{id}: retourne 200 si un utilisateur se modifie lui même', async () => {
-        const response = await request(app)
-          .put(`/api/utilisateur/${nonAdminId}`)
-          .set('Authorization', `Bearer ${tokenNonAdmin}`)
-          .send({ prenom: 'Nouveau Prénom' });
-    
-        expect(response.status).toBe(200);
-        expect(response.body.message).toBe('Utilisateur mis à jour');
-        expect(response.body.data).toBeDefined(); 
-        expect(response.body.data.prenom).toBe('Nouveau Prénom'); 
-      });
-    
-      it('put/utilisateur/{id}: retourne 403 si un non admin veut se rendre admin', async () => {
-        const response = await request(app)
-          .put(`/api/utilisateur/${nonAdminId}`)
-          .set('Authorization', `Bearer ${tokenNonAdmin}`)
-          .send({ admin: true });
-    
-        expect(response.status).toBe(403);
-        expect(response.body.error).toBe('Pas autorisé');
-      });
-    
-      it('put/utilisateur/{id}: retourne 500 si admin veut update un utilisateur inexistant', async () => {
-        const response = await request(app)
-          .put(`/api/utilisateur/nonexistentuserid`)
-          .set('Authorization', `Bearer ${tokenAdmin}`)
-          .send({ prenom: 'Nouveau Prénom' });
-    
-        expect(response.status).toBe(500);
-    
-      });
-    
-      it('put/utilisateur/{id}: retourne 400 si le mdp ne match pas', async () => {
-        const response = await request(app)
-          .put(`/api/utilisateur/${nonAdminId}`)
-          .set('Authorization', `Bearer ${tokenNonAdmin}`)
-          .send({ mdp: 'newpassword', mdp_repeat: 'differentpassword' });
-    
-        expect(response.status).toBe(400);
-        expect(response.body.error).toBe('Les mots de passe ne correspondent pas');
-      });
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Utilisateur supprimé');
+    expect(response.body.data).toBeDefined();
+  });
 
-    });
+  it('del/utilisateur/{id}: retourne 200 si un utilisateur veut se supprimer', async () => {
+    const response = await request(app)
+      .delete(`/api/utilisateur/${utilisateurNonAdminId}`)
+      .set('Authorization', `Bearer ${tokenNonAdmin}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Utilisateur supprimé');
+    expect(response.body.data).toBeDefined();
+  });
+
+  it('del/utilisateur/{id}: retourne 403 si non admin veut supprimer un autre utilisateur', async () => {
+    const response = await request(app)
+      .delete(`/api/utilisateur/${utilisateurAdminId}`)
+      .set('Authorization', `Bearer ${tokenNonAdmin}`);
+
+    expect(response.status).toBe(403);
+    expect(response.body.message).toBe("Vous n'êtes pas autorisé à supprimer cet utilisateur");
+  });
+
+  it('del/utilisateur/{id}: retourne 500 si lutilisateur nexiste pas', async () => {
+    const response = await request(app)
+      .delete(`/api/utilisateur/nonexistentuserid`)
+      .set('Authorization', `Bearer ${tokenAdmin}`);
+
+    expect(response.status).toBe(500);
+
+
+  });
+});
+
