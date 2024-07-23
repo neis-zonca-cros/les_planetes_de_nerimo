@@ -1,28 +1,28 @@
 import jwt from 'jsonwebtoken';
 
 export function verifierToken(req, res, next) {
-  const authorizationHeader = req.headers.authorization;
-  
-  if (!authorizationHeader) {
+  const enTeteAutorisation = req.headers.authorization;
+
+  if (!enTeteAutorisation) {
     return res.status(401).json({ message: 'Token manquant' });
   }
-  
-  const tokenParts = authorizationHeader.split(' ');
-  
-  if (tokenParts.length !== 2 || tokenParts[0] !== 'Bearer') {
+
+  const divisionToken = enTeteAutorisation.split(' ');
+
+  if (divisionToken.length !== 2 || divisionToken[0] !== 'Bearer') {
     return res.status(401).json({ message: 'Format de jeton invalide' });
   }
-  
-  const token = tokenParts[1];
+
+  const token = divisionToken[1];
   // console.log(token);
 
   if (!token) {
     return res.status(401).json({ message: 'Token manquant' });
   }
   try {
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-    
-    req.user = decodedToken;
+    const verifierTokenValide = jwt.verify(token, process.env.JWT_SECRET);
+
+    req.user = verifierTokenValide;
     next();
   } catch (error) {
     return res.status(401).json({ message: 'Token invalide' });
