@@ -9,6 +9,7 @@ import LightThemeIcon from "@/themes/icones/lightThemIcon";
 import { DarkThemeIcon } from "@/themes/icones/darkThemIcon";
 import { lightTheme } from "@/themes/light";
 import { darkTheme } from "@/themes/dark";
+import TopBar from "@/components/navigation/TopBar";
 
 type BienvenueScreen = StackNavigationProp<RootStackParamList, "Bienvenue">;
 
@@ -18,12 +19,15 @@ const Bienvenue: React.FC = () => {
 
   return (
     <View style={theme.container}>
-      <Text style={theme.titreLarge}>
-        Bienvenue sur les planètes de Nérimo !
-      </Text>
+      <TopBar
+        titre="Bienvenue sur les"
+        prenom="planètes de Nérimo"
+ 
+      />
+      <View style={theme.iconeContainer}>
       <TouchableOpacity
         onPress={() => navigation.navigate("AccueilAvantConnexion")}
-        style={theme.iconeContainer}
+        
       >
         <View style={theme.iconeShadow}>
           <Ionicons
@@ -32,24 +36,8 @@ const Bienvenue: React.FC = () => {
             style={theme.iconeColor}
           />
         </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={toggleTheme} style={theme.iconeContainer}>
-        {theme === lightTheme ? (
-          <View style={theme.iconeShadow}>
-            <LightThemeIcon
-              width={80}
-              background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
-            />
-          </View>
-        ) : (
-          <View style={theme.iconeShadow}>
-            <DarkThemeIcon
-              width={80}
-              background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
-            />
-          </View>
-        )}
-      </TouchableOpacity>
+      </TouchableOpacity></View>
+
     </View>
   );
 };

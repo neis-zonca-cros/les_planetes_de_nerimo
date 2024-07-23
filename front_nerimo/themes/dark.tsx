@@ -50,9 +50,9 @@ export const darkTheme = StyleSheet.create({
 
   iconeContainer: {
     alignItems: "center",
-    justifyContent: "center",
-    color: "#FAE6BB",
-    padding: 10,
+    justifyContent: "flex-end",
+    flex: 1,
+    padding: 30,
   },
   iconeColor: {
     color: "#FAE6BB",

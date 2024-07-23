@@ -50,8 +50,9 @@ export const lightTheme = StyleSheet.create({
 
   iconeContainer: {
     alignItems: "center",
-    justifyContent: "center",
-    padding: 10,
+    justifyContent: "flex-end",
+    flex: 1,
+    padding: 30,
   },
   iconeColor: {
     color: "#23363E",
@@ -147,6 +148,7 @@ export const lightTheme = StyleSheet.create({
     flexDirection: "column",
   },
   sessionCard: {
+    justifyContent: "center",
     height: 100,
     borderRadius: 10,
     borderColor: "#FAE6BB",
@@ -200,6 +202,7 @@ export const lightTheme = StyleSheet.create({
     color: "#23363E",
     fontFamily: "brotherBold",
     textTransform: "uppercase",
+    textAlign: "center",
   },
   iconsTopBar: {
     flexDirection: "row",
