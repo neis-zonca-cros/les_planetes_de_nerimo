@@ -110,7 +110,7 @@ export const darkTheme = StyleSheet.create({
   errorText: {
     fontFamily: "brotherBold",
     textTransform: "uppercase",
-    fontSize: 10,
+    fontSize: 8,
     color: "#FFAD80",
     paddingBottom: 10,
   },
@@ -196,8 +196,6 @@ export const darkTheme = StyleSheet.create({
     paddingHorizontal: 16,
     justifyContent: "space-between",
     alignItems: "center",
-    
-    backgroundColor: "#23363E",
   },
   textContainerTopBar: {
     flexDirection: "column",

@@ -87,7 +87,7 @@ export const lightTheme = StyleSheet.create({
   },
   input: {
     height: 40,
-    width: '30%',
+    width: '40%',
     borderRadius: 10,
     borderColor: "#FAE6BB",
     backgroundColor: "#FAE6BB",
@@ -109,7 +109,7 @@ export const lightTheme = StyleSheet.create({
   errorText: {
     fontFamily: "brotherBold",
     textTransform: "uppercase",
-    fontSize: 10,
+    fontSize: 8,
     color: "#825C6E",
     paddingBottom: 10,
   },
@@ -196,7 +196,6 @@ export const lightTheme = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 16,
-    backgroundColor: "#FAE6BB",
   },
   textContainerTopBar: {
     flexDirection: "column",

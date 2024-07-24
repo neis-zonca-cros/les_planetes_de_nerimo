@@ -40,7 +40,7 @@ const MenuInitial: React.FC = () => {
             <TouchableOpacity onPress={goCreerUnCompte}>
               <View style={theme.iconeShadow}>
                 <CompteRondIcon
-                  width={120}
+                  width={90}
                   fill={theme === darkTheme ? "#FFCD69" : "#E7A74F"}
                   background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
                 />
@@ -51,7 +51,7 @@ const MenuInitial: React.FC = () => {
             <TouchableOpacity onPress={goSeConnecter}>
               <View style={theme.iconeShadow}>
                 <ConnexionRondIcon
-                  width={120}
+                  width={90}
                   fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
                   background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
                 />
@@ -62,7 +62,7 @@ const MenuInitial: React.FC = () => {
             <TouchableOpacity>
               <View style={theme.iconeShadow}>
                 <AProposIcon
-                  width={120}
+                  width={90}
                   fill={theme === darkTheme ? "#FAE6BB" : "#23363E"}
                   background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
                 />
@@ -83,7 +83,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 100,
     paddingHorizontal: 16,
   },
   row: {
@@ -95,7 +94,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     justifyContent: "center",
     alignItems: "center",
-    margin: 20,
+    padding: 20,
   },
 });
 export default MenuInitial;

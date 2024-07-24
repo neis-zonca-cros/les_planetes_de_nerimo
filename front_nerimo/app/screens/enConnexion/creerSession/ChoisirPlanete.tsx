@@ -40,8 +40,8 @@ const ChoisirPlanete: React.FC = () => {
   };
 
   const renderItem = ({ item }: { item: Planete }) => (
-    <TouchableOpacity onPress={() => handleSelectPlanete(item._id)} style={{ width: '100%', alignItems: 'center' }}>
-      
+   <View style={styles.buttonContainer}>
+    <TouchableOpacity onPress={() => handleSelectPlanete(item._id)} >
       <View style={theme.listContainer}>
         <Image
           source={getPlaneteImageURI(item.nom)}
@@ -49,7 +49,7 @@ const ChoisirPlanete: React.FC = () => {
         />
         <Text style={theme.listText}>{item.nom}</Text>
       </View>
-    </TouchableOpacity>
+    </TouchableOpacity></View>
   );
 
   
@@ -65,9 +65,6 @@ const ChoisirPlanete: React.FC = () => {
         <FlatList
           data={planetes}
           keyExtractor={(item) => item._id}
-          ListHeaderComponent={() => (
-            <Text style={theme.titreMedium}>Sur quelle planète veux-tu aller ?</Text>
-          )}
           renderItem={renderItem}
           contentContainerStyle={theme.scrollViewContent}
         />
@@ -82,5 +79,13 @@ const styles = StyleSheet.create({
     marginRight: 20,
     resizeMode: 'contain',
   },
+  buttonContainer:{
+    flex:1,
+    alignItems: "center",
+    justifyContent: "center",
+    width:"100%",
+
+  },
+
 });
 export default ChoisirPlanete;

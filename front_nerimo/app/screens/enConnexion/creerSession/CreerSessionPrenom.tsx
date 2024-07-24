@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "@/app/types";
@@ -35,21 +35,22 @@ const CreerSessionPrenom: React.FC = () => {
         iconeDroiteNom="planet-outline"
         iconeDroiteAction={() => navigation.navigate("MenuUtilisateur")}
       />
-      <ScrollView contentContainerStyle={theme.scrollViewContent}>
-        <Text style={theme.titreMedium}>C'est parti pour une nouvelle session !</Text>
+     
+        <View style={styles.bottomIconsContainer}>
         <View style={theme.input}>
         <TextInput
           style={theme.textInput}
           value={prenom}
           onChangeText={setPrenom}
-          placeholder="Écris ton prénom ici"
+          placeholder="Écris ton surnom ici"
           placeholderTextColor={
             theme === darkTheme ? "#FAE6BB" : "#23363E"
           }
         /></View>
+        <View style={theme.iconeContainer}>
         <TouchableOpacity
         onPress={handleNext}
-        style={theme.iconeContainer}
+        
       >
         <View style={theme.iconeShadow}>
           <Ionicons
@@ -58,10 +59,24 @@ const CreerSessionPrenom: React.FC = () => {
             style={theme.iconeColor}
           />
         </View>
-      </TouchableOpacity>
-      </ScrollView>
+      </TouchableOpacity></View>
+      </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  bottomIconsContainer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  icon: {
+    paddingVertical: 5,
+  },
+});
 
 export default CreerSessionPrenom;

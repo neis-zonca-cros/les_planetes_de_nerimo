@@ -79,17 +79,14 @@ const ChoisirPersonnage: React.FC = () => {
   return (
     <View style={theme.container}>
       <TopBar
-        titre="Choisir une"
-        prenom="planète"
+        titre="Choisir un"
+        prenom="personnage"
         iconeDroiteNom="planet-outline"
         iconeDroiteAction={() => navigation.navigate("MenuUtilisateur")}
       />
       <FlatList
         data={personnages}
         keyExtractor={(item) => item._id}
-        ListHeaderComponent={() => (
-          <Text style={theme.titreMedium}>Avec quel personnage ?</Text>
-        )}
         renderItem={renderItem}
         contentContainerStyle={theme.scrollViewContent}
       />

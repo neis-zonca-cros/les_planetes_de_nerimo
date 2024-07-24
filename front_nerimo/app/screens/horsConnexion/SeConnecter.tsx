@@ -58,7 +58,7 @@ const SeConnecter: React.FC = () => {
   return (
     <View style={theme.container}>
       <TopBar
-      
+
         titre="Rentrer dans le "
         prenom="monde de Nérimo"
         iconeDroiteNom="close-outline"
@@ -83,52 +83,53 @@ const SeConnecter: React.FC = () => {
               touched,
             }) => (
               <>
-              <View style={theme.inputContainer}>
-                <View style={theme.input}>
-                  <TextInput
-                    style={theme.textInput}
-                    placeholder="E-MAIL"
-                    placeholderTextColor={
-                      theme === darkTheme ? "#FAE6BB" : "#23363E"
-                    }
-                    onChangeText={handleChange("email")}
-                    onBlur={handleBlur("email")}
-                    value={values.email}
-                    keyboardType="email-address"
-                  />
-                </View>
-                {errors.email && touched.email && (
-                  <Text style={theme.errorText}>{errors.email}</Text>
-                )}
-             
-                <View style={theme.input}>
-                  <TextInput
-                    style={theme.textInput}
-                    placeholder="MOT DE PASSE"
-                    placeholderTextColor={
-                      theme === darkTheme ? "#FAE6BB" : "#23363E"
-                    }
-                    onChangeText={handleChange("mdp")}
-                    onBlur={handleBlur("mdp")}
-                    value={values.mdp}
-                    secureTextEntry
-                  />
-                </View>
-                {errors.mdp && touched.mdp && (
-                  <Text style={theme.errorText}>{errors.mdp}</Text>
-                )}</View>
-                <TouchableOpacity
-                  onPress={handleSubmit as any}
-                  style={styles.icon}
-                >
-                  <View style={theme.iconeShadow}>
-                    <ConnexionIcon
-                      width={200}
-                      fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
-                      background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
+                <View style={theme.inputContainer}>
+                  <View style={theme.input}>
+                    <TextInput
+                      style={theme.textInput}
+                      placeholder="E-MAIL"
+                      placeholderTextColor={
+                        theme === darkTheme ? "#FAE6BB" : "#23363E"
+                      }
+                      onChangeText={handleChange("email")}
+                      onBlur={handleBlur("email")}
+                      value={values.email}
+                      keyboardType="email-address"
                     />
                   </View>
-                </TouchableOpacity>
+                  {errors.email && touched.email && (
+                    <Text style={theme.errorText}>{errors.email}</Text>
+                  )}
+
+                  <View style={theme.input}>
+                    <TextInput
+                      style={theme.textInput}
+                      placeholder="MOT DE PASSE"
+                      placeholderTextColor={
+                        theme === darkTheme ? "#FAE6BB" : "#23363E"
+                      }
+                      onChangeText={handleChange("mdp")}
+                      onBlur={handleBlur("mdp")}
+                      value={values.mdp}
+                      secureTextEntry
+                    />
+                  </View>
+                  {errors.mdp && touched.mdp && (
+                    <Text style={theme.errorText}>{errors.mdp}</Text>
+                  )}</View>
+                <View style={styles.buttonContainer}>
+                  <TouchableOpacity
+                    onPress={handleSubmit as any}
+                    style={styles.icon}
+                  >
+                    <View style={theme.iconeShadow}>
+                      <ConnexionIcon
+                        width={200}
+                        fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
+                        background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
+                      />
+                    </View>
+                  </TouchableOpacity></View>
               </>
             )}
           </Formik>
@@ -144,9 +145,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 16,
   },
+  buttonContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: '100%',
+  },
   icon: {
     alignItems: "center",
-    paddingVertical: 20,
+    paddingBottom: 20,
+    paddingTop: 10,
   },
 });
 
