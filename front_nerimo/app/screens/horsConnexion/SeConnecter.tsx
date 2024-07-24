@@ -58,16 +58,17 @@ const SeConnecter: React.FC = () => {
   return (
     <View style={theme.container}>
       <TopBar
-        titre=""
-        iconeAvantTitre="arrow-back"
-        iconeAvantTitreAction={goBack}
+      
+        titre="Rentrer dans le "
+        prenom="monde de Nérimo"
+        iconeDroiteNom="close-outline"
+        iconeDroiteAction={goBack}
       />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}
       >
         <ScrollView contentContainerStyle={theme.scrollViewContent}>
-          <Text style={theme.titreMedium}>Rentrer dans le monde de Nérimo</Text>
           <Formik
             initialValues={{ email: "", mdp: "" }}
             validationSchema={loginValidationSchema}
@@ -82,6 +83,7 @@ const SeConnecter: React.FC = () => {
               touched,
             }) => (
               <>
+              <View style={theme.inputContainer}>
                 <View style={theme.input}>
                   <TextInput
                     style={theme.textInput}
@@ -98,6 +100,7 @@ const SeConnecter: React.FC = () => {
                 {errors.email && touched.email && (
                   <Text style={theme.errorText}>{errors.email}</Text>
                 )}
+             
                 <View style={theme.input}>
                   <TextInput
                     style={theme.textInput}
@@ -113,14 +116,14 @@ const SeConnecter: React.FC = () => {
                 </View>
                 {errors.mdp && touched.mdp && (
                   <Text style={theme.errorText}>{errors.mdp}</Text>
-                )}
+                )}</View>
                 <TouchableOpacity
                   onPress={handleSubmit as any}
                   style={styles.icon}
                 >
                   <View style={theme.iconeShadow}>
                     <ConnexionIcon
-                      width={250}
+                      width={200}
                       fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
                       background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
                     />

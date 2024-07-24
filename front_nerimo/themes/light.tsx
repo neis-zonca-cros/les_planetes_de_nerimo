@@ -42,7 +42,7 @@ export const lightTheme = StyleSheet.create({
   titreSmall: {
     textAlign: "center",
     fontFamily: "brotherBold",
-    fontSize: 16,
+    fontSize: 10,
     color: "#23363E",
     textTransform: "uppercase",
     paddingVertical: 10,
@@ -70,24 +70,30 @@ export const lightTheme = StyleSheet.create({
       },
     }),
   },
+  inputContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
 
+  },
   textInput: {
     color: "#23363E",
     fontFamily: "brotherBold",
     textAlign:'center',
     alignItems: "center",
     justifyContent: "center",
-    margin: 10,
-    fontSize: 20,
+    paddingTop: 10,
+    fontSize: 12,
   },
   input: {
-    height: 60,
+    height: 40,
+    width: '30%',
     borderRadius: 10,
     borderColor: "#FAE6BB",
     backgroundColor: "#FAE6BB",
     borderWidth: 5,
-    marginBottom: 12,
     paddingHorizontal: 8,
+    marginBottom: 10,
     ...Platform.select({
       ios: {
         shadowColor: "rgba(205, 133, 63, 0.5)",
@@ -103,7 +109,7 @@ export const lightTheme = StyleSheet.create({
   errorText: {
     fontFamily: "brotherBold",
     textTransform: "uppercase",
-    fontSize: 15,
+    fontSize: 10,
     color: "#825C6E",
     paddingBottom: 10,
   },
@@ -137,7 +143,7 @@ export const lightTheme = StyleSheet.create({
 
   },
   listText: {
-    fontSize: 20,
+    fontSize: 10,
     color: '#23363E',
     fontFamily: 'brotherBold',
     textTransform: 'uppercase',
@@ -185,11 +191,11 @@ export const lightTheme = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: 100,
+    height: 56,
     zIndex: 1,
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 16,
+    paddingHorizontal: 16,
     backgroundColor: "#FAE6BB",
   },
   textContainerTopBar: {
@@ -197,11 +203,11 @@ export const lightTheme = StyleSheet.create({
     alignItems: "center",
   },
   titreLargeTopBar: {
-    padding: 5,
-    fontSize: 20,
+    paddingVertical: 2,
+    paddingHorizontal:5,
+    fontSize: 14,
     color: "#23363E",
     fontFamily: "brotherBold",
-    textTransform: "uppercase",
     textAlign: "center",
   },
   iconsTopBar: {
@@ -209,6 +215,7 @@ export const lightTheme = StyleSheet.create({
   },
   iconTopBar: {
     color: "#23363E",
-    padding: 10,
+    paddingVertical: 2,
+    paddingHorizontal:5,
   },
 });

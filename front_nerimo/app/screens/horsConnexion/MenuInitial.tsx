@@ -29,12 +29,12 @@ const MenuInitial: React.FC = () => {
   return (
     <View style={theme.container}>
       <TopBar
-        titre=""
-        iconeAvantTitre="arrow-back"
-        iconeAvantTitreAction={goBack}
+        titre="Menu d'embarcation"
+        prenom="sur Nérimo"
+        iconeDroiteNom="close-outline"
+        iconeDroiteAction={goBack}
       />
       <ScrollView contentContainerStyle={theme.scrollViewContent}>
-        <Text style={theme.titreMedium}>MENU</Text>
         <View style={styles.row}>
           <View style={styles.iconContainer}>
             <TouchableOpacity onPress={goCreerUnCompte}>
@@ -58,28 +58,6 @@ const MenuInitial: React.FC = () => {
               </View>
             </TouchableOpacity>
           </View>
-        </View>
-
-        <View style={styles.row}>
-          <View style={styles.iconContainer}>
-            <TouchableOpacity onPress={toggleTheme}>
-              {theme === lightTheme ? (
-                <View style={theme.iconeShadow}>
-                  <LightThemeIcon
-                    width={120}
-                    background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
-                  />
-                </View>
-              ) : (
-                <View style={theme.iconeShadow}>
-                  <DarkThemeIcon
-                    width={120}
-                    background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
-                  />
-                </View>
-              )}
-            </TouchableOpacity>
-          </View>
           <View style={styles.iconContainer}>
             <TouchableOpacity>
               <View style={theme.iconeShadow}>
@@ -92,6 +70,9 @@ const MenuInitial: React.FC = () => {
             </TouchableOpacity>
           </View>
         </View>
+
+       
+      
       </ScrollView>
     </View>
   );

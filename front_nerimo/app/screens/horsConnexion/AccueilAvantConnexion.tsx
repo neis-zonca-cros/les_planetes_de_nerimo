@@ -43,7 +43,7 @@ const AccueilAvantConnexion: React.FC = () => {
         <TouchableOpacity onPress={goSeConnecter} style={styles.icon}>
           <View style={theme.iconeShadow}>
             <ConnexionIcon
-              width={250}
+              width={200}
               fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
               background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
             />
@@ -52,7 +52,7 @@ const AccueilAvantConnexion: React.FC = () => {
         <TouchableOpacity onPress={goCreerUnCompte} style={styles.icon}>
           <View style={theme.iconeShadow}>
             <CompteIcon
-              width={250}
+              width={200}
               fill={theme === darkTheme ? "#FFCD69" : "#E7A74F"}
               background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
             />
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     alignItems: "center",
-    marginBottom: 50,
+    marginBottom: 20,
   },
   icon: {
     paddingVertical: 5,

@@ -14,12 +14,12 @@ export function TabBarIcon({
   style,
   ...rest
 }: ComponentProps<typeof Ionicons>) {
-  return <Ionicons size={40} style={[{ marginBottom: -3 }, style]} {...rest} />;
+  return <Ionicons size={36} style={[style]} {...rest} />;
 }
 
 interface TopBarProps {
   prenom?: string;
-  titre: string;
+  titre?: string;
   iconeAvantTitre?: ComponentProps<typeof Ionicons>["name"] | null;
   iconeAvantTitreAction?: () => void;
   iconeGaucheNom?: ComponentProps<typeof Ionicons>["name"] | null;
@@ -42,30 +42,30 @@ const TopBar: React.FC<TopBarProps> = ({
 
   return (
     <View style={theme.containerTopBar}>
-      <View style={theme.iconsTopBar}>
-        {iconeAvantTitre ? (
-          <TouchableOpacity onPress={iconeAvantTitreAction}>
-            <TabBarIcon name={iconeAvantTitre} style={theme.iconTopBar} />
-          </TouchableOpacity>
-        ) : null}
-        <View style={theme.textContainerTopBar}>
-          <Text style={theme.titreLargeTopBar}>{titre}</Text>
-          <Text style={theme.titreLargeTopBar}>{prenom} </Text>
-        </View>
-      </View>
-      <View style={theme.iconsTopBar}>
-        {iconeGaucheNom ? (
-          <TouchableOpacity onPress={iconeGaucheAction}>
-            <TabBarIcon name={iconeGaucheNom} style={theme.iconTopBar} />
-          </TouchableOpacity>
-        ) : null}
-        {iconeDroiteNom ? (
-          <TouchableOpacity onPress={iconeDroiteAction}>
-            <TabBarIcon name={iconeDroiteNom} style={theme.iconTopBar} />
-          </TouchableOpacity>
-        ) : null}
+    <View style={theme.iconsTopBar}>
+      {iconeAvantTitre ? (
+        <TouchableOpacity onPress={iconeAvantTitreAction}>
+          <TabBarIcon name={iconeAvantTitre} style={theme.iconTopBar} />
+        </TouchableOpacity>
+      ) : null}
+      <View style={theme.textContainerTopBar}>
+        <Text style={theme.titreLargeTopBar}>{titre}</Text>
+        <Text style={theme.titreLargeTopBar}>{prenom} </Text>
       </View>
     </View>
+    <View style={theme.iconsTopBar}>
+      {iconeGaucheNom ? (
+        <TouchableOpacity onPress={iconeGaucheAction}>
+          <TabBarIcon name={iconeGaucheNom} style={theme.iconTopBar} />
+        </TouchableOpacity>
+      ) : null}
+      {iconeDroiteNom ? (
+        <TouchableOpacity onPress={iconeDroiteAction}>
+          <TabBarIcon name={iconeDroiteNom} style={theme.iconTopBar} />
+        </TouchableOpacity>
+      ) : null}
+    </View>
+  </View>
   );
 };
 export default TopBar;

@@ -32,7 +32,7 @@ const Bienvenue: React.FC = () => {
         <View style={theme.iconeShadow}>
           <Ionicons
             name="arrow-forward-circle"
-            size={110}
+            size={90}
             style={theme.iconeColor}
           />
         </View>
