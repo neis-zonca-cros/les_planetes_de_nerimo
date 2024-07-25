@@ -8,7 +8,7 @@ const useGoToCreerUnCompte = () => {
   const routesLength = useNavigationState((state) => state.routes.length);
 
   const goCreerUnCompte = () => {
-    if (routesLength > 1) {
+    if (routesLength >= 0) {
       navigation.navigate("CreerUnCompte");
     } else {
       console.warn("pas d'écran pour revenir en arrière");

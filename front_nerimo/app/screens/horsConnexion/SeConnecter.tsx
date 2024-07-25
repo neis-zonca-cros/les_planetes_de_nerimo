@@ -22,6 +22,7 @@ import TopBar from "@/components/navigation/TopBar";
 import useGoBack from "@/components/navigation/useGoBack";
 import login from "@/app/fetchs/connexionFetch";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import useGoToCreerUnCompte from "@/components/navigation/useGoToCreerCompte";
 
 type SeConnecterScreen = StackNavigationProp<RootStackParamList, "SeConnecter">;
 
@@ -29,6 +30,7 @@ const SeConnecter: React.FC = () => {
   const navigation = useNavigation<SeConnecterScreen>();
   const { theme } = useTheme();
   const goBack = useGoBack();
+  const creerUnCompte = useGoToCreerUnCompte();
 
   const handleLogin = async (values: { email: string; mdp: string }) => {
     try {
@@ -117,6 +119,7 @@ const SeConnecter: React.FC = () => {
                   {errors.mdp && touched.mdp && (
                     <Text style={theme.errorText}>{errors.mdp}</Text>
                   )}</View>
+                  <View style={styles.marginBottomContainer}>
                 <View style={styles.buttonContainer}>
                   <TouchableOpacity
                     onPress={handleSubmit as any}
@@ -130,6 +133,10 @@ const SeConnecter: React.FC = () => {
                       />
                     </View>
                   </TouchableOpacity></View>
+                  <View style={styles.buttonContainer}>
+                    <Text onPress={creerUnCompte} style={theme.titreSmall}>
+                      Pas inscrit ?
+                    </Text></View></View>
               </>
             )}
           </Formik>
@@ -150,9 +157,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: '100%',
   },
+  marginBottomContainer: {
+    marginBottom: 20,
+  },
   icon: {
     alignItems: "center",
-    paddingBottom: 20,
     paddingTop: 10,
   },
 });

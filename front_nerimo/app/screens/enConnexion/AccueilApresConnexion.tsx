@@ -78,11 +78,11 @@ const AccueilApresConnexion: React.FC = () => {
 
       <ScrollView contentContainerStyle={theme.scrollViewContentForSession}>
         {loading ? (
-          <Text style={theme.titreMedium}>Chargement...</Text>
+          <Text style={theme.listText}>Chargement...</Text>
         ) : error ? (
-          <Text style={theme.titreMedium}>{error}</Text>
+          <Text style={theme.listText}>{error}</Text>
         ) : sessions.length === 0 ? (
-          <Text style={theme.titreMedium}>
+          <Text style={theme.listText}>
             Pour commencer, ajoutez une session
           </Text>
         ) : (

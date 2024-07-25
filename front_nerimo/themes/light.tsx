@@ -1,4 +1,12 @@
 import { Platform, StyleSheet } from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
+
+const largeFontSize = RFValue(12)
+const mediumFontSize = RFValue(10)
+const smallFontSize = RFValue(9)
+const xSmallFontSize = RFValue(7)
+
+
 
 export const lightTheme = StyleSheet.create({
   container: {
@@ -16,33 +24,10 @@ export const lightTheme = StyleSheet.create({
     paddingTop: 110,
   },
 
-  titreLarge: {
-    justifyContent: "flex-start",
-    textAlign: "center",
-    fontFamily: "brotherBold",
-    fontSize: 50,
-    color: "#23363E",
-    textTransform: "uppercase",
-    paddingVertical: 100,
-    paddingHorizontal: 30,
-    lineHeight: 80,
-  },
-  titreMedium: {
-    alignItems: "center",
-    justifyContent: "center",
-    textAlign: "center",
-    fontFamily: "brotherBold",
-    paddingBottom: 20,
-    fontSize: 30,
-    lineHeight: 50,
-    color: "#23363E",
-    textTransform: "uppercase",
-  },
-
   titreSmall: {
     textAlign: "center",
     fontFamily: "brotherBold",
-    fontSize: 10,
+    fontSize: smallFontSize,
     color: "#23363E",
     textTransform: "uppercase",
     paddingVertical: 10,
@@ -83,7 +68,7 @@ export const lightTheme = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingTop: 10,
-    fontSize: 12,
+    fontSize: mediumFontSize,
   },
   input: {
     height: 40,
@@ -109,7 +94,7 @@ export const lightTheme = StyleSheet.create({
   errorText: {
     fontFamily: "brotherBold",
     textTransform: "uppercase",
-    fontSize: 8,
+    fontSize: xSmallFontSize,
     color: "#825C6E",
     paddingBottom: 10,
   },
@@ -143,7 +128,7 @@ export const lightTheme = StyleSheet.create({
 
   },
   listText: {
-    fontSize: 10,
+    fontSize: smallFontSize,
     color: '#23363E',
     fontFamily: 'brotherBold',
     textTransform: 'uppercase',
@@ -177,9 +162,10 @@ export const lightTheme = StyleSheet.create({
   sessionText: {
     fontFamily: "brotherBold",
     color: "#23363E",
-    fontSize: 18,
+    fontSize: largeFontSize,
     paddingLeft: 10,
-    lineHeight: 30,
+    paddingBottom:2,
+  
   },
   iconeSessions: {
     color: "#23363E",
@@ -200,11 +186,13 @@ export const lightTheme = StyleSheet.create({
   textContainerTopBar: {
     flexDirection: "column",
     alignItems: "center",
+    paddingTop: 10,
+
   },
   titreLargeTopBar: {
     paddingVertical: 2,
     paddingHorizontal:5,
-    fontSize: 14,
+    fontSize: largeFontSize,
     color: "#23363E",
     fontFamily: "brotherBold",
     textAlign: "center",

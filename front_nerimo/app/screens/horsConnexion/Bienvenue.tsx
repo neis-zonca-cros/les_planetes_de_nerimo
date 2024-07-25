@@ -10,12 +10,16 @@ import { DarkThemeIcon } from "@/themes/icones/darkThemIcon";
 import { lightTheme } from "@/themes/light";
 import { darkTheme } from "@/themes/dark";
 import TopBar from "@/components/navigation/TopBar";
+import { Dimensions } from 'react-native';
+
+
 
 type BienvenueScreen = StackNavigationProp<RootStackParamList, "Bienvenue">;
 
 const Bienvenue: React.FC = () => {
   const navigation = useNavigation<BienvenueScreen>();
   const { theme, toggleTheme } = useTheme();
+  const screenHeight = Dimensions.get('window').height;
 
   return (
     <View style={theme.container}>
@@ -26,13 +30,13 @@ const Bienvenue: React.FC = () => {
       />
       <View style={theme.iconeContainer}>
       <TouchableOpacity
-        onPress={() => navigation.navigate("AccueilAvantConnexion")}
+        onPress={() => navigation.replace("AccueilAvantConnexion")}
         
       >
         <View style={theme.iconeShadow}>
           <Ionicons
             name="arrow-forward-circle"
-            size={90}
+            size={screenHeight *0.2}
             style={theme.iconeColor}
           />
         </View>

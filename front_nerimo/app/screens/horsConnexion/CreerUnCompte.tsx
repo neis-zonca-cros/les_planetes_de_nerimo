@@ -153,7 +153,7 @@ const CreerUnCompte: React.FC = () => {
                     <Text style={theme.errorText}>{errors.confirmPassword}</Text>
                   )}</View>
                 <View style={styles.marginBottomContainer}>
-                <View style={styles.buttonContainer}>
+                  <View style={styles.buttonContainer}>
                     <TouchableOpacity
                       onPress={handleSubmit as any}
                       style={styles.icon}
@@ -167,10 +167,10 @@ const CreerUnCompte: React.FC = () => {
                       </View>
                     </TouchableOpacity>
                   </View>
-   <View style={styles.buttonContainer}>
-                  <Text onPress={seConnecter} style={theme.titreSmall}>
-                    Déjà un compte ?
-                  </Text></View></View>
+                  <View style={styles.buttonContainer}>
+                    <Text onPress={seConnecter} style={theme.titreSmall}>
+                      Déjà un compte ?
+                    </Text></View></View>
               </>
             )}
           </Formik>
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
   marginBottomContainer: {
     marginBottom: 20,
   },
-  buttonContainer:{
+  buttonContainer: {
     alignItems: "center",
     justifyContent: "center",
     width: '100%',

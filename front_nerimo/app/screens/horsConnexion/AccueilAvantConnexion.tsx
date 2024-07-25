@@ -1,6 +1,6 @@
 import TopBar from "@/components/navigation/TopBar";
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
 import { RootStackParamList } from "@/app/types";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTheme } from "@/themes/themeContext";
@@ -8,7 +8,6 @@ import { useNavigation } from "@react-navigation/native";
 import { darkTheme } from "@/themes/dark";
 import { CompteIcon } from "@/themes/icones/compteIcon";
 import { ConnexionIcon } from "@/themes/icones/connexionIcon";
-import useGoBack from "@/components/navigation/useGoBack";
 import useGoToConnect from "@/components/navigation/useGoToConnect";
 import useGoToCreerUnCompte from "@/components/navigation/useGoToCreerCompte";
 
@@ -18,9 +17,10 @@ type AccueilAvantConnexionScreen = StackNavigationProp<
 >;
 const AccueilAvantConnexion: React.FC = () => {
   const navigation = useNavigation<AccueilAvantConnexionScreen>();
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
   const goSeConnecter = useGoToConnect();
   const goCreerUnCompte = useGoToCreerUnCompte();
+  const screenWidth = Dimensions.get('window').width;
 
   const iconeDroitePress = () => {
     navigation.navigate("MenuInitial");
@@ -43,7 +43,7 @@ const AccueilAvantConnexion: React.FC = () => {
         <TouchableOpacity onPress={goSeConnecter} style={styles.icon}>
           <View style={theme.iconeShadow}>
             <ConnexionIcon
-              width={200}
+              width={screenWidth *0.22}
               fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
               background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
             />
@@ -52,7 +52,7 @@ const AccueilAvantConnexion: React.FC = () => {
         <TouchableOpacity onPress={goCreerUnCompte} style={styles.icon}>
           <View style={theme.iconeShadow}>
             <CompteIcon
-              width={200}
+              width={screenWidth *0.22}
               fill={theme === darkTheme ? "#FFCD69" : "#E7A74F"}
               background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
             />

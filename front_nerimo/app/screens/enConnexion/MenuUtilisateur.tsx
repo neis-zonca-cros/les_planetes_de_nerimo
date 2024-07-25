@@ -38,7 +38,6 @@ const MenuUtilisateur: React.FC = () => {
         iconeAvantTitreAction={goBack}
       />
       <ScrollView contentContainerStyle={theme.scrollViewContent}>
-        <Text style={theme.titreMedium}>MENU</Text>
         <View style={styles.row}>
           <View style={styles.iconContainer}>
             <TouchableOpacity>

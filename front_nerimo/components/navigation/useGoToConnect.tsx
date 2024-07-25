@@ -8,7 +8,7 @@ const useGoToConnect = () => {
   const routesLength = useNavigationState((state) => state.routes.length);
 
   const goSeConnecter = () => {
-    if (routesLength > 1) {
+    if (routesLength >= 0) {
       navigation.navigate("SeConnecter");
     } else {
       console.warn("pas d'écran pour revenir en arrière");
