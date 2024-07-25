@@ -2,7 +2,7 @@ import { darkTheme } from "@/themes/dark";
 import { useTheme } from "@/themes/themeContext";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, Platform } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 
@@ -29,8 +29,8 @@ const SessionComposant: React.FC<SessionProps> = ({
   const { theme } = useTheme();
 
   return (
-    <TouchableOpacity style={theme.sessionCard} onPress={onPress}>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
+    <TouchableOpacity  onPress={onPress} style={theme.sessionCard}>
+      <View style={{ flexDirection: "column", alignItems: "center", justifyContent:"center" }}>
       {imageSource && (
           <Image source={imageSource} style={styles.roundImage} />
         )}
@@ -47,9 +47,9 @@ const SessionComposant: React.FC<SessionProps> = ({
         </View>
         <Ionicons
           name="play-outline"
-          size={36}
+          size={25}
           color={theme === darkTheme ? "#FAE6BB" : "#23363E"}
-          style={{ marginLeft: "auto", padding: 10 }}
+          style={{ alignItems:"center", justifyContent:"center", paddingVertical: 1 }}
         />
       </View>
     </TouchableOpacity>
@@ -65,5 +65,9 @@ const styles = StyleSheet.create({
     borderRadius: 25, 
     resizeMode: "contain",
     marginHorizontal:10,
+    alignItems: 'center', 
+    justifyContent: 'center',
+    marginVertical:5,
   },
+  
 });

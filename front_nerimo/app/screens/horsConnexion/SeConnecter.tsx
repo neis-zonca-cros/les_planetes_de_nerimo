@@ -8,6 +8,7 @@ import {
   Platform,
   ScrollView,
   Alert,
+  Dimensions,
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -29,16 +30,23 @@ type SeConnecterScreen = StackNavigationProp<RootStackParamList, "SeConnecter">;
 const SeConnecter: React.FC = () => {
   const navigation = useNavigation<SeConnecterScreen>();
   const { theme } = useTheme();
-  const goBack = useGoBack();
+  const goBackToAccueil =() => {
+    navigation.navigate("AccueilAvantConnexion")
+  }
   const creerUnCompte = useGoToCreerUnCompte();
+  const screenWidth = Dimensions.get('window').width;
 
   const handleLogin = async (values: { email: string; mdp: string }) => {
     try {
       const emailNormalized = values.email.toLowerCase();
 
       const token = await login(emailNormalized, values.mdp);
-
-      navigation.navigate("AccueilApresConnexion", { refresh: true });
+      if (token) {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "AccueilApresConnexion", params: { refresh: true } }],
+        });
+      }
     } catch (error) {
       console.error("Login error:", error);
       Alert.alert(
@@ -64,7 +72,7 @@ const SeConnecter: React.FC = () => {
         titre="Rentrer dans le "
         prenom="monde de Nérimo"
         iconeDroiteNom="close-outline"
-        iconeDroiteAction={goBack}
+        iconeDroiteAction={goBackToAccueil}
       />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -127,7 +135,7 @@ const SeConnecter: React.FC = () => {
                   >
                     <View style={theme.iconeShadow}>
                       <ConnexionIcon
-                        width={200}
+                        width={screenWidth*0.22}
                         fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
                         background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
                       />

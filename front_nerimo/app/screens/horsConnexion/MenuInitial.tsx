@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "@/app/types";
@@ -22,9 +22,12 @@ type MenuInitialScreen = StackNavigationProp<RootStackParamList, "MenuInitial">;
 const MenuInitial: React.FC = () => {
   const navigation = useNavigation<MenuInitialScreen>();
   const { theme, toggleTheme } = useTheme();
-  const goBack = useGoBack();
+  const goBackToAccueil =() => {
+    navigation.navigate("AccueilAvantConnexion")
+  }
   const goSeConnecter = useGoToConnect();
   const goCreerUnCompte = useGoToCreerUnCompte();
+  const screenHeight = Dimensions.get('window').height;
 
   return (
     <View style={theme.container}>
@@ -32,7 +35,7 @@ const MenuInitial: React.FC = () => {
         titre="Menu d'embarcation"
         prenom="sur Nérimo"
         iconeDroiteNom="close-outline"
-        iconeDroiteAction={goBack}
+        iconeDroiteAction={goBackToAccueil}
       />
       <ScrollView contentContainerStyle={theme.scrollViewContent}>
         <View style={styles.row}>
@@ -40,7 +43,7 @@ const MenuInitial: React.FC = () => {
             <TouchableOpacity onPress={goCreerUnCompte}>
               <View style={theme.iconeShadow}>
                 <CompteRondIcon
-                  width={90}
+                  width={screenHeight*0.25}
                   fill={theme === darkTheme ? "#FFCD69" : "#E7A74F"}
                   background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
                 />
@@ -51,7 +54,7 @@ const MenuInitial: React.FC = () => {
             <TouchableOpacity onPress={goSeConnecter}>
               <View style={theme.iconeShadow}>
                 <ConnexionRondIcon
-                  width={90}
+                  width={screenHeight*0.25}
                   fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
                   background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
                 />
@@ -62,7 +65,7 @@ const MenuInitial: React.FC = () => {
             <TouchableOpacity>
               <View style={theme.iconeShadow}>
                 <AProposIcon
-                  width={90}
+                  width={screenHeight*0.25}
                   fill={theme === darkTheme ? "#FAE6BB" : "#23363E"}
                   background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
                 />

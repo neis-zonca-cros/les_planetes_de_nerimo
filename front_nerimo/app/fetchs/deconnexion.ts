@@ -12,7 +12,10 @@ export const logout = async (
     await AsyncStorage.removeItem("token");
     await AsyncStorage.removeItem("utilisateurId");
 
-    navigation.replace(routeName);
+    navigation.reset({
+      index: 0,
+      routes: [{ name: routeName }],
+    });
   } catch (error) {
     console.error("Erreur lors de la déconnexion:", error);
     throw error;

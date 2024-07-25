@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Dimensions,
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -29,8 +30,11 @@ type CreerUnCompteScreen = StackNavigationProp<
 const CreerUnCompte: React.FC = () => {
   const navigation = useNavigation<CreerUnCompteScreen>();
   const { theme } = useTheme();
-  const goBack = useGoBack();
+  const goBackToAccueil =() => {
+    navigation.navigate("AccueilAvantConnexion")
+  }
   const seConnecter = useGoToConnect();
+  const screenWidth = Dimensions.get('window').width;
   const signUpValidationSchema = Yup.object().shape({
     firstName: Yup.string().required(
       "Oups, tu as oublié de mettre ton prénom !"
@@ -62,7 +66,7 @@ const CreerUnCompte: React.FC = () => {
         titre="Créer un compte"
         prenom="Nérimo"
         iconeDroiteNom="close-outline"
-        iconeDroiteAction={goBack}
+        iconeDroiteAction={goBackToAccueil}
       />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -160,7 +164,7 @@ const CreerUnCompte: React.FC = () => {
                     >
                       <View style={theme.iconeShadow}>
                         <CompteIcon
-                          width={200}
+                          width={screenWidth*0.22}
                           fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
                           background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
                         />

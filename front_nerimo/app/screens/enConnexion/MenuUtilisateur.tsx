@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert, Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../types";
@@ -22,6 +22,7 @@ const MenuUtilisateur: React.FC = () => {
   const navigation = useNavigation<MenuUtilisateurScreen>();
   const { theme } = useTheme();
   const goBack = useGoBack();
+  const screenHeight = Dimensions.get('window').height;
   const handleLogout = async () => {
     try {
       await logout(navigation, "Bienvenue");
@@ -33,9 +34,10 @@ const MenuUtilisateur: React.FC = () => {
   return (
     <View style={theme.container}>
       <TopBar
-        titre=""
-        iconeAvantTitre="arrow-back"
-        iconeAvantTitreAction={goBack}
+        titre="Menu"
+        prenom="sur Nérimo"
+        iconeDroiteNom="close-outline"
+        iconeDroiteAction={goBack}
       />
       <ScrollView contentContainerStyle={theme.scrollViewContent}>
         <View style={styles.row}>
@@ -43,7 +45,7 @@ const MenuUtilisateur: React.FC = () => {
             <TouchableOpacity>
               <View style={theme.iconeShadow}>
                 <ProfilRondIcon
-                  width={120}
+                  width={screenHeight*0.25}
                   fill={theme === darkTheme ? "#FFCD69" : "#E7A74F"}
                   background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
                 />
@@ -54,26 +56,26 @@ const MenuUtilisateur: React.FC = () => {
             <TouchableOpacity onPress={handleLogout}>
               <View style={theme.iconeShadow}>
                 <DeconnexionRondIcon
-                  width={120}
+                  width={screenHeight*0.25}
                   fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
                   background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
                 />
               </View>
             </TouchableOpacity>
           </View>
-        </View>
+        
 
         <View style={styles.iconContainer}>
           <TouchableOpacity>
             <View style={theme.iconeShadow}>
               <AProposIcon
-                width={120}
+                width={screenHeight*0.25}
                 fill={theme === darkTheme ? "#FAE6BB" : "#23363E"}
                 background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
               />
             </View>
           </TouchableOpacity>
-        </View>
+        </View></View>
       </ScrollView>
     </View>
   );
@@ -88,7 +90,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   row: {
-    flexDirection: "column",
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
   },

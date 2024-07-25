@@ -134,16 +134,20 @@ export const darkTheme = StyleSheet.create({
 
   sessionContainer: {
     flexDirection: "column",
+    textAlign:"center",
+    paddingVertical: 5,
   },
-  sessionCard: {
-    justifyContent: "center",
-    height: 100,
-    borderRadius: 10,
+  sessionCard: {    
     borderColor: "#23363E",
     backgroundColor: "#23363E",
+    justifyContent: 'center',
+    height: 150,
+    width:150,
+    borderRadius: 80,  
     borderWidth: 5,
     marginBottom: 12,
     paddingHorizontal: 8,
+    alignItems: 'center', 
     ...Platform.select({
       ios: {
         shadowColor: "rgba(0, 0, 0, 0.5)",
@@ -157,11 +161,12 @@ export const darkTheme = StyleSheet.create({
     }),
   },
   sessionText: {
+    alignItems:"center",
+    textAlign: "center",
+    justifyContent: "center",
     fontFamily: "brotherBold",
     color: "#FAE6BB",
     fontSize: largeFontSize,
-    paddingLeft: 10,
-    paddingBottom:2,
   },
   iconeSessions: {
     color: "#FAE6BB",

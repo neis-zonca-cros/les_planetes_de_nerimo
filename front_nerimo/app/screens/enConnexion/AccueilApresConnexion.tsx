@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../types";
 import { useTheme } from "@/themes/themeContext";
-import { ScrollView } from "react-native-gesture-handler";
 import TopBar from "@/components/navigation/TopBar";
 import Sessions from "@/components/session";
 import { getSessions } from "../../fetchs/sessionFetch";
@@ -53,7 +52,6 @@ const AccueilApresConnexion: React.FC = () => {
   );
 
   const addSession = () => {
-    console.log("coucou");
     navigation.navigate("CreerSessionPrenom");
   };
 
@@ -86,21 +84,40 @@ const AccueilApresConnexion: React.FC = () => {
             Pour commencer, ajoutez une session
           </Text>
         ) : (
-          sessions.map((session) => (
-            <View key={session._id}>
-              <Sessions
-                prenom={session.prenom}
-                planeteNom={session.planeteRef.nom}
-                personnageNom={session.personnageRef.nom}
-                imageSource={getPersonnageImageURI(session.personnageRef.nom)}
-                onPress={BoutonSession}
-              />
-            </View>
-          ))
+          <View style={styles.gridContainer}>
+            {sessions.map((session) => (
+              <View key={session._id} style={styles.sessionWrapper}>
+                <Sessions
+                  prenom={session.prenom}
+                  planeteNom={session.planeteRef.nom}
+                  personnageNom={session.personnageRef.nom}
+                  imageSource={getPersonnageImageURI(session.personnageRef.nom)}
+                  onPress={BoutonSession}
+                />
+              </View>
+            ))}
+          </View>
         )}
       </ScrollView>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  scrollViewContentForSession: {
+    flexGrow: 1,
+    paddingHorizontal: 20,
+    paddingTop: 110,
+  },
+  gridContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  sessionWrapper: {
+    width: '30%', 
+    marginBottom: 10,  
+  },
+});
 
 export default AccueilApresConnexion;

@@ -5,10 +5,6 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "@/app/types";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/themes/themeContext";
-import LightThemeIcon from "@/themes/icones/lightThemIcon";
-import { DarkThemeIcon } from "@/themes/icones/darkThemIcon";
-import { lightTheme } from "@/themes/light";
-import { darkTheme } from "@/themes/dark";
 import TopBar from "@/components/navigation/TopBar";
 import { Dimensions } from 'react-native';
 
@@ -18,7 +14,7 @@ type BienvenueScreen = StackNavigationProp<RootStackParamList, "Bienvenue">;
 
 const Bienvenue: React.FC = () => {
   const navigation = useNavigation<BienvenueScreen>();
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
   const screenHeight = Dimensions.get('window').height;
 
   return (
