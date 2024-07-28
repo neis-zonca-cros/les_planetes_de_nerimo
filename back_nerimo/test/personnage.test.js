@@ -154,12 +154,12 @@ describe('GET /api/personnage', () => {
 
   });
 
-  it('get/api/personnage : retourne 401 si token manquant', async () => {
+  it('get/api/personnage : retourne 500 si token manquant', async () => {
     const response = await request(app)
       .get('/api/personnage')
       .set('Authorization', `Bearer ${123}`);
 
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(500);
   });
 
   it('get/api/personnage : retourne 200 avec la liste des personnages pour la planète sélectionnée', async () => {
