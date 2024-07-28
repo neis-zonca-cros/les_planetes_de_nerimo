@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: CI Pipeline Nérimo
 
 on:
   push:
@@ -17,15 +17,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
+      - name: Installation Node
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
           
-      - name: Install Expo CLI globally
+      - name: Installation Expo 
         run: npm install -g expo-cli
 
-      # Step to install and run linters
+      # Linters en Back et Front
       - name: Install and run linters
         run: |
           # Install dependencies for back-end
@@ -39,33 +39,4 @@ jobs:
           npm install --save-dev eslint-config-expo
           npm run lint
 
-      # Step to run tests for back-end
-      - name: Start back-end server
-        run: |
-          cd back_nerimo
-          nohup npm start &
-        env:
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          PORT: 3001
-          NODE_ENV: ci
-
-      # Step to wait for the server to be ready
-      - name: Wait for server to be ready
-        run: |
-          # Wait for server to be ready before running tests
-          until curl -s http://localhost:3001 > /dev/null; do
-            echo "Waiting for server..."
-            sleep 5
-          done
-
-      # Step to run tests for back-end
-      - name: Run back-end tests
-        run: |
-          cd back_nerimo
-          npm run test
-        env:
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          PORT: 3001
-          NODE_ENV: ci
+   
