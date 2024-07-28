@@ -6,7 +6,6 @@ import request from 'supertest';
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import bcrypt from 'bcrypt';
 import personnageRoutes from '../routes/personnageRoutes.js';
 import Planete from '../models/Planete.js';
 import Personnage from '../models/Personnage.js';
@@ -18,8 +17,6 @@ app.use(express.json());
 app.use('/api/personnage', personnageRoutes());
 let tokenAdmin;
 let tokenNonAdmin;
-let utilisateurAdminId;
-let utilisateurNonAdminId;
 let planeteId;
 let personnageId;
 
@@ -36,7 +33,6 @@ beforeEach(async () => {
     admin: false,
   });
   const utilisateurNonAdmin = await nouvelUtilisateurNonAdmin.save();
-  utilisateurNonAdminId = utilisateurNonAdmin._id;
 
   tokenNonAdmin = jwt.sign(
     { utilisateurId: utilisateurNonAdmin._id, email: utilisateurNonAdmin.email, admin: utilisateurNonAdmin.admin },
@@ -51,7 +47,6 @@ beforeEach(async () => {
     admin: true,
   });
   const utilisateurAdmin = await nouvelUtilisateurAdmin.save();
-  utilisateurAdminId = utilisateurAdmin._id;
 
   tokenAdmin = jwt.sign(
     { utilisateurId: utilisateurAdmin._id, email: utilisateurAdmin.email, admin: utilisateurAdmin.admin },

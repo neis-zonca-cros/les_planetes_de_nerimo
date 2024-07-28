@@ -6,8 +6,6 @@ import request from 'supertest';
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import bcrypt from 'bcrypt';
-import utilisateurRoutes from '../routes/utilisateurRoutes.js';
 import Planete from '../models/Planete.js';
 import Personnage from '../models/Personnage.js';
 import sessionRoutes from '../routes/sessionRoutes';

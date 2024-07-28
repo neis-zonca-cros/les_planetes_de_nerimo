@@ -6,7 +6,6 @@ import request from 'supertest';
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import bcrypt from 'bcrypt';
 import utilisateurRoutes from '../routes/utilisateurRoutes.js';
 
 dotenv.config({ path: '.env.test' });

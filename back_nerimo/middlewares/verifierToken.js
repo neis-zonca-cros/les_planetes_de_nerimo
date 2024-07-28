@@ -25,6 +25,6 @@ export function verifierToken(req, res, next) {
     req.user = verifierTokenValide;
     next();
   } catch (error) {
-    return res.status(401).json({ message: 'Token invalide' });
+    return res.status(401).json(error, { message: 'Token invalide' });
   }
 }
