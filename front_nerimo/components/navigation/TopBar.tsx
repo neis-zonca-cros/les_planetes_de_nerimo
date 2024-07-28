@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   useColorScheme,
+  Dimensions,
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { ComponentProps } from "react";
@@ -13,8 +14,10 @@ import { useTheme } from "@/themes/themeContext";
 export function TabBarIcon({
   style,
   ...rest
-}: ComponentProps<typeof Ionicons>) {
-  return <Ionicons size={36} style={[style]} {...rest} />;
+}: ComponentProps<typeof Ionicons>) 
+
+{const screenHeight = Dimensions.get("window").height;
+  return <Ionicons size={screenHeight*0.09} style={[style]} {...rest} />;
 }
 
 interface TopBarProps {

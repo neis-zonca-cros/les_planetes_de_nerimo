@@ -30,11 +30,11 @@ type CreerUnCompteScreen = StackNavigationProp<
 const CreerUnCompte: React.FC = () => {
   const navigation = useNavigation<CreerUnCompteScreen>();
   const { theme } = useTheme();
-  const goBackToAccueil =() => {
-    navigation.navigate("AccueilAvantConnexion")
-  }
+  const goBackToAccueil = () => {
+    navigation.navigate("AccueilAvantConnexion");
+  };
   const seConnecter = useGoToConnect();
-  const screenWidth = Dimensions.get('window').width;
+  const screenWidth = Dimensions.get("window").width;
   const signUpValidationSchema = Yup.object().shape({
     firstName: Yup.string().required(
       "Oups, tu as oublié de mettre ton prénom !"
@@ -154,8 +154,11 @@ const CreerUnCompte: React.FC = () => {
                     />
                   </View>
                   {errors.confirmPassword && touched.confirmPassword && (
-                    <Text style={theme.errorText}>{errors.confirmPassword}</Text>
-                  )}</View>
+                    <Text style={theme.errorText}>
+                      {errors.confirmPassword}
+                    </Text>
+                  )}
+                </View>
                 <View style={styles.marginBottomContainer}>
                   <View style={styles.buttonContainer}>
                     <TouchableOpacity
@@ -164,9 +167,11 @@ const CreerUnCompte: React.FC = () => {
                     >
                       <View style={theme.iconeShadow}>
                         <CompteIcon
-                          width={screenWidth*0.22}
+                          width={screenWidth * 0.22}
                           fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
-                          background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
+                          background={
+                            theme === darkTheme ? "#23363E" : "#FAE6BB"
+                          }
                         />
                       </View>
                     </TouchableOpacity>
@@ -174,11 +179,12 @@ const CreerUnCompte: React.FC = () => {
                   <View style={styles.buttonContainer}>
                     <Text onPress={seConnecter} style={theme.titreSmall}>
                       Déjà un compte ?
-                    </Text></View></View>
+                    </Text>
+                  </View>
+                </View>
               </>
             )}
           </Formik>
-
         </ScrollView>
       </KeyboardAvoidingView>
     </View>
@@ -197,7 +203,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: "center",
     justifyContent: "center",
-    width: '100%',
+    width: "100%",
   },
 
   icon: {

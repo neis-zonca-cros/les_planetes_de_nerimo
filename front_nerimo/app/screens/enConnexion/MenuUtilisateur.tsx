@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Alert, Dimensions } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  Dimensions,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../types";
@@ -22,7 +28,7 @@ const MenuUtilisateur: React.FC = () => {
   const navigation = useNavigation<MenuUtilisateurScreen>();
   const { theme } = useTheme();
   const goBack = useGoBack();
-  const screenHeight = Dimensions.get('window').height;
+  const screenHeight = Dimensions.get("window").height;
   const handleLogout = async () => {
     try {
       await logout(navigation, "Bienvenue");
@@ -45,7 +51,7 @@ const MenuUtilisateur: React.FC = () => {
             <TouchableOpacity>
               <View style={theme.iconeShadow}>
                 <ProfilRondIcon
-                  width={screenHeight*0.25}
+                  width={screenHeight * 0.25}
                   fill={theme === darkTheme ? "#FFCD69" : "#E7A74F"}
                   background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
                 />
@@ -56,26 +62,26 @@ const MenuUtilisateur: React.FC = () => {
             <TouchableOpacity onPress={handleLogout}>
               <View style={theme.iconeShadow}>
                 <DeconnexionRondIcon
-                  width={screenHeight*0.25}
+                  width={screenHeight * 0.25}
                   fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
                   background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
                 />
               </View>
             </TouchableOpacity>
           </View>
-        
 
-        <View style={styles.iconContainer}>
-          <TouchableOpacity>
-            <View style={theme.iconeShadow}>
-              <AProposIcon
-                width={screenHeight*0.25}
-                fill={theme === darkTheme ? "#FAE6BB" : "#23363E"}
-                background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
-              />
-            </View>
-          </TouchableOpacity>
-        </View></View>
+          <View style={styles.iconContainer}>
+            <TouchableOpacity>
+              <View style={theme.iconeShadow}>
+                <AProposIcon
+                  width={screenHeight * 0.25}
+                  fill={theme === darkTheme ? "#FAE6BB" : "#23363E"}
+                  background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
       </ScrollView>
     </View>
   );

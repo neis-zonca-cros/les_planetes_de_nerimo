@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../types";
@@ -63,6 +63,16 @@ const AccueilApresConnexion: React.FC = () => {
     navigation.navigate("MenuUtilisateur");
   };
 
+  const organizeSessionsInColumns = (sessions: Session[]) => {
+    const columns: Session[][] = [[], [], []];
+    sessions.forEach((session, index) => {
+      columns[index % 3].push(session);
+    });
+    return columns;
+  };
+
+  const organizedSessions = organizeSessionsInColumns(sessions);
+
   return (
     <View style={theme.container}>
       <TopBar
@@ -74,7 +84,7 @@ const AccueilApresConnexion: React.FC = () => {
         iconeGaucheAction={addSession}
       />
 
-      <ScrollView contentContainerStyle={theme.scrollViewContentForSession}>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
         {loading ? (
           <Text style={theme.listText}>Chargement...</Text>
         ) : error ? (
@@ -85,15 +95,21 @@ const AccueilApresConnexion: React.FC = () => {
           </Text>
         ) : (
           <View style={styles.gridContainer}>
-            {sessions.map((session) => (
-              <View key={session._id} style={styles.sessionWrapper}>
-                <Sessions
-                  prenom={session.prenom}
-                  planeteNom={session.planeteRef.nom}
-                  personnageNom={session.personnageRef.nom}
-                  imageSource={getPersonnageImageURI(session.personnageRef.nom)}
-                  onPress={BoutonSession}
-                />
+            {organizedSessions.map((column, columnIndex) => (
+              <View key={columnIndex} style={styles.column}>
+                {column.map((session) => (
+                  <View key={session._id} style={styles.sessionWrapper}>
+                    <Sessions
+                      prenom={session.prenom}
+                      planeteNom={session.planeteRef.nom}
+                      personnageNom={session.personnageRef.nom}
+                      imageSource={getPersonnageImageURI(
+                        session.personnageRef.nom
+                      )}
+                      onPress={BoutonSession}
+                    />
+                  </View>
+                ))}
               </View>
             ))}
           </View>
@@ -102,21 +118,26 @@ const AccueilApresConnexion: React.FC = () => {
     </View>
   );
 };
+const { height: screenHeight } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
-  scrollViewContentForSession: {
+  scrollViewContent: {
     flexGrow: 1,
     paddingHorizontal: 20,
-    paddingTop: 110,
   },
   gridContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingTop: screenHeight * 0.3,
+  },
+  column: {
+    flexDirection: "column",
+    width: "30%",
   },
   sessionWrapper: {
-    width: '30%', 
-    marginBottom: 10,  
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
   },
 });
 

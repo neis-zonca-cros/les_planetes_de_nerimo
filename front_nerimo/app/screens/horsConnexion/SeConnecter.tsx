@@ -30,11 +30,11 @@ type SeConnecterScreen = StackNavigationProp<RootStackParamList, "SeConnecter">;
 const SeConnecter: React.FC = () => {
   const navigation = useNavigation<SeConnecterScreen>();
   const { theme } = useTheme();
-  const goBackToAccueil =() => {
-    navigation.navigate("AccueilAvantConnexion")
-  }
+  const goBackToAccueil = () => {
+    navigation.navigate("AccueilAvantConnexion");
+  };
   const creerUnCompte = useGoToCreerUnCompte();
-  const screenWidth = Dimensions.get('window').width;
+  const screenWidth = Dimensions.get("window").width;
 
   const handleLogin = async (values: { email: string; mdp: string }) => {
     try {
@@ -44,7 +44,9 @@ const SeConnecter: React.FC = () => {
       if (token) {
         navigation.reset({
           index: 0,
-          routes: [{ name: "AccueilApresConnexion", params: { refresh: true } }],
+          routes: [
+            { name: "AccueilApresConnexion", params: { refresh: true } },
+          ],
         });
       }
     } catch (error) {
@@ -68,7 +70,6 @@ const SeConnecter: React.FC = () => {
   return (
     <View style={theme.container}>
       <TopBar
-
         titre="Rentrer dans le "
         prenom="monde de Nérimo"
         iconeDroiteNom="close-outline"
@@ -126,25 +127,31 @@ const SeConnecter: React.FC = () => {
                   </View>
                   {errors.mdp && touched.mdp && (
                     <Text style={theme.errorText}>{errors.mdp}</Text>
-                  )}</View>
-                  <View style={styles.marginBottomContainer}>
-                <View style={styles.buttonContainer}>
-                  <TouchableOpacity
-                    onPress={handleSubmit as any}
-                    style={styles.icon}
-                  >
-                    <View style={theme.iconeShadow}>
-                      <ConnexionIcon
-                        width={screenWidth*0.22}
-                        fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
-                        background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
-                      />
-                    </View>
-                  </TouchableOpacity></View>
+                  )}
+                </View>
+                <View style={styles.marginBottomContainer}>
+                  <View style={styles.buttonContainer}>
+                    <TouchableOpacity
+                      onPress={handleSubmit as any}
+                      style={styles.icon}
+                    >
+                      <View style={theme.iconeShadow}>
+                        <ConnexionIcon
+                          width={screenWidth * 0.22}
+                          fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
+                          background={
+                            theme === darkTheme ? "#23363E" : "#FAE6BB"
+                          }
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  </View>
                   <View style={styles.buttonContainer}>
                     <Text onPress={creerUnCompte} style={theme.titreSmall}>
                       Pas inscrit ?
-                    </Text></View></View>
+                    </Text>
+                  </View>
+                </View>
               </>
             )}
           </Formik>
@@ -163,7 +170,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: "center",
     justifyContent: "center",
-    width: '100%',
+    width: "100%",
   },
   marginBottomContainer: {
     marginBottom: 20,

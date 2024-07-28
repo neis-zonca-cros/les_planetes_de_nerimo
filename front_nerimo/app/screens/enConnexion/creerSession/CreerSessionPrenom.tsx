@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "@/app/types";
@@ -8,6 +16,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import TopBar from "@/components/navigation/TopBar";
 import { darkTheme } from "@/themes/dark";
 import { Ionicons } from "@expo/vector-icons";
+import useGoBack from "@/components/navigation/useGoBack";
 
 type CreerSessionPrenomScreenProp = StackNavigationProp<
   RootStackParamList,
@@ -17,8 +26,9 @@ type CreerSessionPrenomScreenProp = StackNavigationProp<
 const CreerSessionPrenom: React.FC = () => {
   const navigation = useNavigation<CreerSessionPrenomScreenProp>();
   const { theme } = useTheme();
+  const goBack = useGoBack();
   const [prenom, setPrenom] = useState("");
-
+  const screenHeight = Dimensions.get("window").height;
   const handleNext = () => {
     if (prenom) {
       navigation.navigate("ChoisirPlanete", { prenom });
@@ -32,34 +42,33 @@ const CreerSessionPrenom: React.FC = () => {
       <TopBar
         titre="Créer une"
         prenom="session"
-        iconeDroiteNom="planet-outline"
-        iconeDroiteAction={() => navigation.navigate("MenuUtilisateur")}
+        iconeGaucheNom="arrow-back-outline"
+        iconeGaucheAction={goBack}
+        iconeDroiteNom="close-outline"
+        iconeDroiteAction={() => navigation.navigate("AccueilApresConnexion", { refresh: true })}
       />
-     
-        <View style={styles.bottomIconsContainer}>
+
+      <View style={styles.bottomIconsContainer}>
         <View style={theme.input}>
-        <TextInput
-          style={theme.textInput}
-          value={prenom}
-          onChangeText={setPrenom}
-          placeholder="Écris ton surnom ici"
-          placeholderTextColor={
-            theme === darkTheme ? "#FAE6BB" : "#23363E"
-          }
-        /></View>
-        <View style={theme.iconeContainer}>
-        <TouchableOpacity
-        onPress={handleNext}
-        
-      >
-        <View style={theme.iconeShadow}>
-          <Ionicons
-            name="arrow-forward-circle"
-            size={80}
-            style={theme.iconeColor}
+          <TextInput
+            style={theme.textInput}
+            value={prenom}
+            onChangeText={setPrenom}
+            placeholder="Écris ton surnom ici"
+            placeholderTextColor={theme === darkTheme ? "#FAE6BB" : "#23363E"}
           />
         </View>
-      </TouchableOpacity></View>
+        <View style={theme.iconeContainer}>
+          <TouchableOpacity onPress={handleNext}>
+            <View style={theme.iconeShadow}>
+              <Ionicons
+                name="arrow-forward-circle"
+                size={screenHeight * 0.18}
+                style={theme.iconeColor}
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );

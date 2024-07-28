@@ -1,10 +1,12 @@
-import { Platform, StyleSheet } from "react-native";
+import { Dimensions, Platform, StyleSheet } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 
 const largeFontSize = RFValue(12)
 const mediumFontSize = RFValue(10)
 const smallFontSize = RFValue(9)
 const xSmallFontSize = RFValue(7)
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+
 
 
 
@@ -71,8 +73,8 @@ export const lightTheme = StyleSheet.create({
     fontSize: mediumFontSize,
   },
   input: {
-    height: 40,
-    width: '40%',
+    height: screenHeight*0.12,
+    width: screenWidth*0.3,
     borderRadius: 10,
     borderColor: "#FAE6BB",
     backgroundColor: "#FAE6BB",
@@ -100,15 +102,14 @@ export const lightTheme = StyleSheet.create({
   },
 
   listContainer:{
-    width: 300,
+    height: screenWidth*0.15,
+    width:screenWidth*0.15,
+    borderRadius: (screenWidth*0.15)/2,
     paddingVertical: 10,
+    flexDirection: 'column',
+    marginVertical: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'row',
-    marginVertical: 10,
-    marginHorizontal: 50,
-    height: 80,
-    borderRadius: 10,
     borderColor: "#FAE6BB",
     backgroundColor: "#FAE6BB",
     borderWidth: 5,
@@ -132,20 +133,22 @@ export const lightTheme = StyleSheet.create({
     color: '#23363E',
     fontFamily: 'brotherBold',
     textTransform: 'uppercase',
+    textAlign: "center",
 
   },
 
   sessionContainer: {
     flexDirection: "column",
     textAlign:"center",
+    paddingVertical:5,
   },
   sessionCard: {
     borderColor: "#FAE6BB",
     backgroundColor: "#FAE6BB",
     justifyContent: 'center',
-    height: 150,
-    width:150,
-    borderRadius: 80,  
+    height: screenWidth*0.20,
+    width:screenWidth*0.20,
+    borderRadius: (screenWidth*0.20)/2,  
     borderWidth: 5,
     marginBottom: 12,
     paddingHorizontal: 8,
@@ -184,12 +187,12 @@ export const lightTheme = StyleSheet.create({
     zIndex: 1,
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 16,
+    paddingHorizontal:16,
   },
   textContainerTopBar: {
     flexDirection: "column",
     alignItems: "center",
-    paddingTop: 10,
+    paddingTop:10,
 
   },
   titreLargeTopBar: {

@@ -1,12 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "@/app/types";
 import { useTheme } from "@/themes/themeContext";
-import { createSession, getPersonnagesByPlanete, Personnage } from "@/app/fetchs/creerSessionFetch";
+import {
+  createSession,
+  getPersonnagesByPlanete,
+  Personnage,
+} from "@/app/fetchs/creerSessionFetch";
 import TopBar from "@/components/navigation/TopBar";
 import { getPersonnageImageURI } from "@/components/imageSession";
+import useGoBack from "@/components/navigation/useGoBack";
 
 type ChoisirPersonnageScreenProp = StackNavigationProp<
   RootStackParamList,
@@ -19,6 +32,7 @@ const ChoisirPersonnage: React.FC = () => {
   const { theme } = useTheme();
   const prenom = route.params?.prenom;
   const planeteId = route.params?.planeteId;
+  const goBack = useGoBack();
 
   const [personnages, setPersonnages] = useState<Personnage[]>([]);
 
@@ -65,15 +79,17 @@ const ChoisirPersonnage: React.FC = () => {
   };
 
   const renderItem = ({ item }: { item: Personnage }) => (
-    <TouchableOpacity onPress={() => handleSelectPersonnage(item._id)} style={{alignItems:'center'}}>
-      <View style={theme.listContainer}>
-        <Image
-          source={getPersonnageImageURI(item.nom)}
-          style={styles.icon}
-        />
-        <Text style={theme.listText}>{item.nom}</Text>
-      </View>
-    </TouchableOpacity>
+    <View style={styles.buttonContainer}>
+      <TouchableOpacity
+        onPress={() => handleSelectPersonnage(item._id)}
+        style={{ alignItems: "center" }}
+      >
+        <View style={theme.listContainer}>
+          <Image source={getPersonnageImageURI(item.nom)} style={styles.icon} />
+          <Text style={theme.listText}>{item.nom}</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 
   return (
@@ -81,25 +97,42 @@ const ChoisirPersonnage: React.FC = () => {
       <TopBar
         titre="Choisir un"
         prenom="personnage"
-        iconeDroiteNom="planet-outline"
-        iconeDroiteAction={() => navigation.navigate("MenuUtilisateur")}
+        iconeGaucheNom="arrow-back-outline"
+        iconeGaucheAction={goBack}
+        iconeDroiteNom="close-outline"
+        iconeDroiteAction={() => navigation.navigate("AccueilApresConnexion", { refresh: true })}
       />
       <FlatList
         data={personnages}
         keyExtractor={(item) => item._id}
         renderItem={renderItem}
-        contentContainerStyle={theme.scrollViewContent}
+        contentContainerStyle={styles.row}
       />
     </View>
   );
 };
-
+const { height: screenHeight } = Dimensions.get("window");
 const styles = StyleSheet.create({
   icon: {
-    width: 50,
-    height: 50,
-    marginRight: 20,
-    resizeMode: 'contain',
+    width: screenHeight * 0.12,
+    height: screenHeight * 0.12,
+    resizeMode: "contain",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 12,
+  },
+  buttonContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    paddingHorizontal: 20,
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    flexGrow: 1,
   },
 });
 
