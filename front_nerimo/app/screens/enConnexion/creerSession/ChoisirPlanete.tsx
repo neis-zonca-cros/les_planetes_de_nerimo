@@ -80,7 +80,7 @@ const ChoisirPlanete: React.FC = () => {
   );
 };
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+const { height: screenHeight } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   icon: {

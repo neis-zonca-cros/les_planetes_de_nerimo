@@ -1,5 +1,5 @@
 import * as React from "react";
-import Svg, { G, Rect, Path, Defs, Circle } from "react-native-svg";
+import Svg, { G, Path, Defs, Circle } from "react-native-svg";
 import { IconProps } from "@/themes/icones/iconProps";
 
 const AProposIcon: React.FC<IconProps> = ({ width, fill, background }) => (

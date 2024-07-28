@@ -7,7 +7,7 @@ import Bienvenue from "@/app/screens/horsConnexion/Bienvenue";
 import { RootStackParamList } from "./types";
 import { ThemeProvider } from "@/themes/themeContext";
 import MenuInitial from "@/app/screens/horsConnexion/MenuInitial";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import AccueilApresConnexion from "@/app/screens/enConnexion/AccueilApresConnexion";
 import AccueilAvantConnexion from "@/app/screens/horsConnexion/AccueilAvantConnexion";
 import SeConnecter from "@/app/screens/horsConnexion/SeConnecter";

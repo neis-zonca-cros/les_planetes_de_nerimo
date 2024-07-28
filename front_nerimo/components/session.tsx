@@ -2,7 +2,7 @@ import { darkTheme } from "@/themes/dark";
 import { useTheme } from "@/themes/themeContext";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { View, Text, Image, StyleSheet, Platform, Dimensions } from "react-native";
+import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 

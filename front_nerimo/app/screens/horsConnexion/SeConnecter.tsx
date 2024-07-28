@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   TextInput,
@@ -20,9 +20,7 @@ import { ConnexionIcon } from "@/themes/icones/connexionIcon";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { darkTheme } from "@/themes/dark";
 import TopBar from "@/components/navigation/TopBar";
-import useGoBack from "@/components/navigation/useGoBack";
 import login from "@/app/fetchs/connexionFetch";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import useGoToCreerUnCompte from "@/components/navigation/useGoToCreerCompte";
 
 type SeConnecterScreen = StackNavigationProp<RootStackParamList, "SeConnecter">;

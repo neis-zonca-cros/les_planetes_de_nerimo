@@ -19,7 +19,6 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { darkTheme } from "@/themes/dark";
 import { CompteIcon } from "@/themes/icones/compteIcon";
 import TopBar from "@/components/navigation/TopBar";
-import useGoBack from "@/components/navigation/useGoBack";
 import useGoToConnect from "@/components/navigation/useGoToConnect";
 
 type CreerUnCompteScreen = StackNavigationProp<

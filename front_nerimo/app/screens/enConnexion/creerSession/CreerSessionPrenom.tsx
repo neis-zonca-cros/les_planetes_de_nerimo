@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import {
   View,
-  Text,
   TextInput,
-  Button,
   TouchableOpacity,
   StyleSheet,
   Dimensions,
@@ -12,7 +10,6 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "@/app/types";
 import { useTheme } from "@/themes/themeContext";
-import { ScrollView } from "react-native-gesture-handler";
 import TopBar from "@/components/navigation/TopBar";
 import { darkTheme } from "@/themes/dark";
 import { Ionicons } from "@expo/vector-icons";
