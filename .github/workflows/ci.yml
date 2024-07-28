@@ -1,0 +1,42 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14, 16]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      # Step to install and run linters
+      - name: Install and run linters
+        run: |
+          # Install dependencies for back-end
+          cd back_nerimo
+          npm install
+          npm run lint
+
+          # Install dependencies for front-end
+          cd ../front_nerimo
+          npm install
+          npm run lint
+
+      # Step to run tests for back-end
+      - name: Run back-end tests
+        run: |
+          cd back_nerimo
+          npm run test:all
