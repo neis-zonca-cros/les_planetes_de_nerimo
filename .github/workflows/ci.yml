@@ -46,4 +46,10 @@ jobs:
           npm install --save-dev eslint-config-expo
           npm run lint
 
+      - name: Run back-end tests
+        run: |
+          cd back_nerimo
+          npm i npm-run-all
+          npm run test
+
    
