@@ -43,4 +43,5 @@ jobs:
       - name: Run back-end tests
         run: |
           cd back_nerimo
+          npm install npm-run-all --save-dev
           npm run test:all
