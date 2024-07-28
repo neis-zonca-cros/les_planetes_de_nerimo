@@ -53,7 +53,9 @@ function configurationApp() {
 }
 
 
-configurationDotenv();
+if (process.env.NODE_ENV !== 'ci') {
+  configurationDotenv();
+}
 connexionMongo();
 configurationApp();
 
