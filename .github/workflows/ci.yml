@@ -21,6 +21,9 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
+          
+      - name: Install Expo CLI globally
+        run: npm install -g expo-cli
 
       # Step to install and run linters
       - name: Install and run linters
