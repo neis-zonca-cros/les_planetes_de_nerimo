@@ -31,7 +31,7 @@ jobs:
           echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> back_nerimo/.env
           echo PORT=${{ secrets.PORT }} >> back_nerimo/.env
           echo MONGODB_URI=${{ secrets.MONGODB_URI }} >> back_nerimo/.env
-      - name : check .env.test oui
+      - name : check .env.test
         run: cat back_nerimo/.env
       # Linters en Back et Front
       - name: Install and run linters
