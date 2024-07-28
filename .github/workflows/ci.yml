@@ -25,12 +25,6 @@ jobs:
       - name: Install Expo CLI globally
         run: npm install -g expo-cli
 
-      - name: Run tests
-        run: npm test
-        env:
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-
       # Step to install and run linters
       - name: Install and run linters
         run: |
@@ -51,3 +45,6 @@ jobs:
           cd back_nerimo
           npm install npm-run-all --save-dev
           npm run test
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
