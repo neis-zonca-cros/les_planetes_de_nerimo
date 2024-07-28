@@ -36,6 +36,7 @@ jobs:
           # Install dependencies for front-end
           cd ../front_nerimo
           npm install
+          npm install --save-dev eslint-config-expo
           npm run lint
 
       # Step to run tests for back-end
