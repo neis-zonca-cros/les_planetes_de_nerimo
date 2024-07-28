@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14, 16]
+        node-version: [20]
 
     steps:
       - name: Checkout code
@@ -21,6 +21,9 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
+          
+      - name: Install Expo CLI globally
+        run: npm install -g expo-cli
 
       # Step to install and run linters
       - name: Install and run linters
@@ -33,10 +36,34 @@ jobs:
           # Install dependencies for front-end
           cd ../front_nerimo
           npm install
+          npm install --save-dev eslint-config-expo
           npm run lint
+
+      # Step to run tests for back-end
+      - name: Start back-end server
+        run: |
+          cd back_nerimo
+          nohup npm start &
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          PORT: 3001
+
+      # Step to wait for the server to be ready
+      - name: Wait for server to be ready
+        run: |
+          # Wait for server to be ready before running tests
+          until curl -s http://localhost:3001 > /dev/null; do
+            echo "Waiting for server..."
+            sleep 5
+          done
 
       # Step to run tests for back-end
       - name: Run back-end tests
         run: |
           cd back_nerimo
-          npm run test:all
+          npm run test
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          PORT: 3001
