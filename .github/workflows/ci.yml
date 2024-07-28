@@ -44,4 +44,4 @@ jobs:
         run: |
           cd back_nerimo
           npm install npm-run-all --save-dev
-          npm run test:all
+          npm run test
