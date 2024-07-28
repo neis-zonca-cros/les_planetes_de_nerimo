@@ -19,13 +19,18 @@ async function connexionMongo() {
 
 // Configuration dotenv pour l'API
 function configurationDotenv() {
-  
   const env = process.env.NODE_ENV || 'development';
   const envFile = env === 'test' ? '.env.test' : '.env';
+  
+  // Tenter de charger le fichier .env uniquement s'il existe
   const result = dotenv.config({ path: envFile });
   if (result.error) {
-    console.error('Erreur lors de la configuration de dotenv:', result.error.message);
-    process.exit(1); 
+    if (env !== 'ci') {
+      console.error('Erreur lors de la configuration de dotenv:', result.error.message);
+      process.exit(1); 
+    } else {
+      console.warn(`Le fichier ${envFile} est introuvable, en utilisant les variables d'environnement par défaut`);
+    }
   }
 }
 
