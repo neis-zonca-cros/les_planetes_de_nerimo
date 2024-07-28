@@ -25,6 +25,13 @@ jobs:
       - name: Installation Expo 
         run: npm install -g expo-cli
 
+      - name: Create .env file for backend
+        run: |
+          echo MONGODB_URI=${{ secrets.MONGODB_URI }} >> back_nerimo/.env.test
+          echo NODE_ENV=${{ secrets.NODE_ENV }} >> back_nerimo/.env.test
+          echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> back_nerimo/.env.test
+          echo PORT=${{ secrets.PORT }} >> back_nerimo/.env.test
+
       # Linters en Back et Front
       - name: Install and run linters
         run: |
