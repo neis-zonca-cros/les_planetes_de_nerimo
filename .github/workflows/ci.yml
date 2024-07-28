@@ -48,6 +48,7 @@ jobs:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           PORT: 3001
+          NODE_ENV: ci
 
       # Step to wait for the server to be ready
       - name: Wait for server to be ready
