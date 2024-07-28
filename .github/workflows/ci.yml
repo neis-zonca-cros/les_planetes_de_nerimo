@@ -40,10 +40,28 @@ jobs:
           npm run lint
 
       # Step to run tests for back-end
+      - name: Start back-end server
+        run: |
+          cd back_nerimo
+          nohup npm start &
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          PORT: 3001
+
+      # Step to wait for the server to be ready
+      - name: Wait for server to be ready
+        run: |
+          # Wait for server to be ready before running tests
+          until curl -s http://localhost:3001 > /dev/null; do
+            echo "Waiting for server..."
+            sleep 5
+          done
+
+      # Step to run tests for back-end
       - name: Run back-end tests
         run: |
           cd back_nerimo
-          npm install npm-run-all --save-dev
           npm run test
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
