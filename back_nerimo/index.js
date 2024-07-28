@@ -58,9 +58,13 @@ function configurationApp() {
 }
 
 
-if (process.env.NODE_ENV !== 'ci') {
-  configurationDotenv();
+async function startServer() {
+  if (process.env.NODE_ENV !== 'ci') {
+    configurationDotenv();
+  }
+  await connexionMongo();
+  configurationApp();
 }
-connexionMongo();
-configurationApp();
+
+startServer();
 
