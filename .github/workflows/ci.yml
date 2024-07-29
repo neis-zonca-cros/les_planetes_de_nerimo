@@ -21,6 +21,19 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
+
+      - name: Création fichier .env.test
+        run: |
+          echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> back_nerimo/.env.test
+          echo "NODE_ENV=test" >> back_nerimo/.env.test
+          echo "PORT=3001" >> back_nerimo/.env.test
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> back_nerimo/.env.test
+
+      - name: tests back 
+        run: 
+          cd back_nerimo 
+          npm i npm-run-all
+          npm run test
           
       - name: Installation Expo 
         run: npm install -g expo-cli
