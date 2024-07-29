@@ -29,10 +29,11 @@ jobs:
           echo "PORT=3001" >> back_nerimo/.env.test
           echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> back_nerimo/.env.test
 
-      - name: tests back 
-        run: 
+      - name: Install dependencies and run tests back
+        run: |
           cd back_nerimo 
-          npm install
+          npm install 
+          npm i npm-run-all
           npm run test
           
       - name: Installation Expo 
