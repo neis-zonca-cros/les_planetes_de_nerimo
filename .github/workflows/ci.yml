@@ -47,12 +47,9 @@ jobs:
       - name: Remove temporary IP access
         if: always()
         run: |
-          curl -u "${{ secrets.ATLAS_USERNAME }}:${{ secrets.ATLAS_PASSWORD }}" --digest \
+          curl -v -u "${{ secrets.ATLAS_USERNAME }}:${{ secrets.ATLAS_PASSWORD }}" --digest \
             -H "Content-Type: application/json" \
-            -X DELETE "https://cloud.mongodb.com/api/atlas/v1.0/groups/${{ secrets.ATLAS_GROUP_ID }}/accessList" \
-            --data '[
-              { "ipAddress": "0.0.0.0/0" }
-            ]'
+            -X DELETE "https://cloud.mongodb.com/api/atlas/v1.0/groups/${{ secrets.ATLAS_GROUP_ID }}/accessList/IP:0.0.0.0/0" 
           
       - name: Installation Expo 
         run: npm install -g expo-cli
