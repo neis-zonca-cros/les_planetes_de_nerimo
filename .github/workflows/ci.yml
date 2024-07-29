@@ -49,7 +49,7 @@ jobs:
         run: |
           curl -v -u "${{ secrets.ATLAS_USERNAME }}:${{ secrets.ATLAS_PASSWORD }}" --digest \
             -H "Content-Type: application/json" \
-            -X DELETE "https://cloud.mongodb.com/api/atlas/v1.0/groups/${{ secrets.ATLAS_GROUP_ID }}/accessList/IP:0.0.0.0/0" 
+            -X DELETE "https://cloud.mongodb.com/api/atlas/v1.0/groups/${{ secrets.ATLAS_GROUP_ID }}/accessList/0.0.0.0/0" 
           
       - name: Installation Expo 
         run: npm install -g expo-cli
