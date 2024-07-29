@@ -32,7 +32,8 @@ jobs:
       - name: tests back 
         run: 
           cd back_nerimo 
-          npm i npm-run-all
+          npm install
+          npm install npm-run-all
           npm run test
           
       - name: Installation Expo 
