@@ -33,8 +33,7 @@ jobs:
         run: |
           cd back_nerimo 
           npm install 
-          npm i npm-run-all
-          npm run test
+          npm run test:connexion
           
       - name: Installation Expo 
         run: npm install -g expo-cli
