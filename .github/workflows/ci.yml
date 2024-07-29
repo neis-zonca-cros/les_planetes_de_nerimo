@@ -43,6 +43,16 @@ jobs:
           cd back_nerimo 
           npm install 
           npm run test:connexion
+      
+      - name: Remove temporary IP access
+        if: always()
+        run: |
+          curl -u "${{ secrets.ATLAS_USERNAME }}:${{ secrets.ATLAS_PASSWORD }}" --digest \
+            -H "Content-Type: application/json" \
+            -X DELETE "https://cloud.mongodb.com/api/atlas/v1.0/groups/${{ secrets.ATLAS_GROUP_ID }}/accessList" \
+            --data '[
+              { "ipAddress": "0.0.0.0/0" }
+            ]'
           
       - name: Installation Expo 
         run: npm install -g expo-cli
@@ -61,12 +71,7 @@ jobs:
           npm install --save-dev eslint-config-expo
           npm run lint
 
-      - name: Remove temporary IP access
-        if: always()
-        run: |
-          curl -u "${{ secrets.ATLAS_USERNAME }}:${{ secrets.ATLAS_PASSWORD }}" --digest \
-            -H "Content-Type: application/json" \
-            -X DELETE "https://cloud.mongodb.com/api/atlas/v1.0/groups/${{ secrets.ATLAS_GROUP_ID }}/accessList/0.0.0.0/0"
+
 
 
    
