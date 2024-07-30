@@ -30,9 +30,7 @@ jobs:
             --data '[
               { "ipAddress": "0.0.0.0/0", "comment": "Temporary access for CI/CD" }
             ]')
-          echo "Réponse :"
-          echo $response
-          accessListId=$(echo $response | jq -r '.id')
+          accessListId=$(echo $response | jq -r '.results[] | select(.comment == "Temporary access for CI/CD") | .links[0].href | split("/") | .[-1]')
           echo "Access list ID: $accessListId"
           echo "accessListId=$accessListId" >> $GITHUB_ENV
     
