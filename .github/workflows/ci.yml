@@ -24,15 +24,12 @@ jobs:
 
       - name: Add temporary IP access
         run: |
-          response=$(curl -u "${{ secrets.ATLAS_USERNAME }}:${{ secrets.ATLAS_PASSWORD }}" --digest \
+          curl -u "${{ secrets.ATLAS_USERNAME }}:${{ secrets.ATLAS_PASSWORD }}" --digest \
             -H "Content-Type: application/json" \
             -X POST "https://cloud.mongodb.com/api/atlas/v1.0/groups/${{ secrets.ATLAS_GROUP_ID }}/accessList" \
             --data '[
               { "ipAddress": "0.0.0.0/0", "comment": "Temporary access for CI/CD" }
-            ]')
-          accessListId=$(echo $response | jq -r '.results[0].id')
-          echo "Access list ID: $accessListId"
-          echo "accessListId=$accessListId" >> $GITHUB_ENV
+            ]'
 
       - name: Création fichier .env.test
         run: |
@@ -53,7 +50,7 @@ jobs:
           curl -v -u "${{ secrets.ATLAS_USERNAME }}:${{ secrets.ATLAS_PASSWORD }}" --digest \
             --header "Accept: application/json" \
             --header "Content-Type: application/json" \
-            --request DELETE "https://cloud.mongodb.com/api/atlas/v1.0/groups/${{ secrets.ATLAS_GROUP_ID }}/accessList/${accessListId}"
+            --request DELETE "https://cloud.mongodb.com/api/atlas/v1.0/groups/${{ secrets.ATLAS_GROUP_ID }}/accessList/0.0.0.0/0" 
           
       - name: Installation Expo 
         run: npm install -g expo-cli
