@@ -48,7 +48,7 @@ jobs:
           npm i npm-run-all
           npm run test
                 
-      - name: Supprimer l'adresse IP temporaire créee
+      - name: Suppression de l'adresse IP temporaire créee
         if: always()
         run: |
           curl -v -u "${{ secrets.ATLAS_USERNAME }}:${{ secrets.ATLAS_PASSWORD }}" --digest \
