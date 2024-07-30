@@ -14,7 +14,7 @@ jobs:
         node-version: [20]
 
     steps:
-      - name: Checkout code
+      - name: Check du code
         uses: actions/checkout@v2
 
       - name: Installation Node
@@ -22,32 +22,33 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Add temporary IP access
+      - name: Création d'une adresse IP temporaire pour l'accès à MongoDB
         run: |
           response=$(curl -u "${{ secrets.ATLAS_USERNAME }}:${{ secrets.ATLAS_PASSWORD }}" --digest \
             -H "Content-Type: application/json" \
             -X POST "https://cloud.mongodb.com/api/atlas/v1.0/groups/${{ secrets.ATLAS_GROUP_ID }}/accessList" \
             --data '[
-              { "ipAddress": "0.0.0.0/0", "comment": "Temporary access for CI/CD" }
+              { "ipAddress": "0.0.0.0/0", "comment": "Accès temporaire pour la CI" }
             ]')
-          accessListId=$(echo $response | jq -r '.results[] | select(.comment == "Temporary access for CI/CD") | .links[0].href | split("/") | .[-1]')
+          accessListId=$(echo $response | jq -r '.results[] | select(.comment == "Accès temporaire pour la CI") | .links[0].href | split("/") | .[-1]')
           echo "Access list ID: $accessListId"
           echo "accessListId=$accessListId" >> $GITHUB_ENV
     
-      - name: Création fichier .env.test
+      - name: Création d'un fichier .env.test dans back_nerimo
         run: |
           echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> back_nerimo/.env.test
           echo "NODE_ENV=test" >> back_nerimo/.env.test
           echo "PORT=3001" >> back_nerimo/.env.test
           echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> back_nerimo/.env.test
 
-      - name: Install dependencies and run tests back
+      - name: Installation des dépendances et lancement des tests back_nerimo
         run: |
           cd back_nerimo 
           npm install 
-          npm run test:connexion
+          npm i npm-run-all
+          npm run test
                 
-      - name: Remove temporary IP access
+      - name: Supprimer l'adresse IP temporaire créee
         if: always()
         run: |
           curl -v -u "${{ secrets.ATLAS_USERNAME }}:${{ secrets.ATLAS_PASSWORD }}" --digest \
@@ -58,15 +59,12 @@ jobs:
       - name: Installation Expo 
         run: npm install -g expo-cli
 
-      # Linters en Back et Front
-      - name: Install and run linters
+      - name: Installation et lancement des Linters en back_nerimo et en front_nerimo
         run: |
-          # Install dependencies for back-end
           cd back_nerimo
           npm install
           npm run lint
 
-          # Install dependencies for front-end
           cd ../front_nerimo
           npm install
           npm install --save-dev eslint-config-expo
