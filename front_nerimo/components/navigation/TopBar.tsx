@@ -21,12 +21,12 @@ export function TabBarIcon({
 interface TopBarProps {
   prenom?: string;
   titre?: string;
-  iconeAvantTitre?: ComponentProps<typeof Ionicons>["name"] | null;
-  iconeAvantTitreAction?: () => void;
   iconeGaucheNom?: ComponentProps<typeof Ionicons>["name"] | null;
   iconeGaucheAction?: () => void;
   iconeDroiteNom?: ComponentProps<typeof Ionicons>["name"] | null;
   iconeDroiteAction?: () => void;
+  iconeZeroNom?: ComponentProps<typeof Ionicons>["name"] | null;
+  iconeZeroAction?: () => void;
 }
 
 const TopBar: React.FC<TopBarProps> = ({
@@ -36,25 +36,25 @@ const TopBar: React.FC<TopBarProps> = ({
   iconeGaucheAction,
   iconeDroiteNom,
   iconeDroiteAction,
-  iconeAvantTitre,
-  iconeAvantTitreAction,
+  iconeZeroAction,
+  iconeZeroNom,
 }) => {
   const { theme } = useTheme();
 
   return (
     <View style={theme.containerTopBar}>
     <View style={theme.iconsTopBar}>
-      {iconeAvantTitre ? (
-        <TouchableOpacity onPress={iconeAvantTitreAction}>
-          <TabBarIcon name={iconeAvantTitre} style={theme.iconTopBar} />
-        </TouchableOpacity>
-      ) : null}
       <View style={theme.textContainerTopBar}>
         <Text style={theme.titreLargeTopBar}>{titre}</Text>
         <Text style={theme.titreLargeTopBar}>{prenom} </Text>
       </View>
     </View>
     <View style={theme.iconsTopBar}>
+    {iconeZeroNom ? (
+        <TouchableOpacity onPress={iconeZeroAction}>
+          <TabBarIcon name={iconeZeroNom} style={theme.iconTopBar} />
+        </TouchableOpacity>
+      ) : null}
       {iconeGaucheNom ? (
         <TouchableOpacity onPress={iconeGaucheAction}>
           <TabBarIcon name={iconeGaucheNom} style={theme.iconTopBar} />

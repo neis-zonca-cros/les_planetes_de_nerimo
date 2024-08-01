@@ -23,6 +23,7 @@ const AccueilApresConnexion: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [prenom, setPrenom] = useState<string>("");
+  const [editMode, setEditMode] = useState<boolean>(false); // Edit mode state
 
   const fetchUtilisateurAndSessions = async () => {
     try {
@@ -63,6 +64,10 @@ const AccueilApresConnexion: React.FC = () => {
     navigation.navigate("MenuUtilisateur");
   };
 
+  const toggleEditMode = () => {
+    setEditMode(!editMode);
+  };
+
   const organizeSessionsInColumns = (sessions: Session[]) => {
     const columns: Session[][] = [[], [], []];
     sessions.forEach((session, index) => {
@@ -78,10 +83,12 @@ const AccueilApresConnexion: React.FC = () => {
       <TopBar
         titre="Bienvenue"
         prenom={prenom}
-        iconeDroiteNom="planet-outline"
-        iconeDroiteAction={menuUtilisateur}
-        iconeGaucheNom="add-outline"
-        iconeGaucheAction={addSession}
+        iconeZeroNom={editMode ? null : "brush-outline"}
+        iconeZeroAction={editMode? undefined: toggleEditMode}
+        iconeDroiteNom={editMode ? "close-outline" : "planet-outline"}
+        iconeDroiteAction={editMode? toggleEditMode: menuUtilisateur}
+        iconeGaucheNom={editMode? null: "add-outline"}
+        iconeGaucheAction={editMode? undefined: addSession}
       />
 
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -106,7 +113,10 @@ const AccueilApresConnexion: React.FC = () => {
                       imageSource={getPersonnageImageURI(
                         session.personnageRef.nom
                       )}
-                      onPress={BoutonSession}
+                      onPress={editMode ? () => console.log('delete session', session.prenom) : BoutonSession}
+                      
+                      icon={editMode ? "trash-outline" : "play-outline"}
+                      
                     />
                   </View>
                 ))}
@@ -118,6 +128,7 @@ const AccueilApresConnexion: React.FC = () => {
     </View>
   );
 };
+
 const { height: screenHeight } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
