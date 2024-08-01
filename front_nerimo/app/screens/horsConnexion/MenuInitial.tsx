@@ -80,12 +80,6 @@ const MenuInitial: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 16,
-  },
   row: {
     flexDirection: "row",
     justifyContent: "center",
@@ -95,7 +89,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     justifyContent: "center",
     alignItems: "center",
-    padding: 20,
+    margin: 20,
   },
 });
 export default MenuInitial;

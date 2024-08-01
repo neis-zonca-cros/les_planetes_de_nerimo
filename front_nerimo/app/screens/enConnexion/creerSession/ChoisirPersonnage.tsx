@@ -114,8 +114,8 @@ const ChoisirPersonnage: React.FC = () => {
 const { height: screenHeight } = Dimensions.get("window");
 const styles = StyleSheet.create({
   icon: {
-    width: screenHeight * 0.12,
-    height: screenHeight * 0.12,
+    width: screenHeight * 0.17,
+    height: screenHeight * 0.17,
     resizeMode: "contain",
     justifyContent: "center",
     alignItems: "center",

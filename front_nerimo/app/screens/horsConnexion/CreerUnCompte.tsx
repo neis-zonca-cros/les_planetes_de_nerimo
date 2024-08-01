@@ -95,7 +95,7 @@ const CreerUnCompte: React.FC = () => {
                   <View style={theme.input}>
                     <TextInput
                       style={theme.textInput}
-                      placeholder="PRÉNOM"
+                      placeholder="Prénom"
                       placeholderTextColor={
                         theme === darkTheme ? "#FAE6BB" : "#23363E"
                       }
@@ -110,7 +110,7 @@ const CreerUnCompte: React.FC = () => {
                   <View style={theme.input}>
                     <TextInput
                       style={theme.textInput}
-                      placeholder="E-MAIL"
+                      placeholder="Adresse mail"
                       placeholderTextColor={
                         theme === darkTheme ? "#FAE6BB" : "#23363E"
                       }
@@ -126,7 +126,7 @@ const CreerUnCompte: React.FC = () => {
                   <View style={theme.input}>
                     <TextInput
                       style={theme.textInput}
-                      placeholder="MOT DE PASSE"
+                      placeholder="Mot de passe"
                       placeholderTextColor={
                         theme === darkTheme ? "#FAE6BB" : "#23363E"
                       }
@@ -142,7 +142,7 @@ const CreerUnCompte: React.FC = () => {
                   <View style={theme.input}>
                     <TextInput
                       style={theme.textInput}
-                      placeholder="RÉPETEZ LE MOT DE PASSE"
+                      placeholder="Répetez le mot de passe"
                       placeholderTextColor={
                         theme === darkTheme ? "#FAE6BB" : "#23363E"
                       }
@@ -166,11 +166,9 @@ const CreerUnCompte: React.FC = () => {
                     >
                       <View style={theme.iconeShadow}>
                         <CompteIcon
-                          width={screenWidth * 0.22}
-                          fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
-                          background={
-                            theme === darkTheme ? "#23363E" : "#FAE6BB"
-                          }
+                          width={screenWidth * 0.26}
+                          fill={theme === darkTheme ? "#FFCD69" : "#E7A74F"}
+                          background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
                         />
                       </View>
                     </TouchableOpacity>
@@ -189,22 +187,21 @@ const CreerUnCompte: React.FC = () => {
     </View>
   );
 };
+const screenHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    paddingHorizontal: 16,
   },
   marginBottomContainer: {
-    marginBottom: 20,
+    marginBottom: screenHeight*0.03,
   },
   buttonContainer: {
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
   },
-
   icon: {
     alignItems: "center",
     paddingTop: 10,

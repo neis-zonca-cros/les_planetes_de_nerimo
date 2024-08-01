@@ -48,7 +48,7 @@ const SessionComposant: React.FC<SessionProps> = ({
         </View>
         <Ionicons
           name={icon} 
-          size={screenHeight * 0.07}
+          size={screenHeight * 0.060}
           color={theme === darkTheme ? "#FAE6BB" : "#23363E"}
           style={{ alignItems:"center", justifyContent:"center", paddingVertical: 1 }}
         />

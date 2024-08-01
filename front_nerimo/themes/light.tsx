@@ -1,9 +1,8 @@
 import { Dimensions, Platform, StyleSheet } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 
-const largeFontSize = RFValue(12)
-const mediumFontSize = RFValue(10)
-const smallFontSize = RFValue(9)
+const mediumFontSize = RFValue(14)
+const smallFontSize = RFValue(11)
 const xSmallFontSize = RFValue(7)
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -32,14 +31,15 @@ export const lightTheme = StyleSheet.create({
     fontSize: smallFontSize,
     color: "#23363E",
     textTransform: "uppercase",
-    paddingVertical: 10,
+    paddingBottom: 20,
+    paddingTop: 10,
   },
 
   iconeContainer: {
     alignItems: "center",
     justifyContent: "flex-end",
     flex: 1,
-    padding: 30,
+    paddingBottom: 20,
   },
   iconeColor: {
     color: "#23363E",
@@ -64,6 +64,7 @@ export const lightTheme = StyleSheet.create({
 
   },
   textInput: {
+    flex: 1,
     color: "#23363E",
     fontFamily: "brotherBold",
     textAlign:'center',
@@ -74,7 +75,7 @@ export const lightTheme = StyleSheet.create({
   },
   input: {
     height: screenHeight*0.12,
-    width: screenWidth*0.3,
+    width: screenWidth*0.40,
     borderRadius: 10,
     borderColor: "#FAE6BB",
     backgroundColor: "#FAE6BB",
@@ -102,9 +103,9 @@ export const lightTheme = StyleSheet.create({
   },
 
   listContainer:{
-    height: screenWidth*0.15,
-    width:screenWidth*0.15,
-    borderRadius: (screenWidth*0.15)/2,
+    height: screenWidth*0.23,
+    width:screenWidth*0.23,
+    borderRadius: (screenWidth*0.23)/2,
     paddingVertical: 10,
     flexDirection: 'column',
     marginVertical: 10,
@@ -134,7 +135,7 @@ export const lightTheme = StyleSheet.create({
     fontFamily: 'brotherBold',
     textTransform: 'uppercase',
     textAlign: "center",
-
+    paddingTop: 10,
   },
 
   sessionContainer: {
@@ -171,7 +172,7 @@ export const lightTheme = StyleSheet.create({
     justifyContent: "center",
     fontFamily: "brotherBold",
     color: "#23363E",
-    fontSize: largeFontSize,  
+    fontSize: mediumFontSize,  
   },
   iconeSessions: {
     color: "#23363E",
@@ -188,17 +189,17 @@ export const lightTheme = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal:16,
+    marginVertical: 15,
   },
   textContainerTopBar: {
     flexDirection: "column",
     alignItems: "center",
     paddingTop:10,
-
   },
   titreLargeTopBar: {
     paddingVertical: 2,
     paddingHorizontal:5,
-    fontSize: largeFontSize,
+    fontSize: mediumFontSize,
     color: "#23363E",
     fontFamily: "brotherBold",
     textAlign: "center",

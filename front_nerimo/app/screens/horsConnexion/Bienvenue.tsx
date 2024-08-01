@@ -14,6 +14,8 @@ const Bienvenue: React.FC = () => {
   const navigation = useNavigation<BienvenueScreen>();
   const { theme } = useTheme();
   const screenHeight = Dimensions.get("window").height;
+  const maxSize = 150; 
+  const iconSize = Math.min(screenHeight * 0.20, maxSize)
 
   return (
     <View style={theme.container}>
@@ -25,7 +27,7 @@ const Bienvenue: React.FC = () => {
           <View style={theme.iconeShadow}>
             <Ionicons
               name="arrow-forward-circle"
-              size={screenHeight * 0.2}
+              size={iconSize}
               style={theme.iconeColor}
             />
           </View>

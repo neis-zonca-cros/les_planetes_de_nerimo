@@ -26,6 +26,8 @@ const CreerSessionPrenom: React.FC = () => {
   const goBack = useGoBack();
   const [prenom, setPrenom] = useState("");
   const screenHeight = Dimensions.get("window").height;
+  const maxSize = 150; 
+  const iconSize = Math.min(screenHeight * 0.20, maxSize)
   const handleNext = () => {
     if (prenom) {
       navigation.navigate("ChoisirPlanete", { prenom });
@@ -60,7 +62,7 @@ const CreerSessionPrenom: React.FC = () => {
             <View style={theme.iconeShadow}>
               <Ionicons
                 name="arrow-forward-circle"
-                size={screenHeight * 0.18}
+                size={iconSize}
                 style={theme.iconeColor}
               />
             </View>

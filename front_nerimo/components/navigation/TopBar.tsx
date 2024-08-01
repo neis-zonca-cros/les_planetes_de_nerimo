@@ -15,7 +15,9 @@ export function TabBarIcon({
 }: ComponentProps<typeof Ionicons>) 
 
 {const screenHeight = Dimensions.get("window").height;
-  return <Ionicons size={screenHeight*0.09} style={[style]} {...rest} />;
+  const maxSize = 56; 
+  const iconSize = Math.min(screenHeight * 0.10, maxSize); 
+  return <Ionicons size={iconSize} style={[style]} {...rest} />;
 }
 
 interface TopBarProps {

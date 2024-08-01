@@ -96,7 +96,7 @@ const SeConnecter: React.FC = () => {
                   <View style={theme.input}>
                     <TextInput
                       style={theme.textInput}
-                      placeholder="E-MAIL"
+                      placeholder="Adresse mail"
                       placeholderTextColor={
                         theme === darkTheme ? "#FAE6BB" : "#23363E"
                       }
@@ -113,7 +113,7 @@ const SeConnecter: React.FC = () => {
                   <View style={theme.input}>
                     <TextInput
                       style={theme.textInput}
-                      placeholder="MOT DE PASSE"
+                      placeholder="Mot de passe"
                       placeholderTextColor={
                         theme === darkTheme ? "#FAE6BB" : "#23363E"
                       }
@@ -135,7 +135,7 @@ const SeConnecter: React.FC = () => {
                     >
                       <View style={theme.iconeShadow}>
                         <ConnexionIcon
-                          width={screenWidth * 0.22}
+                          width={screenWidth * 0.26}
                           fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
                           background={
                             theme === darkTheme ? "#23363E" : "#FAE6BB"
@@ -158,20 +158,20 @@ const SeConnecter: React.FC = () => {
     </View>
   );
 };
+const screenHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    paddingHorizontal: 16,
+  },
+  marginBottomContainer: {
+    marginBottom: screenHeight*0.03,
   },
   buttonContainer: {
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-  },
-  marginBottomContainer: {
-    marginBottom: 20,
   },
   icon: {
     alignItems: "center",

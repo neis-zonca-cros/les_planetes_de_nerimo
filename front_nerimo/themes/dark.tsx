@@ -1,9 +1,8 @@
 import { Dimensions, Platform, StyleSheet } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 
-const largeFontSize = RFValue(12)
-const mediumFontSize = RFValue(10)
-const smallFontSize = RFValue(9)
+const mediumFontSize = RFValue(14)
+const smallFontSize = RFValue(11)
 const xSmallFontSize = RFValue(7)
 const { width: screenWidth, height: screenHeight} = Dimensions.get("window");
 
@@ -29,14 +28,15 @@ export const darkTheme = StyleSheet.create({
     fontSize: smallFontSize,
     color: "#FAE6BB",
     textTransform: "uppercase",
-    paddingVertical: 10,
+    paddingBottom: 20,
+    paddingTop: 10,
   },
 
   iconeContainer: {
     alignItems: "center",
     justifyContent: "flex-end",
     flex: 1,
-    padding: 30,
+    paddingBottom: 20,
   },
   iconeColor: {
     color: "#FAE6BB",
@@ -62,6 +62,7 @@ export const darkTheme = StyleSheet.create({
 
   },
   textInput: {
+    flex: 1,
     color: "#FAE6BB",
     textAlign:'center',
     fontFamily: "brotherBold",
@@ -72,7 +73,7 @@ export const darkTheme = StyleSheet.create({
   },
   input: {
     height: screenHeight*0.12,
-    width: screenWidth*0.3,
+    width: screenWidth*0.40,
     borderRadius: 10,
     borderColor: "#23363E",
     backgroundColor: "#23363E",
@@ -100,9 +101,9 @@ export const darkTheme = StyleSheet.create({
   },
 
   listContainer:{
-    height: screenWidth*0.15,
-    width:screenWidth*0.15,
-    borderRadius: (screenWidth*0.15)/2,
+    height: screenWidth*0.23,
+    width:screenWidth*0.23,
+    borderRadius: (screenWidth*0.23)/2,
     paddingVertical: 10,
     flexDirection: 'column',
     marginVertical: 10,
@@ -132,7 +133,7 @@ export const darkTheme = StyleSheet.create({
     fontFamily: 'brotherBold',
     textTransform: 'uppercase',
     textAlign: "center",
-
+    paddingTop: 10,
   },
 
   sessionContainer: {
@@ -169,7 +170,7 @@ export const darkTheme = StyleSheet.create({
     justifyContent: "center",
     fontFamily: "brotherBold",
     color: "#FAE6BB",
-    fontSize: largeFontSize,
+    fontSize: mediumFontSize,
   },
   iconeSessions: {
     color: "#FAE6BB",
@@ -183,9 +184,10 @@ export const darkTheme = StyleSheet.create({
     right: 0,
     height: 56,
     zIndex: 1,
-    paddingHorizontal: 16,
     justifyContent: "space-between",
     alignItems: "center",
+    paddingHorizontal:16,
+    marginVertical: 15,
   },
   textContainerTopBar: {
     flexDirection: "column",
@@ -195,7 +197,7 @@ export const darkTheme = StyleSheet.create({
   titreLargeTopBar: {
     paddingVertical: 2,
     paddingHorizontal:5,
-    fontSize: largeFontSize,
+    fontSize: mediumFontSize,
     color: "#FAE6BB",
     fontFamily: "brotherBold",
     textAlign: "center",
