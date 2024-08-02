@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -6,10 +6,12 @@ import { RootStackParamList } from "../../types";
 import { useTheme } from "@/themes/themeContext";
 import TopBar from "@/components/navigation/TopBar";
 import Sessions from "@/components/session";
-import { getSessions } from "../../fetchs/sessionFetch";
+import { getSessions, deleteSession } from "../../fetchs/sessionFetch";
 import { Session } from "../../fetchs/sessionFetch";
 import { getUtilisateur } from "../../fetchs/utilisateurFetch";
 import { getPersonnageImageURI } from "@/components/imageSession";
+import ConfirmationModal from "@/components/ConfirmDeleteModal";
+import { Modalize } from "react-native-modalize";
 
 type AccueilApresConnexionScreenProp = StackNavigationProp<
   RootStackParamList,
@@ -23,7 +25,9 @@ const AccueilApresConnexion: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [prenom, setPrenom] = useState<string>("");
-  const [editMode, setEditMode] = useState<boolean>(false); // Edit mode state
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [sessionToDelete, setSessionToDelete] = useState<Session | null>(null);
+  const modalizeRef = useRef<Modalize>(null);
 
   const fetchUtilisateurAndSessions = async () => {
     try {
@@ -76,6 +80,29 @@ const AccueilApresConnexion: React.FC = () => {
     return columns;
   };
 
+  const openDialog = (session: Session) => {
+    setSessionToDelete(session);
+    if (modalizeRef.current) {
+      modalizeRef.current.open();
+    }
+  };
+
+  const handleDelete = async () => {
+    if (sessionToDelete) {
+      try {
+        await deleteSession(sessionToDelete._id);
+        fetchUtilisateurAndSessions();
+        setEditMode(false); 
+      } catch (err) {
+        console.error("Failed to delete session:", err);
+      } finally {
+        if (modalizeRef.current) {
+          modalizeRef.current.close();
+        }
+      }
+    }
+  };
+
   const organizedSessions = organizeSessionsInColumns(sessions);
 
   return (
@@ -84,11 +111,11 @@ const AccueilApresConnexion: React.FC = () => {
         titre="Bienvenue"
         prenom={prenom}
         iconeZeroNom={editMode ? null : "brush-outline"}
-        iconeZeroAction={editMode? undefined: toggleEditMode}
+        iconeZeroAction={editMode ? undefined : toggleEditMode}
         iconeDroiteNom={editMode ? "close-outline" : "planet-outline"}
-        iconeDroiteAction={editMode? toggleEditMode: menuUtilisateur}
-        iconeGaucheNom={editMode? null: "add-outline"}
-        iconeGaucheAction={editMode? undefined: addSession}
+        iconeDroiteAction={editMode ? toggleEditMode : menuUtilisateur}
+        iconeGaucheNom={editMode ? null : "add-outline"}
+        iconeGaucheAction={editMode ? undefined : addSession}
       />
 
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -113,10 +140,10 @@ const AccueilApresConnexion: React.FC = () => {
                       imageSource={getPersonnageImageURI(
                         session.personnageRef.nom
                       )}
-                      onPress={editMode ? () => console.log('delete session', session.prenom) : BoutonSession}
-                      
+                      onPress={
+                        editMode ? () => openDialog(session) : BoutonSession
+                      }
                       icon={editMode ? "trash-outline" : "play-outline"}
-                      
                     />
                   </View>
                 ))}
@@ -125,6 +152,15 @@ const AccueilApresConnexion: React.FC = () => {
           </View>
         )}
       </ScrollView>
+
+      {sessionToDelete && (
+        <ConfirmationModal
+          ref={modalizeRef}
+          onConfirm={handleDelete}
+          onCancel={() => modalizeRef.current?.close()}
+          sessionName={sessionToDelete.prenom}
+        />
+      )}
     </View>
   );
 };

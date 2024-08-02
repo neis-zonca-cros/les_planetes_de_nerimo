@@ -14,6 +14,11 @@ export const lightTheme = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FAE6BB",
   },
+  containerModal: {
+    padding: 20,
+    alignItems: "center",
+    backgroundColor: "#FAE6BB",
+  },
   scrollViewContent: {
     flexGrow: 1,
     paddingHorizontal: 20,

@@ -12,6 +12,11 @@ export const darkTheme = StyleSheet.create({
     flex: 1,
     backgroundColor: "#23363E",
   },
+  containerModal: {
+    padding: 20,
+    alignItems: "center",
+    backgroundColor: "#23363E",
+  },
   scrollViewContent: {
     flexGrow: 1,
     paddingHorizontal: 20,
