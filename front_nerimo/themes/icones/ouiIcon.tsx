@@ -1,5 +1,5 @@
 import * as React from "react";
-import Svg, { SvgProps, G, Rect, Path, Defs } from "react-native-svg";
+import Svg, { G, Rect, Path, Defs } from "react-native-svg";
 import { IconProps } from "@/themes/icones/iconProps";
 
 const OuiIcon: React.FC<IconProps> = ({ width, fill, background }) => (

@@ -1,21 +1,11 @@
+// fetchs/deconnexion.ts
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../types";
 
-type NavigationProp = StackNavigationProp<RootStackParamList>;
-
-export const logout = async (
-  navigation: NavigationProp,
-  routeName: keyof RootStackParamList
-) => {
+export const logout = async () => {
   try {
     await AsyncStorage.removeItem("token");
     await AsyncStorage.removeItem("utilisateurId");
-
-    navigation.reset({
-      index: 0,
-      routes: [{ name: routeName }],
-    });
   } catch (error) {
     console.error("Erreur lors de la déconnexion:", error);
     throw error;

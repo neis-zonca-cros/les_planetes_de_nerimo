@@ -1,4 +1,5 @@
-import React from "react";
+// SeConnecter.tsx
+import React from 'react';
 import {
   View,
   TextInput,
@@ -9,60 +10,48 @@ import {
   ScrollView,
   Alert,
   Dimensions,
-} from "react-native";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import { RootStackParamList } from "@/app/types";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { useNavigation } from "@react-navigation/native";
-import { useTheme } from "@/themes/themeContext";
-import { ConnexionIcon } from "@/themes/icones/connexionIcon";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { darkTheme } from "@/themes/dark";
-import TopBar from "@/components/navigation/TopBar";
-import login from "@/app/fetchs/connexionFetch";
-import useGoToCreerUnCompte from "@/components/navigation/useGoToCreerCompte";
+} from 'react-native';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import { RootStackParamList } from '@/app/types';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
+import { useTheme } from '@/themes/themeContext';
+import { ConnexionIcon } from '@/themes/icones/connexionIcon';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { darkTheme } from '@/themes/dark';
+import TopBar from '@/components/navigation/TopBar';
+import useGoToCreerUnCompte from '@/components/navigation/useGoToCreerCompte';
+import { useUser } from '@/app/screens/userContext'; 
 
-type SeConnecterScreen = StackNavigationProp<RootStackParamList, "SeConnecter">;
+type SeConnecterScreen = StackNavigationProp<RootStackParamList, 'SeConnecter'>;
 
 const SeConnecter: React.FC = () => {
   const navigation = useNavigation<SeConnecterScreen>();
   const { theme } = useTheme();
   const goBackToAccueil = () => {
-    navigation.navigate("AccueilAvantConnexion");
+    navigation.navigate('AccueilAvantConnexion');
   };
   const creerUnCompte = useGoToCreerUnCompte();
-  const screenWidth = Dimensions.get("window").width;
+  const screenWidth = Dimensions.get('window').width;
+  const { connexion } = useUser();
 
   const handleLogin = async (values: { email: string; mdp: string }) => {
     try {
       const emailNormalized = values.email.toLowerCase();
-
-      const token = await login(emailNormalized, values.mdp);
-      if (token) {
-        navigation.reset({
-          index: 0,
-          routes: [
-            { name: "AccueilApresConnexion", params: { refresh: true } },
-          ],
-        });
-      }
+      await connexion(emailNormalized, values.mdp);
+      navigation.navigate('AccueilApresConnexion', { refresh: true });
     } catch (error) {
-      console.error("Login error:", error);
-      Alert.alert(
-        "Login Error",
-        "Failed to log in. Please check your credentials."
-      );
+      console.error('Login error:', error);
+      Alert.alert('Login Error', 'Failed to log in. Please check your credentials.');
     }
   };
 
   const loginValidationSchema = Yup.object().shape({
     email: Yup.string()
-      .email("Email invalide")
-      .required("Oups, tu as oublié de mettre ton email !"),
-    mdp: Yup.string().required(
-      "Oups, tu as oublié de mettre ton mot de passe !"
-    ),
+      .email('Email invalide')
+      .required('Oups, tu as oublié de mettre ton email !'),
+    mdp: Yup.string().required('Oups, tu as oublié de mettre ton mot de passe !'),
   });
 
   return (
@@ -74,12 +63,12 @@ const SeConnecter: React.FC = () => {
         iconeDroiteAction={goBackToAccueil}
       />
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
         <ScrollView contentContainerStyle={theme.scrollViewContent}>
           <Formik
-            initialValues={{ email: "", mdp: "" }}
+            initialValues={{ email: '', mdp: '' }}
             validationSchema={loginValidationSchema}
             onSubmit={handleLogin}
           >
@@ -98,10 +87,10 @@ const SeConnecter: React.FC = () => {
                       style={theme.textInput}
                       placeholder="Adresse mail"
                       placeholderTextColor={
-                        theme === darkTheme ? "#FAE6BB" : "#23363E"
+                        theme === darkTheme ? '#FAE6BB' : '#23363E'
                       }
-                      onChangeText={handleChange("email")}
-                      onBlur={handleBlur("email")}
+                      onChangeText={handleChange('email')}
+                      onBlur={handleBlur('email')}
                       value={values.email}
                       keyboardType="email-address"
                     />
@@ -115,10 +104,10 @@ const SeConnecter: React.FC = () => {
                       style={theme.textInput}
                       placeholder="Mot de passe"
                       placeholderTextColor={
-                        theme === darkTheme ? "#FAE6BB" : "#23363E"
+                        theme === darkTheme ? '#FAE6BB' : '#23363E'
                       }
-                      onChangeText={handleChange("mdp")}
-                      onBlur={handleBlur("mdp")}
+                      onChangeText={handleChange('mdp')}
+                      onBlur={handleBlur('mdp')}
                       value={values.mdp}
                       secureTextEntry
                     />
@@ -136,9 +125,9 @@ const SeConnecter: React.FC = () => {
                       <View style={theme.iconeShadow}>
                         <ConnexionIcon
                           width={screenWidth * 0.26}
-                          fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
+                          fill={theme === darkTheme ? '#FFAD80' : '#825C6E'}
                           background={
-                            theme === darkTheme ? "#23363E" : "#FAE6BB"
+                            theme === darkTheme ? '#23363E' : '#FAE6BB'
                           }
                         />
                       </View>
@@ -158,23 +147,24 @@ const SeConnecter: React.FC = () => {
     </View>
   );
 };
-const screenHeight = Dimensions.get("window").height;
+
+const screenHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   marginBottomContainer: {
-    marginBottom: screenHeight*0.03,
+    marginBottom: screenHeight * 0.03,
   },
   buttonContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
   },
   icon: {
-    alignItems: "center",
+    alignItems: 'center',
     paddingTop: 10,
   },
 });

@@ -9,4 +9,5 @@ export type RootStackParamList = {
   CreerSessionPrenom: undefined;
   ChoisirPlanete: { prenom: string };
   ChoisirPersonnage: { prenom: string; planeteId: string };
+  MonProfil: undefined;
 };

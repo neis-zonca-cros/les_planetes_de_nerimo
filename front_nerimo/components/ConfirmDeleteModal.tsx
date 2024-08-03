@@ -54,6 +54,8 @@ const ConfirmDeleteModal = forwardRef<Modalize, ConfirmationModalProps>(
   }
 );
 
+ConfirmDeleteModal.displayName = "ConfirmDeleteModal";
+
 const styles = StyleSheet.create({
   container: {
     padding: 20,

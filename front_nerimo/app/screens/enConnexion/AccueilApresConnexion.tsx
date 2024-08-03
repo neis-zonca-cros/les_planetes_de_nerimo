@@ -8,10 +8,10 @@ import TopBar from "@/components/navigation/TopBar";
 import Sessions from "@/components/session";
 import { getSessions, deleteSession } from "../../fetchs/sessionFetch";
 import { Session } from "../../fetchs/sessionFetch";
-import { getUtilisateur } from "../../fetchs/utilisateurFetch";
-import { getPersonnageImageURI } from "@/components/imageSession";
-import ConfirmationModal from "@/components/ConfirmDeleteModal";
+import ConfirmDeleteModal from "@/components/ConfirmDeleteModal";
 import { Modalize } from "react-native-modalize";
+import { useUser } from "@/app/screens/userContext"; 
+import { getPersonnageImageURI } from "@/components/imageSession";
 
 type AccueilApresConnexionScreenProp = StackNavigationProp<
   RootStackParamList,
@@ -21,19 +21,16 @@ type AccueilApresConnexionScreenProp = StackNavigationProp<
 const AccueilApresConnexion: React.FC = () => {
   const navigation = useNavigation<AccueilApresConnexionScreenProp>();
   const { theme } = useTheme();
+  const { utilisateur } = useUser(); // Utiliser le contexte utilisateur
   const [sessions, setSessions] = useState<Session[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [prenom, setPrenom] = useState<string>("");
   const [editMode, setEditMode] = useState<boolean>(false);
   const [sessionToDelete, setSessionToDelete] = useState<Session | null>(null);
   const modalizeRef = useRef<Modalize>(null);
 
-  const fetchUtilisateurAndSessions = async () => {
+  const fetchSessions = async () => {
     try {
-      const utilisateur = await getUtilisateur();
-      setPrenom(utilisateur.prenom);
-
       const fetchedSessions = await getSessions();
       setSessions(fetchedSessions);
     } catch (err) {
@@ -45,13 +42,13 @@ const AccueilApresConnexion: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchUtilisateurAndSessions();
+    fetchSessions();
   }, []);
 
   useFocusEffect(
     React.useCallback(() => {
       if (navigation.isFocused()) {
-        fetchUtilisateurAndSessions();
+        fetchSessions();
       }
     }, [navigation])
   );
@@ -91,7 +88,7 @@ const AccueilApresConnexion: React.FC = () => {
     if (sessionToDelete) {
       try {
         await deleteSession(sessionToDelete._id);
-        fetchUtilisateurAndSessions();
+        fetchSessions();
         setEditMode(false); 
       } catch (err) {
         console.error("Failed to delete session:", err);
@@ -109,7 +106,7 @@ const AccueilApresConnexion: React.FC = () => {
     <View style={theme.container}>
       <TopBar
         titre="Bienvenue"
-        prenom={prenom}
+        prenom={utilisateur?.prenom || ""} 
         iconeZeroNom={editMode ? null : "brush-outline"}
         iconeZeroAction={editMode ? undefined : toggleEditMode}
         iconeDroiteNom={editMode ? "close-outline" : "planet-outline"}
@@ -154,7 +151,7 @@ const AccueilApresConnexion: React.FC = () => {
       </ScrollView>
 
       {sessionToDelete && (
-        <ConfirmationModal
+        <ConfirmDeleteModal
           ref={modalizeRef}
           onConfirm={handleDelete}
           onCancel={() => modalizeRef.current?.close()}
