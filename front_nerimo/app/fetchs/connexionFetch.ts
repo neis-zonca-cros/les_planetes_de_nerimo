@@ -1,5 +1,5 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import apiFetch from "./apiService";
+import * as SecureStore from 'expo-secure-store';
 
 interface LoginResponse {
   token: string;
@@ -15,8 +15,8 @@ async function login(email: string, mdp: string): Promise<string> {
 
     const { token, utilisateurId } = response;
 
-    await AsyncStorage.setItem("token", token);
-    await AsyncStorage.setItem("utilisateurId", utilisateurId);
+    await SecureStore.setItemAsync('token', token);
+    await SecureStore.setItemAsync('utilisateurId', utilisateurId);
 
     return token;
   } catch (error) {

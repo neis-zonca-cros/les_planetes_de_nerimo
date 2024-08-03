@@ -54,7 +54,6 @@ export async function connexionUtilisateur(req, res) {
       const token = jwt.sign(
         { utilisateurId: utilisateur._id, email: utilisateur.email, prenom: utilisateur.prenom, admin: utilisateur.admin },
         process.env.JWT_SECRET,
-        { expiresIn: '1h' } 
       );
 
       res.status(200).json({ message: 'Connexion réussie', utilisateurId: utilisateur._id, token });

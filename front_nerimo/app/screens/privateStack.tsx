@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import AccueilApresConnexion from '@/app/screens/enConnexion/AccueilApresConnexion';
 import MenuUtilisateur from '@/app/screens/enConnexion/MenuUtilisateur';
@@ -6,10 +6,14 @@ import CreerSessionPrenom from '@/app/screens/enConnexion/creerSession/CreerSess
 import ChoisirPlanete from '@/app/screens/enConnexion/creerSession/ChoisirPlanete';
 import ChoisirPersonnage from '@/app/screens/enConnexion/creerSession/ChoisirPersonnage';
 import MonProfil from './enConnexion/MonProfil';
+import { useUser } from './userContext';
+import { AppState, AppStateStatus } from 'react-native';
+import { useAutoLogout } from '../fetchs/useAutoLogOut';
 
 const Stack = createStackNavigator();
 
 const PrivateStack: React.FC = () => {
+  useAutoLogout();
   return (
     <Stack.Navigator initialRouteName='AccueilApresConnexion'>
       <Stack.Screen name="AccueilApresConnexion" component={AccueilApresConnexion} options={{ headerShown: false }} />

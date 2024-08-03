@@ -37,7 +37,6 @@ beforeEach(async () => {
   tokenNonAdmin = jwt.sign(
     { utilisateurId: utilisateurNonAdmin._id, email: utilisateurNonAdmin.email, admin: utilisateurNonAdmin.admin },
     process.env.JWT_SECRET,
-    { expiresIn: '1h' }
   );
 
   const nouvelUtilisateurAdmin = new Utilisateur({
@@ -51,7 +50,6 @@ beforeEach(async () => {
   tokenAdmin = jwt.sign(
     { utilisateurId: utilisateurAdmin._id, email: utilisateurAdmin.email, admin: utilisateurAdmin.admin },
     process.env.JWT_SECRET,
-    { expiresIn: '1h' }
   );
 
   const nouvellePlanete = new Planete({

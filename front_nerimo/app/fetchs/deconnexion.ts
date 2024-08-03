@@ -1,11 +1,11 @@
 // fetchs/deconnexion.ts
-
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { clearCredentials } from "./clearCredentials";
 
 export const logout = async () => {
   try {
-    await AsyncStorage.removeItem("token");
-    await AsyncStorage.removeItem("utilisateurId");
+    await clearCredentials();
+    console.log("Déconnexion réussie")
+    
   } catch (error) {
     console.error("Erreur lors de la déconnexion:", error);
     throw error;

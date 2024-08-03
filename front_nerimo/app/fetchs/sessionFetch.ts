@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import apiFetch from "./apiService";
+import { getCredentials } from "./getCredentials";
 
 export interface Session {
   _id: string;
@@ -24,7 +25,7 @@ interface SessionsResponse {
 
 export async function getSessions(): Promise<Session[]> {
   try {
-    const token = await AsyncStorage.getItem("token");
+    const { token } = await getCredentials();
     if (!token) {
       throw new Error("Token non trouvé");
     }
@@ -53,7 +54,7 @@ type DeleteSessionResponse = {
 
 export async function deleteSession(sessionId: string): Promise<Session> {
   try {
-    const token = await AsyncStorage.getItem("token");
+    const { token } = await getCredentials();
     if (!token) {
       throw new Error("Token non trouvé");
     }

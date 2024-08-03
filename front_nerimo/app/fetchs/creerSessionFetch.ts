@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import apiFetch from "./apiService";
+import { getCredentials } from "./getCredentials";
 
 export interface Planete {
   _id: string;
@@ -54,7 +55,7 @@ interface CreateSessionResponse {
 
 export async function getPlanetes(): Promise<Planete[]> {
   try {
-    const token = await AsyncStorage.getItem("token");
+    const { token } = await getCredentials();
     if (!token) {
       throw new Error("Token non trouvé");
     }
@@ -77,7 +78,7 @@ export async function getPersonnagesByPlanete(
   planeteId: string
 ): Promise<Personnage[]> {
   try {
-    const token = await AsyncStorage.getItem("token");
+    const { token } = await getCredentials();
     if (!token) {
       throw new Error("Token non trouvé");
     }
@@ -103,7 +104,7 @@ export async function createSession(
   sessionData: CreateSessionData
 ): Promise<Session> {
   try {
-    const token = await AsyncStorage.getItem("token");
+    const { token } = await getCredentials();
     if (!token) {
       throw new Error("Token non trouvé");
     }

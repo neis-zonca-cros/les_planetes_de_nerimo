@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import apiFetch from "./apiService";
+import { getCredentials } from "./getCredentials";
 
 interface UtilisateurResponse {
   data: {
@@ -12,8 +13,7 @@ interface UtilisateurResponse {
 
 export async function getUtilisateur(): Promise<UtilisateurResponse["data"]> {
   try {
-    const token = await AsyncStorage.getItem("token");
-    const utilisateurId = await AsyncStorage.getItem("utilisateurId");
+    const { token, utilisateurId } = await getCredentials();
     if (!token) {
       throw new Error("Token non trouvé");
     }
