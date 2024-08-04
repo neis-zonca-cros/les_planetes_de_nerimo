@@ -8,7 +8,7 @@ import {
   Image,
   Dimensions,
 } from "react-native";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "@/app/types";
 import { useTheme } from "@/app/hooks/themeContext";
@@ -17,6 +17,7 @@ import { Planete } from "@/app/services/creerSessionFetch";
 import TopBar from "@/app/components/TopBar";
 import { getPlaneteImageURI } from "@/app/components/imageSession";
 import useGoBack from "@/app/navigation/useGoBack";
+import { useSession } from "@/app/hooks/sessionContext";
 
 type ChoisirPlaneteScreenProp = StackNavigationProp<
   RootStackParamList,
@@ -25,11 +26,9 @@ type ChoisirPlaneteScreenProp = StackNavigationProp<
 
 const ChoisirPlanete: React.FC = () => {
   const navigation = useNavigation<ChoisirPlaneteScreenProp>();
-  const route = useRoute<RouteProp<RootStackParamList, "ChoisirPlanete">>();
   const { theme } = useTheme();
-  const prenom = route.params?.prenom;
   const goBack = useGoBack();
-
+  const { setCurrentSession } = useSession(); 
   const [planetes, setPlanetes] = useState<Planete[]>([]);
 
   useEffect(() => {
@@ -45,7 +44,11 @@ const ChoisirPlanete: React.FC = () => {
   }, []);
 
   const handleSelectPlanete = (planeteId: string) => {
-    navigation.navigate("ChoisirPersonnage", { prenom, planeteId });
+    setCurrentSession(prev => ({
+      ...prev,
+      planeteRef: planeteId
+    }));
+    navigation.navigate("ChoisirPersonnage");
   };
 
   const renderItem = ({ item }: { item: Planete }) => (
@@ -104,4 +107,5 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
 });
+
 export default ChoisirPlanete;

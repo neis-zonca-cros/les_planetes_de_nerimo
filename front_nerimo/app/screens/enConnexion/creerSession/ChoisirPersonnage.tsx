@@ -8,18 +8,18 @@ import {
   StyleSheet,
   Dimensions,
 } from "react-native";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "@/app/types";
 import { useTheme } from "@/app/hooks/themeContext";
 import {
-  createSession,
   getPersonnagesByPlanete,
   Personnage,
 } from "@/app/services/creerSessionFetch";
 import TopBar from "@/app/components/TopBar";
 import { getPersonnageImageURI } from "@/app/components/imageSession";
 import useGoBack from "@/app/navigation/useGoBack";
+import { useSession } from "@/app/hooks/sessionContext";
 
 type ChoisirPersonnageScreenProp = StackNavigationProp<
   RootStackParamList,
@@ -28,38 +28,35 @@ type ChoisirPersonnageScreenProp = StackNavigationProp<
 
 const ChoisirPersonnage: React.FC = () => {
   const navigation = useNavigation<ChoisirPersonnageScreenProp>();
-  const route = useRoute<RouteProp<RootStackParamList, "ChoisirPersonnage">>();
   const { theme } = useTheme();
-  const prenom = route.params?.prenom;
-  const planeteId = route.params?.planeteId;
   const goBack = useGoBack();
-
+  const { currentSession, createNewSession } = useSession();
   const [personnages, setPersonnages] = useState<Personnage[]>([]);
+  const { prenom, planeteRef } = currentSession || {};
 
   useEffect(() => {
     const fetchPersonnages = async () => {
       try {
-        if (planeteId) {
-          const data = await getPersonnagesByPlanete(planeteId);
+        if (planeteRef && typeof planeteRef === 'string') {
+          const data = await getPersonnagesByPlanete(planeteRef);
           setPersonnages(data);
-          console.log(planeteId);
         }
       } catch (error) {
         console.error("Erreur lors de la récupération des personnages:", error);
       }
     };
     fetchPersonnages();
-  }, [planeteId]);
+  }, [planeteRef]);
 
   const handleSelectPersonnage = async (personnageId: string) => {
     try {
       const sauvegardeParDefaut = "oui";
 
-      if (prenom && planeteId && personnageId) {
-        await createSession({
+      if (prenom && planeteRef && personnageId) {
+        await createNewSession({
           prenom,
           sauvegarde: sauvegardeParDefaut,
-          planeteRef: planeteId,
+          planeteRef, 
           personnageRef: personnageId,
         });
 
@@ -69,7 +66,7 @@ const ChoisirPersonnage: React.FC = () => {
           "Données de session manquantes :",
           prenom,
           sauvegardeParDefaut,
-          planeteId,
+          planeteRef,
           personnageId
         );
       }
@@ -111,7 +108,9 @@ const ChoisirPersonnage: React.FC = () => {
     </View>
   );
 };
+
 const { height: screenHeight } = Dimensions.get("window");
+
 const styles = StyleSheet.create({
   icon: {
     width: screenHeight * 0.17,

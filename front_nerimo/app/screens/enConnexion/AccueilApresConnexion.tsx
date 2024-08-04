@@ -6,12 +6,12 @@ import { RootStackParamList } from "../../types";
 import { useTheme } from "@/app/hooks/themeContext";
 import TopBar from "@/app/components/TopBar";
 import Sessions from "@/app/components/session";
-import { getSessions, deleteSession } from "../../services/sessionFetch";
-import { Session } from "../../services/sessionFetch";
 import ConfirmDeleteModal from "@/app/components/ConfirmDeleteModal";
 import { Modalize } from "react-native-modalize";
 import { useUser } from "@/app/hooks/userContext"; 
 import { getPersonnageImageURI } from "@/app/components/imageSession";
+import { useSession } from "@/app/hooks/sessionContext";
+import { Session } from "@/app/services/sessionFetch";
 
 type AccueilApresConnexionScreenProp = StackNavigationProp<
   RootStackParamList,
@@ -21,36 +21,23 @@ type AccueilApresConnexionScreenProp = StackNavigationProp<
 const AccueilApresConnexion: React.FC = () => {
   const navigation = useNavigation<AccueilApresConnexionScreenProp>();
   const { theme } = useTheme();
-  const { utilisateur } = useUser(); 
-  const [sessions, setSessions] = useState<Session[]>([]);
+  const { utilisateur } = useUser();
+  const { sessions, refreshSessions, removeSession } = useSession();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [sessionToDelete, setSessionToDelete] = useState<Session | null>(null);
   const modalizeRef = useRef<Modalize>(null);
 
-  const fetchSessions = async () => {
-    try {
-      const fetchedSessions = await getSessions();
-      setSessions(fetchedSessions);
-    } catch (err) {
-      setError("Erreur lors de la récupération des données");
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchSessions();
-  }, []);
-
   useFocusEffect(
     React.useCallback(() => {
       if (navigation.isFocused()) {
-        fetchSessions();
+        refreshSessions().catch(err => {
+          setError("Erreur lors de la récupération des données");
+          console.error(err);
+        }).finally(() => setLoading(false));
       }
-    }, [navigation])
+    }, [navigation, refreshSessions])
   );
 
   const addSession = () => {
@@ -88,11 +75,11 @@ const AccueilApresConnexion: React.FC = () => {
       console.log("Modalize n'est pas encore prêt");
     }
   };
+
   const handleDelete = async () => {
     if (sessionToDelete) {
       try {
-        await deleteSession(sessionToDelete._id);
-        fetchSessions();
+        await removeSession(sessionToDelete._id);
         setEditMode(false); 
       } catch (err) {
         console.error("Failed to delete session:", err);
@@ -104,13 +91,13 @@ const AccueilApresConnexion: React.FC = () => {
     }
   };
 
-  const organizedSessions = organizeSessionsInColumns(sessions);
+  const organizedSessions = organizeSessionsInColumns(sessions || []);
 
   return (
     <View style={theme.container}>
       <TopBar
         titre="Bienvenue"
-        prenom={utilisateur?.prenom || ""} 
+        prenom={utilisateur?.prenom || ""}
         iconeZeroNom={editMode ? null : "brush-outline"}
         iconeZeroAction={editMode ? undefined : toggleEditMode}
         iconeDroiteNom={editMode ? "close-outline" : "planet-outline"}
@@ -124,7 +111,7 @@ const AccueilApresConnexion: React.FC = () => {
           <Text style={theme.listText}>Chargement...</Text>
         ) : error ? (
           <Text style={theme.listText}>{error}</Text>
-        ) : sessions.length === 0 ? (
+        ) : sessions && sessions.length === 0 ? (
           <Text style={theme.listText}>
             Pour commencer, ajoutez une session
           </Text>

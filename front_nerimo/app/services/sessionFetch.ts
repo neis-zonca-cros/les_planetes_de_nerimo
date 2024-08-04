@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import apiFetch from "./apiService";
 import { getCredentials } from "./credentials/getCredentials";
 

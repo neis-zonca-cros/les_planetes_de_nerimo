@@ -7,7 +7,7 @@ export type RootStackParamList = {
   CreerUnCompte: undefined;
   MenuUtilisateur: undefined;
   CreerSessionPrenom: undefined;
-  ChoisirPlanete: { prenom: string };
-  ChoisirPersonnage: { prenom: string; planeteId: string };
+  ChoisirPlanete: undefined;
+  ChoisirPersonnage: undefined;
   MonProfil: undefined;
 };

@@ -14,6 +14,7 @@ import TopBar from "@/app/components/TopBar";
 import { darkTheme } from "@/app/constants/dark";
 import { Ionicons } from "@expo/vector-icons";
 import useGoBack from "@/app/navigation/useGoBack";
+import { useSession } from "@/app/hooks/sessionContext";
 
 type CreerSessionPrenomScreenProp = StackNavigationProp<
   RootStackParamList,
@@ -24,13 +25,19 @@ const CreerSessionPrenom: React.FC = () => {
   const navigation = useNavigation<CreerSessionPrenomScreenProp>();
   const { theme } = useTheme();
   const goBack = useGoBack();
+  const { setCurrentSession } = useSession();
   const [prenom, setPrenom] = useState("");
   const screenHeight = Dimensions.get("window").height;
   const maxSize = 150; 
-  const iconSize = Math.min(screenHeight * 0.20, maxSize)
+  const iconSize = Math.min(screenHeight * 0.20, maxSize);
+
   const handleNext = () => {
     if (prenom) {
-      navigation.navigate("ChoisirPlanete", { prenom });
+      setCurrentSession(prev => ({
+        ...prev,
+        prenom
+      }));
+      navigation.navigate("ChoisirPlanete");
     } else {
       alert("Veuillez entrer un prénom.");
     }
