@@ -6,15 +6,15 @@ import {
   Alert,
   Dimensions,
 } from "react-native";
-import { useTheme } from "@/themes/themeContext";
-import TopBar from "@/components/navigation/TopBar";
-import { darkTheme } from "@/themes/dark";
-import { AProposIcon } from "@/themes/icones/aProposIcon";
-import useGoBack from "@/components/navigation/useGoBack";
+import { useTheme } from "@/app/hooks/themeContext";
+import TopBar from "@/app/components/TopBar";
+import { darkTheme } from "@/app/constants/dark";
+import { AProposIcon } from "@/app/assets/icons/aProposIcon";
+import useGoBack from "@/app/navigation/useGoBack";
 import { ScrollView } from "react-native-gesture-handler";
-import { ProfilRondIcon } from "@/themes/icones/profilRondIcon";
-import { DeconnexionRondIcon } from "@/themes/icones/deconnexionRondIcon";
-import { useUser } from "../userContext";
+import { ProfilRondIcon } from "@/app/assets/icons/profilRondIcon";
+import { DeconnexionRondIcon } from "@/app/assets/icons/deconnexionRondIcon";
+import { useUser } from "../../hooks/userContext";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "@/app/types";
 import { useNavigation } from "@react-navigation/native";
@@ -29,7 +29,8 @@ const MenuUtilisateur: React.FC = () => {
   const screenHeight = Dimensions.get("window").height;
   const handleLogout = async () => {
     try {
-      await deconnexion("Bienvenue");
+      await deconnexion();
+      navigation.navigate("Bienvenue");
     } catch (error) {
       console.error("Erreur lors de la déconnexion:", error);
       Alert.alert("Erreur", "La déconnexion a échoué. Veuillez réessayer.");

@@ -4,8 +4,8 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "@/app/types";
 import { Ionicons } from "@expo/vector-icons";
-import { useTheme } from "@/themes/themeContext";
-import TopBar from "@/components/navigation/TopBar";
+import { useTheme } from "@/app/hooks/themeContext";
+import TopBar from "@/app/components/TopBar";
 import { Dimensions } from "react-native";
 
 type BienvenueScreen = StackNavigationProp<RootStackParamList, "Bienvenue">;

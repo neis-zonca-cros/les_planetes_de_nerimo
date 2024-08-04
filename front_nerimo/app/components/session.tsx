@@ -1,5 +1,5 @@
-import { darkTheme } from "@/themes/dark";
-import { useTheme } from "@/themes/themeContext";
+import { darkTheme } from "@/app/constants/dark";
+import { useTheme } from "@/app/hooks/themeContext";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { View, Text, Image, StyleSheet, Dimensions } from "react-native";

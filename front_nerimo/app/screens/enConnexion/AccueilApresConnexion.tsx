@@ -3,15 +3,15 @@ import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../types";
-import { useTheme } from "@/themes/themeContext";
-import TopBar from "@/components/navigation/TopBar";
-import Sessions from "@/components/session";
-import { getSessions, deleteSession } from "../../fetchs/sessionFetch";
-import { Session } from "../../fetchs/sessionFetch";
-import ConfirmDeleteModal from "@/components/ConfirmDeleteModal";
+import { useTheme } from "@/app/hooks/themeContext";
+import TopBar from "@/app/components/TopBar";
+import Sessions from "@/app/components/session";
+import { getSessions, deleteSession } from "../../services/sessionFetch";
+import { Session } from "../../services/sessionFetch";
+import ConfirmDeleteModal from "@/app/components/ConfirmDeleteModal";
 import { Modalize } from "react-native-modalize";
-import { useUser } from "@/app/screens/userContext"; 
-import { getPersonnageImageURI } from "@/components/imageSession";
+import { useUser } from "@/app/hooks/userContext"; 
+import { getPersonnageImageURI } from "@/app/components/imageSession";
 
 type AccueilApresConnexionScreenProp = StackNavigationProp<
   RootStackParamList,
@@ -21,7 +21,7 @@ type AccueilApresConnexionScreenProp = StackNavigationProp<
 const AccueilApresConnexion: React.FC = () => {
   const navigation = useNavigation<AccueilApresConnexionScreenProp>();
   const { theme } = useTheme();
-  const { utilisateur } = useUser(); // Utiliser le contexte utilisateur
+  const { utilisateur } = useUser(); 
   const [sessions, setSessions] = useState<Session[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -78,12 +78,16 @@ const AccueilApresConnexion: React.FC = () => {
   };
 
   const openDialog = (session: Session) => {
+    console.log("Ouverture de la modal pour la session :", session);
     setSessionToDelete(session);
+    console.log("sessionToDelete après mise à jour :", sessionToDelete);
     if (modalizeRef.current) {
+      console.log("Modalize est prêt à ouvrir");
       modalizeRef.current.open();
+    } else {
+      console.log("Modalize n'est pas encore prêt");
     }
   };
-
   const handleDelete = async () => {
     if (sessionToDelete) {
       try {

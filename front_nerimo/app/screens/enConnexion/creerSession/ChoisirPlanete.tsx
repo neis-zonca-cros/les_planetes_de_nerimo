@@ -11,12 +11,12 @@ import {
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "@/app/types";
-import { useTheme } from "@/themes/themeContext";
-import { getPlanetes } from "@/app/fetchs/creerSessionFetch";
-import { Planete } from "@/app/fetchs/creerSessionFetch";
-import TopBar from "@/components/navigation/TopBar";
-import { getPlaneteImageURI } from "@/components/imageSession";
-import useGoBack from "@/components/navigation/useGoBack";
+import { useTheme } from "@/app/hooks/themeContext";
+import { getPlanetes } from "@/app/services/creerSessionFetch";
+import { Planete } from "@/app/services/creerSessionFetch";
+import TopBar from "@/app/components/TopBar";
+import { getPlaneteImageURI } from "@/app/components/imageSession";
+import useGoBack from "@/app/navigation/useGoBack";
 
 type ChoisirPlaneteScreenProp = StackNavigationProp<
   RootStackParamList,

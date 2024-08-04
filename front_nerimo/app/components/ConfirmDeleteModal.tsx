@@ -1,5 +1,5 @@
-import { darkTheme } from "@/themes/dark";
-import { useTheme } from "@/themes/themeContext";
+import { darkTheme } from "@/app/constants/dark";
+import { useTheme } from "@/app/hooks/themeContext";
 import React, { forwardRef } from "react";
 import {
   View,
@@ -9,8 +9,8 @@ import {
   Dimensions,
 } from "react-native";
 import { Modalize } from "react-native-modalize";
-import { OuiIcon } from "@/themes/icones/ouiIcon";
-import { NonIcon } from "@/themes/icones/nonIcon";
+import { OuiIcon } from "@/app/assets/icons/ouiIcon";
+import { NonIcon } from "@/app/assets/icons/nonIcon";
 
 interface ConfirmationModalProps {
   onConfirm: () => void;
@@ -53,8 +53,6 @@ const ConfirmDeleteModal = forwardRef<Modalize, ConfirmationModalProps>(
     );
   }
 );
-
-ConfirmDeleteModal.displayName = "ConfirmDeleteModal";
 
 const styles = StyleSheet.create({
   container: {

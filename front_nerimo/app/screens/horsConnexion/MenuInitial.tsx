@@ -8,14 +8,14 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "@/app/types";
-import { useTheme } from "@/themes/themeContext";
-import TopBar from "@/components/navigation/TopBar";
-import { CompteRondIcon } from "@/themes/icones/compteRondIcon";
-import { darkTheme } from "@/themes/dark";
-import { ConnexionRondIcon } from "@/themes/icones/connexionRondIcon";
-import { AProposIcon } from "@/themes/icones/aProposIcon";
-import useGoToConnect from "@/components/navigation/useGoToConnect";
-import useGoToCreerUnCompte from "@/components/navigation/useGoToCreerCompte";
+import { useTheme } from "@/app/hooks/themeContext";
+import TopBar from "@/app/components/TopBar";
+import { CompteRondIcon } from "@/app/assets/icons/compteRondIcon";
+import { darkTheme } from "@/app/constants/dark";
+import { ConnexionRondIcon } from "@/app/assets/icons/connexionRondIcon";
+import { AProposIcon } from "@/app/assets/icons/aProposIcon";
+import useGoToConnect from "@/app/navigation/useGoToConnect";
+import useGoToCreerUnCompte from "@/app/navigation/useGoToCreerCompte";
 import { ScrollView } from "react-native-gesture-handler";
 
 type MenuInitialScreen = StackNavigationProp<RootStackParamList, "MenuInitial">;

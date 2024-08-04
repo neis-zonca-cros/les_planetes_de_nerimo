@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { getUtilisateur } from '@/app/fetchs/utilisateurFetch';
-import { logout } from '../fetchs/deconnexion';
-import login from '../fetchs/connexionFetch';
+import { getUtilisateur } from '@/app/services/utilisateurFetch';
+import { logout } from '../services/deconnexion';
+import login from '../services/connexionFetch';
 
 interface User {
   _id: string;
@@ -15,7 +15,7 @@ interface UserContextType {
   refreshUser: () => void;
   resetUser: () => void;
   connexion: (email: string, mdp: string) => Promise<void>;
-  deconnexion: (navigation: any) => Promise<void>;
+  deconnexion: () => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);

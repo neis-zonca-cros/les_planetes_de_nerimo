@@ -1,4 +1,4 @@
-// SeConnecter.tsx
+
 import React from 'react';
 import {
   View,
@@ -16,13 +16,13 @@ import * as Yup from 'yup';
 import { RootStackParamList } from '@/app/types';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
-import { useTheme } from '@/themes/themeContext';
-import { ConnexionIcon } from '@/themes/icones/connexionIcon';
+import { useTheme } from '@/app/hooks/themeContext';
+import { ConnexionIcon } from '@/app/assets/icons/connexionIcon';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { darkTheme } from '@/themes/dark';
-import TopBar from '@/components/navigation/TopBar';
-import useGoToCreerUnCompte from '@/components/navigation/useGoToCreerCompte';
-import { useUser } from '@/app/screens/userContext'; 
+import { darkTheme } from '@/app/constants/dark';
+import TopBar from '@/app/components/TopBar';
+import useGoToCreerUnCompte from '@/app/navigation/useGoToCreerCompte';
+import { useUser } from '@/app/hooks/userContext'; 
 
 type SeConnecterScreen = StackNavigationProp<RootStackParamList, 'SeConnecter'>;
 

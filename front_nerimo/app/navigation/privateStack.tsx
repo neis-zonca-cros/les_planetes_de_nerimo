@@ -5,10 +5,10 @@ import MenuUtilisateur from '@/app/screens/enConnexion/MenuUtilisateur';
 import CreerSessionPrenom from '@/app/screens/enConnexion/creerSession/CreerSessionPrenom';
 import ChoisirPlanete from '@/app/screens/enConnexion/creerSession/ChoisirPlanete';
 import ChoisirPersonnage from '@/app/screens/enConnexion/creerSession/ChoisirPersonnage';
-import MonProfil from './enConnexion/MonProfil';
-import { useUser } from './userContext';
+import MonProfil from '../screens/enConnexion/MonProfil';
+import { useUser } from '../hooks/userContext';
 import { AppState, AppStateStatus } from 'react-native';
-import { useAutoLogout } from '../fetchs/useAutoLogOut';
+import { useAutoLogout } from '../hooks/useAutoLogOut';
 
 const Stack = createStackNavigator();
 

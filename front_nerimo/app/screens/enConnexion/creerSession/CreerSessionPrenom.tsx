@@ -9,11 +9,11 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "@/app/types";
-import { useTheme } from "@/themes/themeContext";
-import TopBar from "@/components/navigation/TopBar";
-import { darkTheme } from "@/themes/dark";
+import { useTheme } from "@/app/hooks/themeContext";
+import TopBar from "@/app/components/TopBar";
+import { darkTheme } from "@/app/constants/dark";
 import { Ionicons } from "@expo/vector-icons";
-import useGoBack from "@/components/navigation/useGoBack";
+import useGoBack from "@/app/navigation/useGoBack";
 
 type CreerSessionPrenomScreenProp = StackNavigationProp<
   RootStackParamList,

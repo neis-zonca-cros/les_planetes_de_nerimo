@@ -14,12 +14,12 @@ import * as Yup from "yup";
 import { RootStackParamList } from "@/app/types";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
-import { useTheme } from "@/themes/themeContext";
+import { useTheme } from "@/app/hooks/themeContext";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { darkTheme } from "@/themes/dark";
-import { CompteIcon } from "@/themes/icones/compteIcon";
-import TopBar from "@/components/navigation/TopBar";
-import useGoToConnect from "@/components/navigation/useGoToConnect";
+import { darkTheme } from "@/app/constants/dark";
+import { CompteIcon } from "@/app/assets/icons/compteIcon";
+import TopBar from "@/app/components/TopBar";
+import useGoToConnect from "@/app/navigation/useGoToConnect";
 
 type CreerUnCompteScreen = StackNavigationProp<
   RootStackParamList,

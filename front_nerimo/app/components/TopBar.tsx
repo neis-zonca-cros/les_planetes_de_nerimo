@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { ComponentProps } from "react";
-import { useTheme } from "@/themes/themeContext";
+import { useTheme } from "@/app/hooks/themeContext";
 
 export function TabBarIcon({
   style,

@@ -1,11 +1,11 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
-import { useTheme } from "@/themes/themeContext";
-import TopBar from "@/components/navigation/TopBar";
+import { useTheme } from "@/app/hooks/themeContext";
+import TopBar from "@/app/components/TopBar";
 import { Dimensions } from "react-native";
-import { ProfilRondIcon } from "@/themes/icones/profilRondIcon";
-import { darkTheme } from "@/themes/dark";
-import { useUser } from "../userContext";
+import { ProfilRondIcon } from "@/app/assets/icons/profilRondIcon";
+import { darkTheme } from "@/app/constants/dark";
+import { useUser } from "../../hooks/userContext";
 
 const MonProfil: React.FC = () => {
   const { theme } = useTheme();

@@ -1,4 +1,4 @@
-import TopBar from "@/components/navigation/TopBar";
+import TopBar from "@/app/components/TopBar";
 import React from "react";
 import {
   View,
@@ -9,13 +9,13 @@ import {
 } from "react-native";
 import { RootStackParamList } from "@/app/types";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { useTheme } from "@/themes/themeContext";
+import { useTheme } from "@/app/hooks/themeContext";
 import { useNavigation } from "@react-navigation/native";
-import { darkTheme } from "@/themes/dark";
-import { CompteIcon } from "@/themes/icones/compteIcon";
-import { ConnexionIcon } from "@/themes/icones/connexionIcon";
-import useGoToConnect from "@/components/navigation/useGoToConnect";
-import useGoToCreerUnCompte from "@/components/navigation/useGoToCreerCompte";
+import { darkTheme } from "@/app/constants/dark";
+import { CompteIcon } from "@/app/assets/icons/compteIcon";
+import { ConnexionIcon } from "@/app/assets/icons/connexionIcon";
+import useGoToConnect from "@/app/navigation/useGoToConnect";
+import useGoToCreerUnCompte from "@/app/navigation/useGoToCreerCompte";
 
 type AccueilAvantConnexionScreen = StackNavigationProp<
   RootStackParamList,
