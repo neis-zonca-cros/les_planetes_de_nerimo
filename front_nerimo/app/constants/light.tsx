@@ -219,12 +219,12 @@ export const lightTheme = StyleSheet.create({
   },
 
   containerProfilItems: {
-    marginBottom:10,
+    marginBottom:15,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "#FAE6BB",
-    borderRadius: 5,
+    borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 15,
     width: "60%",
@@ -247,6 +247,7 @@ export const lightTheme = StyleSheet.create({
     paddingTop: 10,
   },
   iconeProfilItems: {
+    color: "#23363E",
     paddingHorizontal: 10,
     alignItems: "center",
     justifyContent: "center",

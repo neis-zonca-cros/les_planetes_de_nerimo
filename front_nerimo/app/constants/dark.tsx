@@ -217,12 +217,12 @@ export const darkTheme = StyleSheet.create({
   },
 
   containerProfilItems: {
-    marginBottom:10,
+    marginBottom:15,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "#23363E",
-    borderRadius: 5,
+    borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 15,
     width: "60%",
@@ -245,6 +245,7 @@ export const darkTheme = StyleSheet.create({
     paddingTop: 10,
   },
   iconeProfilItems: {
+    color: "#FAE6BB",
     paddingHorizontal: 10,
     alignItems: "center",
     justifyContent: "center",

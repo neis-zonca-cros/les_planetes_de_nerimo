@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Text, Platform } from "react-native";
+import { View, StyleSheet, Text, Platform, Alert } from "react-native";
 import { useTheme } from "@/app/hooks/themeContext";
 import TopBar from "@/app/components/TopBar";
 import { Dimensions } from "react-native";
@@ -13,6 +13,13 @@ const MonProfil: React.FC = () => {
   const { utilisateur } = useUser();
   const screenHeight = Dimensions.get("window").height;
 
+  function toggleMusic(value: boolean): void {
+    if (value) {
+      Alert.alert('Switch musique activé !', 'Le switch est maintenant activé.');
+    } else {
+      Alert.alert('Switch musique désactivé !', 'Le switch est maintenant désactivé.');
+    };
+  }
   return (
     <View style={theme.container}>
       <TopBar titre="Profil de" prenom={utilisateur?.prenom} />
@@ -27,8 +34,8 @@ const MonProfil: React.FC = () => {
           </View>
         </View>
         <View style={styles.rightContainer}>
-          <ProfilItems text="Musique" iconName="toggle-sharp"></ProfilItems>
-          <ProfilItems text="Lightmode" iconName="toggle-sharp"></ProfilItems>
+          <ProfilItems text="Musique" isSwitch={true} onSwitchToggle={toggleMusic}></ProfilItems>
+          <ProfilItems text="Lightmode" isSwitch={true}></ProfilItems>
           <ProfilItems text="Mes informations" iconName="arrow-forward-outline"></ProfilItems>
           <ProfilItems text="Partir" iconName="log-out-sharp"></ProfilItems>
         </View>
