@@ -215,4 +215,38 @@ export const darkTheme = StyleSheet.create({
     paddingVertical: 2,
     paddingHorizontal:5,
   },
+
+  containerProfilItems: {
+    marginBottom:10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#23363E",
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 15,
+    width: "60%",
+    ...Platform.select({
+      ios: {
+        shadowColor: "rgba(0, 0, 0, 0.5)",
+        shadowOffset: { width: 2, height: 5 },
+        shadowOpacity: 0.8,
+        shadowRadius: 1,
+      },
+      android: {
+        elevation: 5,
+      },
+    }),
+  },
+  textProfilItems: {
+    fontSize: mediumFontSize,
+    color: "#FAE6BB",
+    fontFamily: "brotherBold",
+    paddingTop: 10,
+  },
+  iconeProfilItems: {
+    paddingHorizontal: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
