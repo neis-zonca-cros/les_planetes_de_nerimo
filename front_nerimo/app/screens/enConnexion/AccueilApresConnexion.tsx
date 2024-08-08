@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -44,9 +44,11 @@ const AccueilApresConnexion: React.FC = () => {
     navigation.navigate("CreerSessionPrenom");
   };
 
-  const BoutonSession = () => {
-    console.log("bouton session appuyé");
+  const BoutonSession = (session: Session) => {
+    console.log("Session sélectionnée:", session);
+    navigation.navigate("Histoire", { histoire: session.personnageRef.histoire });
   };
+
 
   const menuUtilisateur = () => {
     navigation.navigate("MenuUtilisateur");
@@ -129,7 +131,7 @@ const AccueilApresConnexion: React.FC = () => {
                         session.personnageRef.nom
                       )}
                       onPress={
-                        editMode ? () => openDialog(session) : BoutonSession
+                        editMode ? () => openDialog(session) : () => BoutonSession(session)
                       }
                       icon={editMode ? "trash-outline" : "play-outline"}
                     />

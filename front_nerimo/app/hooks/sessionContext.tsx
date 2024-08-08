@@ -24,6 +24,7 @@ interface Session {
   personnageRef: {
     _id: string;
     nom: string;
+    histoire: string;
   };
 }
 

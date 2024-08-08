@@ -10,6 +10,7 @@ export interface Planete {
 export interface Personnage {
   _id: string;
   nom: string;
+  histoire: string;
   planeteRef: {
     _id: string;
     nom: string;

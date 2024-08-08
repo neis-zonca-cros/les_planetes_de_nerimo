@@ -6,10 +6,9 @@ import CreerSessionPrenom from "@/app/screens/enConnexion/creerSession/CreerSess
 import ChoisirPlanete from "@/app/screens/enConnexion/creerSession/ChoisirPlanete";
 import ChoisirPersonnage from "@/app/screens/enConnexion/creerSession/ChoisirPersonnage";
 import MonProfil from "../screens/enConnexion/MonProfil";
-import { useUser } from "../hooks/userContext";
-import { AppState, AppStateStatus } from "react-native";
 import { useAutoLogout } from "../hooks/useAutoLogOut";
 import { SessionProvider } from "../hooks/sessionContext";
+import Histoire from "@/app/screens/enConnexion/Histoire";
 
 const Stack = createStackNavigator();
 
@@ -49,8 +48,14 @@ const PrivateStack: React.FC = () => {
           component={MonProfil}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="Histoire"
+          component={Histoire}
+          options={{ headerShown: false }}
+        />
       
-    </Stack.Navigator></SessionProvider>
+    </Stack.Navigator>
+    </SessionProvider>
   );
 };
 

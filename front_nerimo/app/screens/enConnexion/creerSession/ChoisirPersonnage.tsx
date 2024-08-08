@@ -48,26 +48,25 @@ const ChoisirPersonnage: React.FC = () => {
     fetchPersonnages();
   }, [planeteRef]);
 
-  const handleSelectPersonnage = async (personnageId: string) => {
+  const handleSelectPersonnage = async (personnage: Personnage) => {
     try {
       const sauvegardeParDefaut = "oui";
 
-      if (prenom && planeteRef && personnageId) {
+      if (prenom && planeteRef && personnage._id) {
         await createNewSession({
           prenom,
           sauvegarde: sauvegardeParDefaut,
           planeteRef, 
-          personnageRef: personnageId,
+          personnageRef: personnage._id,
         });
-
-        navigation.navigate("AccueilApresConnexion", { refresh: true });
+        navigation.navigate("Histoire", { histoire: personnage.histoire });
       } else {
         console.error(
           "Données de session manquantes :",
           prenom,
           sauvegardeParDefaut,
           planeteRef,
-          personnageId
+          personnage._id
         );
       }
     } catch (error) {
@@ -78,7 +77,7 @@ const ChoisirPersonnage: React.FC = () => {
   const renderItem = ({ item }: { item: Personnage }) => (
     <View style={styles.buttonContainer}>
       <TouchableOpacity
-        onPress={() => handleSelectPersonnage(item._id)}
+        onPress={() => handleSelectPersonnage(item)}
         style={{ alignItems: "center" }}
       >
         <View style={theme.listContainer}>
