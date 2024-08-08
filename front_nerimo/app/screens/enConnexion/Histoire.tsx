@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, StyleSheet, Button, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Button, TouchableOpacity, ImageBackground } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation, RouteProp, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '@/app/types';
@@ -29,7 +29,7 @@ const Histoire: React.FC = () => {
     while (inkStory.canContinue) {
       text += inkStory.Continue();
     }
-    setCurrentText(text);
+    setCurrentText(text.trim()); 
     setChoices(inkStory.currentChoices);
   };
 
@@ -41,54 +41,79 @@ const Histoire: React.FC = () => {
   };
 
   return (
-    <ScrollView style={theme.container}>
-      <View style={styles.textContainer}>
-        <Text style={styles.listText}>{currentText}</Text>
+    // <ImageBackground 
+    //   source={require('@/app/assets/images/chambr.jpg')} 
+    //   style={styles.backgroundImage}
+    // >
+      <View style={styles.container}>
+        <View style={styles.textContainer}>
+          <Text style={styles.listText}>{currentText}</Text>
+        </View>
+        <View style={styles.choicesContainer}>
+          {choices.map((choice, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.choiceButton}
+              onPress={() => makeChoice(index)}
+            >
+              <Text style={styles.choiceButtonText}>{choice.text}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
-      <View style={styles.choicesContainer}>
-        {choices.map((choice, index) => (
-          <TouchableOpacity
-            key={index}
-            style={styles.choiceButton}
-            onPress={() => makeChoice(index)}
-          >
-            <Text style={styles.choiceButtonText}>{choice.text}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-    </ScrollView>
+    // </ImageBackground>
   );
 };
 
 export default Histoire;
 
 const styles = StyleSheet.create({
-    textContainer: {
-      padding: 20,
-    },
-    listText: {
-      fontSize: 18,
-      lineHeight: 24,
-      textAlign: 'center'
-    },
-    choicesContainer: {
-        flexDirection: "row",
-        justifyContent: 'center',
-        alignItems: 'center',
-      paddingHorizontal: 20,
-      marginHorizontal: 10,
-    },
-    choiceButton: {
-      backgroundColor: '#007bff', // Couleur de fond du bouton
-      padding: 10,
-      marginHorizontal: 5,
-      borderRadius: 5, // Coins arrondis
-      alignItems: 'center',
-      justifyContent: 'center' // Centrer le texte
-    },
-    choiceButtonText: {
-      color: '#ffffff', // Couleur du texte
-      fontSize: 16,
-    },
-  });
-  
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover', 
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'flex-end', 
+    padding: 10,
+    backgroundColor: "#23363E"
+  },
+  textContainer: {
+    padding: 10,
+    backgroundColor: 'rgba(255, 230, 187, 0.8)',
+    borderRadius: 10,
+    marginHorizontal: 10,
+    marginBottom: 5, 
+  },
+  listText: {
+    fontSize: 12,
+    lineHeight: 20,
+    textAlign: 'center',
+    fontFamily: "brotherBold",
+    color: '#23363E',
+  },
+  choicesContainer: {
+    flexDirection: "row",
+    flexWrap: 'wrap', 
+    justifyContent: 'center',
+    marginBottom: 2, 
+    width: '100%',
+  },
+  choiceButton: {
+    borderColor: 'rgba(255, 230, 187, 0.8)',
+    borderWidth: 2,
+    padding: 10,
+    marginHorizontal: 5,
+    marginTop: 5,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 200, 
+  },
+  choiceButtonText: {    
+    fontSize: 12,
+    fontFamily: "brotherBold",
+    color: 'rgba(255, 230, 187, 0.8)',
+    textAlign: 'center', 
+  },
+});
