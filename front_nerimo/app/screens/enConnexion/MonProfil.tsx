@@ -7,11 +7,13 @@ import { ProfilRondIcon } from "@/app/assets/icons/profilRondIcon";
 import { darkTheme } from "@/app/constants/dark";
 import { useUser } from "../../hooks/userContext";
 import ProfilItems from "@/app/components/profilItems";
+import useGoBack from "@/app/navigation/useGoBack";
 
 const MonProfil: React.FC = () => {
   const { theme } = useTheme();
   const { utilisateur } = useUser();
   const screenHeight = Dimensions.get("window").height;
+  const goBack = useGoBack();
 
   function toggleMusic(value: boolean): void {
     if (value) {
@@ -22,7 +24,7 @@ const MonProfil: React.FC = () => {
   }
   return (
     <View style={theme.container}>
-      <TopBar titre="Profil de" prenom={utilisateur?.prenom} />
+      <TopBar titre="Profil de" prenom={utilisateur?.prenom} iconeDroiteAction={goBack} iconeDroiteNom={"close-outline"}/>
       <View style={styles.mainContainer}>
         <View style={styles.leftContainer}>
           <View style={theme.iconeShadow}>

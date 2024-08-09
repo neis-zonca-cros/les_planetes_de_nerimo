@@ -44,7 +44,7 @@ const MenuUtilisateur: React.FC = () => {
   return (
     <View style={theme.container}>
       <TopBar
-        titre="Menu"
+        titre="Menu de"
         prenom={utilisateur?.prenom}
         iconeDroiteNom="close-outline"
         iconeDroiteAction={goBack}

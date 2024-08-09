@@ -30,9 +30,8 @@ const ProfilItems: React.FC<ProfilItemsProps> = ({ text, iconName, isSwitch, onS
           <Switch
             value={switchValue}
             onValueChange={toggleSwitch}
-            // trackColor={{ false: theme.switchTrackFalse, true: theme.switchTrackTrue }}
-            // thumbColor={switchValue ? theme.switchThumbTrue : theme.switchThumbFalse}
-            // style={theme.switchProfilItems}
+            trackColor={{ false: theme.switchTrackFalse.color, true: theme.switchTrackTrue.color }}
+            thumbColor={switchValue ? theme.switchThumbTrue.color : theme.switchThumbFalse.color}
           />
         ) : (
           iconName && <Ionicons name={iconName} size={30} style={theme.iconeProfilItems} />
@@ -44,7 +43,3 @@ const ProfilItems: React.FC<ProfilItemsProps> = ({ text, iconName, isSwitch, onS
 
 export default ProfilItems;
 
-// switchTrackFalse: '#767577', // Couleur de la piste du switch lorsqu'il est désactivé
-// switchTrackTrue: '#81b0ff',  // Couleur de la piste du switch lorsqu'il est activé
-// switchThumbFalse: '#f4f3f4',  // Couleur du pouce du switch lorsqu'il est désactivé
-// switchThumbTrue: '#f5dd4b',   // Couleur du pouce du switch lorsqu'il est activé

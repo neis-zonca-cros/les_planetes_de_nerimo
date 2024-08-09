@@ -148,16 +148,17 @@ export const darkTheme = StyleSheet.create({
     paddingVertical:5,
   },
   sessionCard: {    
-    borderColor: "#23363E",
-    backgroundColor: "#23363E",
     justifyContent: 'center',
     height: screenWidth*0.23,
     width:screenWidth*0.23,
     borderRadius: (screenWidth*0.23)/2,  
-    borderWidth: 5,
+
     marginBottom: 12,
     paddingHorizontal: 8,
     alignItems: 'center', 
+    borderWidth: 5,
+    borderColor: "#23363E",
+    backgroundColor: "#23363E",
     ...Platform.select({
       ios: {
         shadowColor: "rgba(0, 0, 0, 0.5)",
@@ -182,6 +183,7 @@ export const darkTheme = StyleSheet.create({
     color: "#FAE6BB",
   },
 
+    // Styles screens TopBar
   containerTopBar: {
     flexDirection: "row",
     position: "absolute",
@@ -223,11 +225,11 @@ export const darkTheme = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#23363E",
     borderRadius: 10,
     paddingHorizontal: 10,
-    paddingVertical: 15,
+    paddingVertical: 10,
     width: "60%",
+    backgroundColor: "#23363E",
     ...Platform.select({
       ios: {
         shadowColor: "rgba(0, 0, 0, 0.5)",
@@ -241,7 +243,7 @@ export const darkTheme = StyleSheet.create({
     }),
   },
   textProfilItems: {
-    fontSize: mediumFontSize,
+    fontSize: smallFontSize,
     color: "#FAE6BB",
     fontFamily: "brotherBold",
     paddingTop: 10,
@@ -251,6 +253,20 @@ export const darkTheme = StyleSheet.create({
     paddingHorizontal: 10,
     alignItems: "center",
     justifyContent: "center",
+  },
+  switchTrackTrue:{
+    color: 'rgba(250, 230, 187, 1)',
+    
+  },
+  switchTrackFalse:{
+    color: 'rgba(35,54,62, 0.1)',
+    
+  },
+  switchThumbFalse:{
+    color: 'rgba(35,54,62, 1)',
+  },
+  switchThumbTrue:{
+    color: 'rgba(35,54,62, 1)',
   },
 
 // Styles screens Histoire 
@@ -270,20 +286,20 @@ export const darkTheme = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     padding: 10,
-    backgroundColor: "#23363E"
+    backgroundColor: "#23363E",
   },
   textContainerHistoire: {
     padding: 10,
-    backgroundColor: 'rgba(255, 230, 187, 0.8)',
+    backgroundColor: "#23363E",
     borderRadius: 10,
     marginHorizontal: 10,
   },
   textHistoire: {
     fontSize: histoireFontSize,
-    lineHeight: screenHeight*0.04,
+    lineHeight: screenHeight*0.045,
     textAlign: 'center',
     fontFamily: "brotherBold",
-    color: '#23363E',
+    color: "#FAE6BB"
   },
   choixHistoire: {
     flexDirection: "row",
@@ -294,20 +310,33 @@ export const darkTheme = StyleSheet.create({
     marginBottom: 10,
   },
   choixBouttonHistoire: {
-    borderColor: 'rgba(255, 230, 187, 0.8)',
-    borderWidth: 2,
-    padding: 10,
+    padding: 2,
     marginHorizontal: 5,
+    marginBottom: 5,
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
     width: screenWidth * 0.3,
+    borderWidth: 5,
+    borderColor: "#23363E",
+    backgroundColor: "#23363E",
+    ...Platform.select({
+      ios: {
+        shadowColor: "rgba(0, 0, 0, 0.5)",
+        shadowOffset: { width: 2, height: 5 },
+        shadowOpacity: 0.8,
+        shadowRadius: 1,
+      },
+      android: {
+        elevation: 5,
+      },
+    }),
   },
   choixBouttonTexteHistoire: {    
     fontSize: histoireFontSize,
     fontFamily: "brotherBold",
-    lineHeight: screenHeight*0.04,
-    color: 'rgba(255, 230, 187, 0.8)',
+    lineHeight: screenHeight*0.045,
+    color: "#FAE6BB",
     textAlign: 'center',
   },
   
