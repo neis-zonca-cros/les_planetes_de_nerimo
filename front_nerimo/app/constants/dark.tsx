@@ -3,6 +3,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 
 const mediumFontSize = RFValue(14)
 const smallFontSize = RFValue(11)
+const histoireFontSize = RFValue(10)
 const xSmallFontSize = RFValue(7)
 const { width: screenWidth, height: screenHeight} = Dimensions.get("window");
 
@@ -216,6 +217,7 @@ export const darkTheme = StyleSheet.create({
     paddingHorizontal:5,
   },
 
+// Styles screens Profil
   containerProfilItems: {
     marginBottom:15,
     flexDirection: "row",
@@ -250,4 +252,63 @@ export const darkTheme = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+
+// Styles screens Histoire 
+  imageHistoire: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+  },
+  containerHistoire: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    padding: 10,
+  },
+  containerHistoireSansImage: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    padding: 10,
+    backgroundColor: "#23363E"
+  },
+  textContainerHistoire: {
+    padding: 10,
+    backgroundColor: 'rgba(255, 230, 187, 0.8)',
+    borderRadius: 10,
+    marginHorizontal: 10,
+  },
+  textHistoire: {
+    fontSize: histoireFontSize,
+    lineHeight: screenHeight*0.04,
+    textAlign: 'center',
+    fontFamily: "brotherBold",
+    color: '#23363E',
+  },
+  choixHistoire: {
+    flexDirection: "row",
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    width: '100%',
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  choixBouttonHistoire: {
+    borderColor: 'rgba(255, 230, 187, 0.8)',
+    borderWidth: 2,
+    padding: 10,
+    marginHorizontal: 5,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: screenWidth * 0.3,
+  },
+  choixBouttonTexteHistoire: {    
+    fontSize: histoireFontSize,
+    fontFamily: "brotherBold",
+    lineHeight: screenHeight*0.04,
+    color: 'rgba(255, 230, 187, 0.8)',
+    textAlign: 'center',
+  },
+  
 });
