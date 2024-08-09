@@ -46,7 +46,7 @@ const AccueilApresConnexion: React.FC = () => {
 
   const BoutonSession = (session: Session) => {
     console.log("Session sélectionnée:", session);
-    navigation.navigate("Histoire", { histoire: session.personnageRef.histoire });
+    navigation.navigate("Histoire", { histoire: session.personnageRef.histoire, personnageNom: session.personnageRef.nom, sessionPrenom: session.prenom });
   };
 
 

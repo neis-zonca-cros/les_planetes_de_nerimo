@@ -10,5 +10,5 @@ export type RootStackParamList = {
   ChoisirPlanete: undefined;
   ChoisirPersonnage: undefined;
   MonProfil: undefined;
-  Histoire: { histoire: string };
+  Histoire: { histoire: string, personnageNom: string, sessionPrenom: string };
 };
