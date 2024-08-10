@@ -56,7 +56,7 @@ const ChoisirPlanete: React.FC = () => {
       <TouchableOpacity onPress={() => handleSelectPlanete(item._id)}>
         <View style={theme.listContainer}>
           <Image source={getPlaneteImageURI(item.nom)} style={styles.icon} />
-          <Text style={theme.listText}>{item.nom}</Text>
+          <Text style={theme.listTextPlanete}>{item.nom}</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -87,12 +87,11 @@ const { height: screenHeight } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   icon: {
-    width: screenHeight * 0.17,
-    height: screenHeight * 0.17,
+    width: screenHeight * 0.22,
+    height: screenHeight * 0.22,
     resizeMode: "contain",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 12,
   },
   buttonContainer: {
     flex: 1,

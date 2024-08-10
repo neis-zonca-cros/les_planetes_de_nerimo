@@ -1,4 +1,4 @@
-// fetchs/deconnexion.ts
+
 import { clearCredentials } from "./credentials/clearCredentials";
 
 export const logout = async () => {

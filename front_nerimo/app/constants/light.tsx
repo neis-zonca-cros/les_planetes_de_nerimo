@@ -108,6 +108,16 @@ export const lightTheme = StyleSheet.create({
     paddingBottom: 10,
   },
 
+  listTextPlanete: {
+    fontSize: mediumFontSize,
+    color: '#23363E',
+    fontFamily: 'brotherBold',
+    textTransform: 'uppercase',
+    textAlign: "center",
+
+
+  },
+
   listContainer:{
     height: screenWidth*0.23,
     width:screenWidth*0.23,

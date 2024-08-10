@@ -106,6 +106,16 @@ export const darkTheme = StyleSheet.create({
     paddingBottom: 10,
   },
 
+  listTextPlanete: {
+    fontSize: mediumFontSize,
+    color: '#FAE6BB',
+    fontFamily: 'brotherBold',
+    textTransform: 'uppercase',
+    textAlign: "center",
+    paddingVertical: 5,
+
+  },
+
   listContainer:{
     height: screenWidth*0.23,
     width:screenWidth*0.23,

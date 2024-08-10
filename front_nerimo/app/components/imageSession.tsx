@@ -19,7 +19,7 @@ export const getPersonnageImageURI = (personnageNom: any) => {
   export const getPlaneteImageURI = (planeteNom: any) => {
     switch (planeteNom) {
       case "Lune":
-        return require("@/app/assets/images/lune.png"); 
+        return require("@/app/assets/images/planete_nerimo.gif"); 
       case "Mars":
         return require("@/app/assets/images/mars.png");
 
