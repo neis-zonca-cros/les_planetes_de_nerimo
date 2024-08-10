@@ -20,6 +20,9 @@ import { darkTheme } from "@/app/constants/dark";
 import { CompteIcon } from "@/app/assets/icons/compteIcon";
 import TopBar from "@/app/components/TopBar";
 import useGoToConnect from "@/app/navigation/useGoToConnect";
+import { creerUtilisateur } from "@/app/services/utilisateurFetch";
+import { useUser } from "@/app/hooks/userContext";
+import { normalizeKey } from "@/app/utils/normalizeKey";
 
 type CreerUnCompteScreen = StackNavigationProp<
   RootStackParamList,
@@ -29,6 +32,7 @@ type CreerUnCompteScreen = StackNavigationProp<
 const CreerUnCompte: React.FC = () => {
   const navigation = useNavigation<CreerUnCompteScreen>();
   const { theme } = useTheme();
+  const { connexion } = useUser();
   const goBackToAccueil = () => {
     navigation.navigate("AccueilAvantConnexion");
   };
@@ -52,12 +56,31 @@ const CreerUnCompte: React.FC = () => {
       .required("Oups, tu as oublié de répéter ton mot de passe !"),
   });
 
-  const handleLogin = (values: { email: string; password: string }) => {
-    console.log("Email:", values.email);
-    console.log("Password:", values.password);
-
-    navigation.navigate("AccueilApresConnexion", { refresh: true });
+  const handleSignUp = async (values: {
+    firstName: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+  }) => {
+    try {
+      const response = await creerUtilisateur({
+        prenom: values.firstName,
+        email: normalizeKey(values.email),
+        mdp: values.password,
+        mdp_repeat: values.confirmPassword,
+      });
+      try {
+        await connexion(normalizeKey(values.email), values.password);
+        navigation.navigate('AccueilApresConnexion', { refresh: true });
+      } catch (loginError) {
+        console.error('Erreur lors de la connexion:', loginError);
+      }
+      navigation.navigate("AccueilApresConnexion", { refresh: true });
+    } catch (error) {
+      console.error("Erreur lors de la création du compte:", error);
+    }
   };
+  
 
   return (
     <View style={theme.container}>
@@ -80,7 +103,7 @@ const CreerUnCompte: React.FC = () => {
               confirmPassword: "",
             }}
             validationSchema={signUpValidationSchema}
-            onSubmit={handleLogin}
+            onSubmit={handleSignUp}
           >
             {({
               handleChange,

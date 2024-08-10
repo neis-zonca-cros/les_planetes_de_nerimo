@@ -9,6 +9,11 @@ export async function creerUtilisateur(req, res) {
       if (req.body.mdp !== req.body.mdp_repeat) {
         return res.status(400).json({ error: "Les mots de passe ne correspondent pas" });
     }
+
+    const utilisateurExistant = await Utilisateur.findOne({ email: req.body.email });
+    if (utilisateurExistant) {
+        return res.status(400).json({ error: "L'email est déjà utilisé" });
+    }
     
         const hasherMotDePasse = await bcrypt.hash(req.body.mdp, 10);
         req.body.mdp = hasherMotDePasse;

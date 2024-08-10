@@ -7,18 +7,10 @@ import { useTheme } from '@/app/hooks/themeContext';
 import { Story } from 'inkjs';
 import TopBar from '@/app/components/TopBar';
 import { backgroundImages } from '@/app/components/imageHistoire';
-import { useSession } from '@/app/hooks/sessionContext';
+import { normalizeKey } from '@/app/utils/normalizeKey';
 
 
 type HistoireScreenProp = StackNavigationProp<RootStackParamList, 'Histoire'>;
-
-
-const normalizeKey = (key: string): string => {
-  return key
-    .toLowerCase()      
-    .normalize('NFD')     
-    .replace(/[\u0300-\u036f]/g, ''); 
-};
 
 const Histoire: React.FC = () => {
   const navigation = useNavigation<HistoireScreenProp>();
@@ -100,7 +92,7 @@ const Histoire: React.FC = () => {
               key={index}
               style={({ pressed }) => [
                 {
-                  opacity: pressed ? 0.6 : 1, // Réduire l'opacité à 60% lorsqu'il est pressé
+                  opacity: pressed ? 0.6 : 1, 
                 },
                 theme.choixBouttonHistoire
               ]}

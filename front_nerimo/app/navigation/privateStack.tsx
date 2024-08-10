@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import AccueilApresConnexion from "@/app/screens/enConnexion/AccueilApresConnexion";
 import MenuUtilisateur from "@/app/screens/enConnexion/MenuUtilisateur";

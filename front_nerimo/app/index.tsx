@@ -7,7 +7,6 @@ import { ThemeProvider } from '@/app/hooks/themeContext';
 import { UserProvider, useUser } from './hooks/userContext';
 import PublicStack from "./navigation/publickStack"
 import PrivateStack from './navigation/privateStack'; 
-import { AppState, AppStateStatus } from 'react-native';
 
 const AppNavigator: React.FC = () => {
   const { utilisateur } = useUser(); 

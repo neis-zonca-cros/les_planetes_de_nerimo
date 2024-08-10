@@ -30,7 +30,10 @@ async function apiFetch<T>(
     const response = await fetch(url, defaultOptions);
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || "Network response was not ok");
+      const errorMessage = errorData.error || "Network response was not ok";
+      const error = new Error(errorMessage);
+      (error as any).statusCode = response.status;
+      throw error;
     }
     return await response.json();
   } catch (error) {

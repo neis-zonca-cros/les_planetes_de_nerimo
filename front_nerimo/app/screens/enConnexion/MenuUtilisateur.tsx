@@ -3,7 +3,6 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  Alert,
   Dimensions,
 } from "react-native";
 import { useTheme } from "@/app/hooks/themeContext";
@@ -33,7 +32,6 @@ const MenuUtilisateur: React.FC = () => {
       navigation.navigate("Bienvenue");
     } catch (error) {
       console.error("Erreur lors de la déconnexion:", error);
-      Alert.alert("Erreur", "La déconnexion a échoué. Veuillez réessayer.");
     }
   };
 

@@ -3,15 +3,13 @@ import { useColorScheme } from 'react-native';
 import { darkTheme } from '@/app/constants/dark';
 import { lightTheme } from '@/app/constants/light';
 
-// Définissez le type du contexte de thème
+
 interface ThemeContextType {
   theme: typeof lightTheme | typeof darkTheme;
 }
 
-// Créez le contexte de thème
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-// Fournissez le contexte de thème à l'ensemble de l'application via le provider
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
@@ -23,7 +21,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   );
 };
 
-// Hook personnalisé pour utiliser le contexte de thème dans les composants
+
 export const useTheme = () => {
   const context = useContext(ThemeContext);
   if (!context) {

@@ -34,7 +34,7 @@ export const darkTheme = StyleSheet.create({
     fontSize: smallFontSize,
     color: "#FAE6BB",
     textTransform: "uppercase",
-    paddingBottom: 20,
+    paddingBottom: 10,
     paddingTop: 10,
   },
 
@@ -78,7 +78,7 @@ export const darkTheme = StyleSheet.create({
     fontSize: mediumFontSize,
   },
   input: {
-    height: screenHeight*0.12,
+    height: screenHeight*0.10,
     width: screenWidth*0.40,
     borderRadius: 10,
     borderColor: "#23363E",

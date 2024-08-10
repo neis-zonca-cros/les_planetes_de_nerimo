@@ -24,7 +24,7 @@ const Bienvenue: React.FC = () => {
       <View style={styles.contentContainer}>
         <Image
           style={styles.image}
-          source={require('@/app/assets/images/planete.gif')}
+          source={require('@/app/assets/images/nerimo.gif')}
         />
       </View>
       <TouchableOpacity

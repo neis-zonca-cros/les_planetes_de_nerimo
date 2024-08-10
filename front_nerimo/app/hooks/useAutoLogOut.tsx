@@ -1,10 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { AppState, Alert, Keyboard, AppStateStatus } from 'react-native';
-import { clearCredentials } from '../services/credentials/clearCredentials';
-import { useNavigation } from 'expo-router';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '@/app/types';
-import { logout } from '../services/deconnexion';
 import { useUser } from './userContext';
 
 const AUTO_LOGOUT_DELAY = 2 * 60 * 1000; 

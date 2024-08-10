@@ -37,7 +37,7 @@ export const lightTheme = StyleSheet.create({
     fontSize: smallFontSize,
     color: "#23363E",
     textTransform: "uppercase",
-    paddingBottom: 20,
+    paddingBottom: 10,
     paddingTop: 10,
   },
 
@@ -80,7 +80,7 @@ export const lightTheme = StyleSheet.create({
     fontSize: mediumFontSize,
   },
   input: {
-    height: screenHeight*0.12,
+    height: screenHeight*0.10,
     width: screenWidth*0.40,
     borderRadius: 10,
     borderColor: "#FAE6BB",

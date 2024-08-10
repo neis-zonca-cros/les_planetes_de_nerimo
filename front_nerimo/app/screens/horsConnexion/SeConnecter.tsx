@@ -43,7 +43,7 @@ const SeConnecter: React.FC = () => {
       navigation.navigate('AccueilApresConnexion', { refresh: true });
     } catch (error) {
       console.error('Login error:', error);
-      Alert.alert('Login Error', 'Failed to log in. Please check your credentials.');
+      Alert.alert('Connexion impossible', 'Veuillez vérifier vos identifiants.');
     }
   };
 

@@ -32,7 +32,9 @@ const ChoisirPersonnage: React.FC = () => {
   const goBack = useGoBack();
   const { currentSession, createNewSession } = useSession();
   const [personnages, setPersonnages] = useState<Personnage[]>([]);
-  const { prenom, planeteRef } = currentSession || {};
+
+  const prenom = currentSession?.prenom || "";
+  const planeteRef = currentSession?.planeteRef || "";
 
   useEffect(() => {
     const fetchPersonnages = async () => {
@@ -59,7 +61,7 @@ const ChoisirPersonnage: React.FC = () => {
           planeteRef, 
           personnageRef: personnage._id,
         });
-        navigation.navigate("Histoire", { histoire: personnage.histoire });
+        navigation.navigate("Histoire", { histoire: personnage.histoire, personnageNom: personnage.nom, sessionPrenom: prenom});
       } else {
         console.error(
           "Données de session manquantes :",
