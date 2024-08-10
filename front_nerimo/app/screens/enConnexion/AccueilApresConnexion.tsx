@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -29,13 +29,21 @@ const AccueilApresConnexion: React.FC = () => {
   const [sessionToDelete, setSessionToDelete] = useState<Session | null>(null);
   const modalizeRef = useRef<Modalize>(null);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 3000); 
+
+    return () => clearTimeout(timer); 
+  }, []);
+
   useFocusEffect(
     React.useCallback(() => {
       if (navigation.isFocused()) {
         refreshSessions().catch(err => {
           setError("Erreur lors de la récupération des données");
           console.error(err);
-        }).finally(() => setLoading(false));
+        });
       }
     }, [navigation, refreshSessions])
   );
@@ -97,59 +105,65 @@ const AccueilApresConnexion: React.FC = () => {
 
   return (
     <View style={theme.container}>
-      <TopBar
-        titre="Bienvenue"
-        prenom={utilisateur?.prenom || ""}
-        iconeZeroNom={editMode ? null : "brush-outline"}
-        iconeZeroAction={editMode ? undefined : toggleEditMode}
-        iconeDroiteNom={editMode ? "close-outline" : "planet-outline"}
-        iconeDroiteAction={editMode ? toggleEditMode : menuUtilisateur}
-        iconeGaucheNom={editMode ? null : "add-outline"}
-        iconeGaucheAction={editMode ? undefined : addSession}
-      />
-
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        {loading ? (
+      {loading ? (
+        <View>
           <Text style={theme.listText}>Chargement...</Text>
-        ) : error ? (
-          <Text style={theme.listText}>{error}</Text>
-        ) : sessions && sessions.length === 0 ? (
-          <Text style={theme.listText}>
-            Pour commencer, ajoutez une session
-          </Text>
-        ) : (
-          <View style={styles.gridContainer}>
-            {organizedSessions.map((column, columnIndex) => (
-              <View key={columnIndex} style={styles.column}>
-                {column.map((session) => (
-                  <View key={session._id} style={styles.sessionWrapper}>
-                    <Sessions
-                      prenom={session.prenom}
-                      planeteNom={session.planeteRef.nom}
-                      personnageNom={session.personnageRef.nom}
-                      imageSource={getPersonnageImageURI(
-                        session.personnageRef.nom
-                      )}
-                      onPress={
-                        editMode ? () => openDialog(session) : () => BoutonSession(session)
-                      }
-                      icon={editMode ? "trash-outline" : "play-outline"}
-                    />
+        </View>
+      ) : (
+        <>
+          <TopBar
+            titre="Bienvenue"
+            prenom={utilisateur?.prenom || ""}
+            iconeZeroNom={editMode ? null : "brush-outline"}
+            iconeZeroAction={editMode ? undefined : toggleEditMode}
+            iconeDroiteNom={editMode ? "close-outline" : "planet-outline"}
+            iconeDroiteAction={editMode ? toggleEditMode : menuUtilisateur}
+            iconeGaucheNom={editMode ? null : "add-outline"}
+            iconeGaucheAction={editMode ? undefined : addSession}
+          />
+
+          <ScrollView contentContainerStyle={styles.scrollViewContent}>
+            {error ? (
+              <Text style={theme.listText}>{error}</Text>
+            ) : sessions && sessions.length === 0 ? (
+              <Text style={theme.listText}>
+                Pour commencer, ajoutez une session
+              </Text>
+            ) : (
+              <View style={styles.gridContainer}>
+                {organizedSessions.map((column, columnIndex) => (
+                  <View key={columnIndex} style={styles.column}>
+                    {column.map((session) => (
+                      <View key={session._id} style={styles.sessionWrapper}>
+                        <Sessions
+                          prenom={session.prenom}
+                          planeteNom={session.planeteRef.nom}
+                          personnageNom={session.personnageRef.nom}
+                          imageSource={getPersonnageImageURI(
+                            session.personnageRef.nom
+                          )}
+                          onPress={
+                            editMode ? () => openDialog(session) : () => BoutonSession(session)
+                          }
+                          icon={editMode ? "trash-outline" : "play-outline"}
+                        />
+                      </View>
+                    ))}
                   </View>
                 ))}
               </View>
-            ))}
-          </View>
-        )}
-      </ScrollView>
+            )}
+          </ScrollView>
 
-      {sessionToDelete && (
-        <ConfirmDeleteModal
-          ref={modalizeRef}
-          onConfirm={handleDelete}
-          onCancel={() => modalizeRef.current?.close()}
-          sessionName={sessionToDelete.prenom}
-        />
+          {sessionToDelete && (
+            <ConfirmDeleteModal
+              ref={modalizeRef}
+              onConfirm={handleDelete}
+              onCancel={() => modalizeRef.current?.close()}
+              sessionName={sessionToDelete.prenom}
+            />
+          )}
+        </>
       )}
     </View>
   );
