@@ -34,7 +34,7 @@ const ProfilItems: React.FC<ProfilItemsProps> = ({ text, iconName, isSwitch, onS
             thumbColor={switchValue ? theme.switchThumbTrue.color : theme.switchThumbFalse.color}
           />
         ) : (
-          iconName && <Ionicons name={iconName} size={30} style={theme.iconeProfilItems} />
+          iconName && <Ionicons name={iconName} size={26} style={theme.iconeProfilItems} />
         )}
       </View>
     </TouchableOpacity>

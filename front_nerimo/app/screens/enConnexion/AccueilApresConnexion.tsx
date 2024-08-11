@@ -1,5 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Dimensions,
+  Image,
+} from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../types";
@@ -8,7 +15,7 @@ import TopBar from "@/app/components/TopBar";
 import Sessions from "@/app/components/session";
 import ConfirmDeleteModal from "@/app/components/ConfirmDeleteModal";
 import { Modalize } from "react-native-modalize";
-import { useUser } from "@/app/hooks/userContext"; 
+import { useUser } from "@/app/hooks/userContext";
 import { getPersonnageImageURI } from "@/app/components/imageSession";
 import { useSession } from "@/app/hooks/sessionContext";
 import { Session } from "@/app/services/sessionFetch";
@@ -32,15 +39,15 @@ const AccueilApresConnexion: React.FC = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 3000); 
+    }, 3000);
 
-    return () => clearTimeout(timer); 
+    return () => clearTimeout(timer);
   }, []);
 
   useFocusEffect(
     React.useCallback(() => {
       if (navigation.isFocused()) {
-        refreshSessions().catch(err => {
+        refreshSessions().catch((err) => {
           setError("Erreur lors de la récupération des données");
           console.error(err);
         });
@@ -54,9 +61,12 @@ const AccueilApresConnexion: React.FC = () => {
 
   const BoutonSession = (session: Session) => {
     console.log("Session sélectionnée:", session);
-    navigation.navigate("Histoire", { histoire: session.personnageRef.histoire, personnageNom: session.personnageRef.nom, sessionPrenom: session.prenom });
+    navigation.navigate("Histoire", {
+      histoire: session.personnageRef.histoire,
+      personnageNom: session.personnageRef.nom,
+      sessionPrenom: session.prenom,
+    });
   };
-
 
   const menuUtilisateur = () => {
     navigation.navigate("MenuUtilisateur");
@@ -90,7 +100,7 @@ const AccueilApresConnexion: React.FC = () => {
     if (sessionToDelete) {
       try {
         await removeSession(sessionToDelete._id);
-        setEditMode(false); 
+        setEditMode(false);
       } catch (err) {
         console.error("Failed to delete session:", err);
       } finally {
@@ -106,8 +116,11 @@ const AccueilApresConnexion: React.FC = () => {
   return (
     <View style={theme.container}>
       {loading ? (
-        <View>
-          <Text style={theme.listText}>Chargement...</Text>
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.backgroundImage}
+            source={require("@/app/assets/images/loader.gif")}
+          />
         </View>
       ) : (
         <>
@@ -143,7 +156,9 @@ const AccueilApresConnexion: React.FC = () => {
                             session.personnageRef.nom
                           )}
                           onPress={
-                            editMode ? () => openDialog(session) : () => BoutonSession(session)
+                            editMode
+                              ? () => openDialog(session)
+                              : () => BoutonSession(session)
                           }
                           icon={editMode ? "trash-outline" : "play-outline"}
                         />
@@ -172,6 +187,18 @@ const AccueilApresConnexion: React.FC = () => {
 const { height: screenHeight } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
+  imageContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  backgroundImage: {
+    resizeMode: "contain",
+
+    width: screenHeight * 0.5,
+    height: screenHeight * 0.5,
+  },
   scrollViewContent: {
     flexGrow: 1,
     paddingHorizontal: 20,

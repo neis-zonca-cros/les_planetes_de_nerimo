@@ -3,7 +3,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 
 const mediumFontSize = RFValue(14)
 const smallFontSize = RFValue(11)
-const histoireFontSize = RFValue(10)
+const histoireFontSize = RFValue(12)
 const xSmallFontSize = RFValue(7)
 const { width: screenWidth, height: screenHeight} = Dimensions.get("window");
 
@@ -75,7 +75,7 @@ export const darkTheme = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingTop: 10,
-    fontSize: mediumFontSize,
+    fontSize: smallFontSize,
   },
   input: {
     height: screenHeight*0.10,
@@ -237,8 +237,8 @@ export const darkTheme = StyleSheet.create({
     alignItems: "center",
     borderRadius: 10,
     paddingHorizontal: 10,
-    paddingVertical: 10,
     width: "60%",
+    height: screenHeight*0.10,
     backgroundColor: "#23363E",
     ...Platform.select({
       ios: {
@@ -256,7 +256,6 @@ export const darkTheme = StyleSheet.create({
     fontSize: smallFontSize,
     color: "#FAE6BB",
     fontFamily: "brotherBold",
-    paddingTop: 10,
   },
   iconeProfilItems: {
     color: "#FAE6BB",

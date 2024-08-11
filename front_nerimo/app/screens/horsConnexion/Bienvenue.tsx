@@ -14,17 +14,16 @@ const Bienvenue: React.FC = () => {
   const navigation = useNavigation<BienvenueScreen>();
   const { theme } = useTheme();
   const screenHeight = Dimensions.get("window").height;
-  const maxSize = 150; 
-  const iconSize = Math.min(screenHeight * 0.20, maxSize);
+  const maxSize = 150;
+  const iconSize = Math.min(screenHeight * 0.2, maxSize);
 
   return (
     <View style={[theme.container]}>
-      {/* <ImageBackground source={require('@/app/assets/images/chambr.jpg')} style={styles.backgroundImage}></ImageBackground> */}
       <TopBar titre="Bienvenue sur les" prenom="planètes de Nérimo !" />
       <View style={styles.contentContainer}>
         <Image
           style={styles.image}
-          source={require('@/app/assets/images/planete_nerimo.gif')}
+          source={require("@/app/assets/images/planete_nerimo.gif")}
         />
       </View>
       <TouchableOpacity
@@ -49,14 +48,14 @@ const { height: screenHeight } = Dimensions.get("window");
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
-    resizeMode: 'cover', 
-    justifyContent: 'center', 
-    alignItems: 'center', 
+    resizeMode: "cover",
+    justifyContent: "center",
+    alignItems: "center",
   },
   contentContainer: {
     flex: 0.75,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   image: {
     width: screenHeight * 0.7,
@@ -65,9 +64,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   iconButton: {
-    position: 'absolute',
+    position: "absolute",
     paddingTop: 20,
     bottom: 20,
-    alignSelf: 'center',
-  }
+    alignSelf: "center",
+  },
 });

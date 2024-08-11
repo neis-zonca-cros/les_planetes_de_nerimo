@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
   },
   rightContainer: {
     flex: 0.60,
+    paddingTop: 60,
     justifyContent: "center",
     alignItems: "flex-start",
   },

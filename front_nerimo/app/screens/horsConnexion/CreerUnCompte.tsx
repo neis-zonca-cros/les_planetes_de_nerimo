@@ -165,7 +165,7 @@ const CreerUnCompte: React.FC = () => {
                   <View style={theme.input}>
                     <TextInput
                       style={theme.textInput}
-                      placeholder="Répetez le mot de passe"
+                      placeholder="Répétez le mot de passe"
                       placeholderTextColor={
                         theme === darkTheme ? "#FAE6BB" : "#23363E"
                       }
