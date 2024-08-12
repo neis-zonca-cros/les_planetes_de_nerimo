@@ -9,14 +9,5 @@ export const paddingHorizontalMedium = responsiveWidth(1);
 export const paddingVerticalSmall = responsiveHeight(0.2); 
 export const paddingVerticalMedium = responsiveHeight(0.4);  
 
-export const paddingSmall = {
-  paddingHorizontal: paddingHorizontalSmall,
-  paddingVertical: paddingVerticalSmall,
-};
-
-export const paddingMedium = {
-  paddingHorizontal: paddingHorizontalMedium,
-  paddingVertical: paddingVerticalMedium,
-};
 
 
