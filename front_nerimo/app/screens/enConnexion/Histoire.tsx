@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Pressable } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Pressable, Dimensions } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation, RouteProp, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '@/app/types';
@@ -76,52 +76,47 @@ const Histoire: React.FC = () => {
   };
 
   return backgroundImage ? (
-    <ImageBackground source={backgroundImage} style={theme.imageHistoire}>
+    <ImageBackground source={backgroundImage} style={styles.imageHistoire}>
       <TopBar
         iconeDroiteNom="close-outline"
         iconeDroiteAction={goToAccueil}
       />
-      <View style={theme.containerHistoire}>
+      <View style={styles.containerHistoire}>
 
-        <View style={theme.textContainerHistoire}>
-          <Text style={theme.textHistoire}>{currentText}</Text>
+        <View style={[styles.textContainerHistoire, {backgroundColor: theme.colors.background}]}>
+          <Text style={[styles.textHistoire, {fontFamily: theme.typographySize.medium.fontFamily, color: theme.colors.text, fontSize: theme.typographySize.medium.fontSize}]}>{currentText}</Text>
         </View>
-        <View style={theme.choixHistoire}>
+        <View style={styles.choixHistoire}>
           {choices.map((choice, index) => (
-            <Pressable
+            <TouchableOpacity
               key={index}
-              style={({ pressed }) => [
-                {
-                  opacity: pressed ? 0.6 : 1, 
-                },
-                theme.choixBouttonHistoire
-              ]}
+              style={[styles.choixBouttonHistoire, theme.colors.effectShadow, {backgroundColor: theme.colors.background, borderColor: theme.colors.background}]}
               onPress={() => makeChoice(index)}
             >
-              <Text style={theme.choixBouttonTexteHistoire}>{choice.text}</Text>
-            </Pressable>
+              <Text style={[styles.textHistoire, {fontFamily: theme.typographySize.medium.fontFamily, color: theme.colors.text, fontSize: theme.typographySize.medium.fontSize}]}>{choice.text}</Text>
+            </TouchableOpacity>
           ))}
         </View>
       </View>
       
     </ImageBackground>
   ) : (
-    <View style={theme.containerHistoireSansImage}>
+    <View style={[styles.containerHistoireSansImage, {backgroundColor: theme.colors.background}]}>
             <TopBar
         iconeDroiteNom="close-outline"
         iconeDroiteAction={goToAccueil}
       />
-      <View style={theme.textContainerHistoire}>
-        <Text style={theme.textHistoire}>{currentText}</Text>
+      <View style={[styles.textContainerHistoire, {backgroundColor: theme.colors.neutralButton}]}>
+        <Text style={[styles.textHistoire, {fontFamily: theme.typographySize.medium.fontFamily, color: theme.colors.text, fontSize: theme.typographySize.medium.fontSize}]}>{currentText}</Text>
       </View>
-      <View style={theme.choixHistoire}>
+      <View style={styles.choixHistoire}>
         {choices.map((choice, index) => (
           <TouchableOpacity
             key={index}
-            style={theme.choixBouttonHistoire}
+            style={[styles.choixBouttonHistoire, theme.colors.effectShadow, {backgroundColor: theme.colors.background, borderColor: theme.colors.background}]}
             onPress={() => makeChoice(index)}
           >
-            <Text style={theme.choixBouttonTexteHistoire}>{choice.text}</Text>
+            <Text style={[styles.textHistoire, {fontFamily: theme.typographySize.medium.fontFamily, color: theme.colors.text, fontSize: theme.typographySize.medium.fontSize}]}>{choice.text}</Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -130,4 +125,51 @@ const Histoire: React.FC = () => {
 };
 
 export default Histoire;
-
+const screenHeight = Dimensions.get('window').height;
+const screenWidth = Dimensions.get('window').width;
+const styles = StyleSheet.create ({
+  imageHistoire: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+  },
+  containerHistoire: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    padding: 10,
+  },
+  containerHistoireSansImage: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    padding: 10,
+  },
+  textContainerHistoire: {
+    padding: 10,
+    borderRadius: 10,
+    marginHorizontal: 10,
+  },
+  textHistoire: {
+    lineHeight: screenHeight*0.045,
+    textAlign: 'center',
+  },
+  choixHistoire: {
+    flexDirection: "row",
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    width: '100%',
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  choixBouttonHistoire: {
+    padding: 2,
+    marginHorizontal: 5,
+    marginBottom: 5,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: screenWidth * 0.3,
+    borderWidth: 5,
+  },
+})

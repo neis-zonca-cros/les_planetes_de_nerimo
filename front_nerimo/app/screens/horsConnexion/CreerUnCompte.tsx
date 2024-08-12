@@ -16,7 +16,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { useTheme } from "@/app/hooks/themeContext";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { darkTheme } from "@/app/constants/dark";
+import { darkTheme } from "@/app/themes/dark";
 import { CompteIcon } from "@/app/assets/icons/compteIcon";
 import TopBar from "@/app/components/TopBar";
 import useGoToConnect from "@/app/navigation/useGoToConnect";
@@ -83,7 +83,7 @@ const CreerUnCompte: React.FC = () => {
   
 
   return (
-    <View style={theme.container}>
+    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
       <TopBar
         titre="Créer un compte"
         prenom="Nérimo"
@@ -94,7 +94,7 @@ const CreerUnCompte: React.FC = () => {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}
       >
-        <ScrollView contentContainerStyle={theme.scrollViewContent}>
+        <ScrollView contentContainerStyle={styles.scrollViewContent}>
           <Formik
             initialValues={{
               firstName: "",
@@ -114,10 +114,17 @@ const CreerUnCompte: React.FC = () => {
               touched,
             }) => (
               <>
-                <View style={theme.inputContainer}>
-                  <View style={theme.input}>
+                <View style={styles.inputContainer}>
+                  <View style={[
+                        styles.input,
+                        theme.colors.effectShadow,
+                        { backgroundColor: theme.colors.background, borderColor: theme.colors.background}  
+                      ]}>
                     <TextInput
-                      style={theme.textInput}
+                      style={[
+                        styles.textInput,
+                        { fontSize: theme.typographySize.medium.fontSize, fontFamily: theme.typographySize.medium.fontFamily, color: theme.colors.text, paddingVertical: theme.paddingVerticalSmall }  
+                      ]}
                       placeholder="Prénom"
                       placeholderTextColor={
                         theme === darkTheme ? "#FAE6BB" : "#23363E"
@@ -128,11 +135,20 @@ const CreerUnCompte: React.FC = () => {
                     />
                   </View>
                   {errors.firstName && touched.firstName && (
-                    <Text style={theme.errorText}>{errors.firstName}</Text>
+                    <Text style={[styles.errorText,
+                      {fontFamily: theme.typographySize.error.fontFamily, fontSize: theme.typographySize.error.fontSize, color: theme.colors.errorText}
+                    ]}>{errors.firstName}</Text>
                   )}
-                  <View style={theme.input}>
+                  <View style={[
+                        styles.input,
+                        theme.colors.effectShadow,
+                        { backgroundColor: theme.colors.background, borderColor: theme.colors.background}  
+                      ]}>
                     <TextInput
-                      style={theme.textInput}
+                      style={[
+                        styles.textInput,
+                        { fontSize: theme.typographySize.medium.fontSize, fontFamily: theme.typographySize.medium.fontFamily, color: theme.colors.text, paddingVertical: theme.paddingVerticalSmall }  
+                      ]}
                       placeholder="Adresse mail"
                       placeholderTextColor={
                         theme === darkTheme ? "#FAE6BB" : "#23363E"
@@ -144,11 +160,20 @@ const CreerUnCompte: React.FC = () => {
                     />
                   </View>
                   {errors.email && touched.email && (
-                    <Text style={theme.errorText}>{errors.email}</Text>
+                    <Text style={[styles.errorText,
+                      {fontFamily: theme.typographySize.error.fontFamily, fontSize: theme.typographySize.error.fontSize, color: theme.colors.errorText}
+                    ]}>{errors.email}</Text>
                   )}
-                  <View style={theme.input}>
+                  <View style={[
+                        styles.input,
+                        theme.colors.effectShadow,
+                        { backgroundColor: theme.colors.background, borderColor: theme.colors.background}  
+                      ]}>
                     <TextInput
-                      style={theme.textInput}
+                      style={[
+                        styles.textInput,
+                        { fontSize: theme.typographySize.medium.fontSize, fontFamily: theme.typographySize.medium.fontFamily, color: theme.colors.text, paddingVertical: theme.paddingVerticalSmall }  
+                      ]}
                       placeholder="Mot de passe"
                       placeholderTextColor={
                         theme === darkTheme ? "#FAE6BB" : "#23363E"
@@ -160,11 +185,20 @@ const CreerUnCompte: React.FC = () => {
                     />
                   </View>
                   {errors.password && touched.password && (
-                    <Text style={theme.errorText}>{errors.password}</Text>
+                    <Text style={[styles.errorText,
+                      {fontFamily: theme.typographySize.error.fontFamily, fontSize: theme.typographySize.error.fontSize, color: theme.colors.errorText}
+                    ]}>{errors.password}</Text>
                   )}
-                  <View style={theme.input}>
+                  <View style={[
+                        styles.input,
+                        theme.colors.effectShadow,
+                        { backgroundColor: theme.colors.background, borderColor: theme.colors.background}  
+                      ]}>
                     <TextInput
-                      style={theme.textInput}
+                      style={[
+                        styles.textInput,
+                        { fontSize: theme.typographySize.medium.fontSize, fontFamily: theme.typographySize.medium.fontFamily, color: theme.colors.text, paddingVertical: theme.paddingVerticalSmall }  
+                      ]}
                       placeholder="Répétez le mot de passe"
                       placeholderTextColor={
                         theme === darkTheme ? "#FAE6BB" : "#23363E"
@@ -176,7 +210,9 @@ const CreerUnCompte: React.FC = () => {
                     />
                   </View>
                   {errors.confirmPassword && touched.confirmPassword && (
-                    <Text style={theme.errorText}>
+                    <Text style={[styles.errorText,
+                      {fontFamily: theme.typographySize.error.fontFamily, fontSize: theme.typographySize.error.fontSize, color: theme.colors.errorText}
+                    ]}>
                       {errors.confirmPassword}
                     </Text>
                   )}
@@ -187,7 +223,7 @@ const CreerUnCompte: React.FC = () => {
                       onPress={handleSubmit as any}
                       style={styles.icon}
                     >
-                      <View style={theme.iconeShadow}>
+                      <View style={theme.colors.effectShadow}>
                         <CompteIcon
                           width={screenWidth * 0.26}
                           fill={theme === darkTheme ? "#FFCD69" : "#E7A74F"}
@@ -197,7 +233,7 @@ const CreerUnCompte: React.FC = () => {
                     </TouchableOpacity>
                   </View>
                   <View style={styles.buttonContainer}>
-                    <Text onPress={seConnecter} style={theme.titreSmall}>
+                    <Text onPress={seConnecter} style={[styles.titreSmall, {fontFamily: theme.typographySize.medium.fontFamily, fontSize: theme.typographySize.medium.fontSize, color: theme.colors.text, paddingVertical: theme.paddingVerticalMedium}]}>
                       Déjà un compte ?
                     </Text>
                   </View>
@@ -211,6 +247,7 @@ const CreerUnCompte: React.FC = () => {
   );
 };
 const screenHeight = Dimensions.get("window").height;
+const screenWidth = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({
   container: {
@@ -229,6 +266,40 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 10,
   },
+  scrollViewContent: {
+    flexGrow: 1,
+    paddingHorizontal: 20,
+    justifyContent: "center",
+  },
+  inputContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+
+  },
+  textInput: {
+    flex: 1,
+    textAlign:'center',
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  input: {
+    height: screenHeight*0.10,
+    width: screenWidth*0.40,
+    borderRadius: 10,
+    borderWidth: 5,
+    paddingHorizontal: 8,
+    marginBottom: 10,
+  },
+  errorText: {
+    textTransform: "uppercase",
+    paddingBottom: 10,
+  },
+  titreSmall: {
+    textAlign: "center",
+    textTransform: "uppercase",
+  },
+
 });
 
 export default CreerUnCompte;

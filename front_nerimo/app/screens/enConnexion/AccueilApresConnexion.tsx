@@ -114,7 +114,7 @@ const AccueilApresConnexion: React.FC = () => {
   const organizedSessions = organizeSessionsInColumns(sessions || []);
 
   return (
-    <View style={theme.container}>
+    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
       {loading ? (
         <View style={styles.imageContainer}>
           <Image
@@ -137,9 +137,9 @@ const AccueilApresConnexion: React.FC = () => {
 
           <ScrollView contentContainerStyle={styles.scrollViewContent}>
             {error ? (
-              <Text style={theme.listText}>{error}</Text>
+              <Text style={[styles.listText, {fontFamily: theme.typographySize.medium.fontFamily, fontSize: theme.typographySize.medium.fontSize, color: theme.colors.text}]}>{error}</Text>
             ) : sessions && sessions.length === 0 ? (
-              <Text style={theme.listText}>
+              <Text style={[styles.listText, {fontFamily: theme.typographySize.medium.fontFamily, fontSize: theme.typographySize.medium.fontSize, color: theme.colors.text}]}>
                 Pour commencer, ajoutez une session
               </Text>
             ) : (
@@ -216,6 +216,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 10,
+  },
+  listText: {
+    textTransform: 'uppercase',
+    textAlign: "center",
+    paddingTop: 10,
   },
 });
 

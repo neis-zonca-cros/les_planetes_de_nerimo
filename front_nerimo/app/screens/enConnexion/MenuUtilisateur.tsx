@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { useTheme } from "@/app/hooks/themeContext";
 import TopBar from "@/app/components/TopBar";
-import { darkTheme } from "@/app/constants/dark";
+import { darkTheme } from "@/app/themes/dark";
 import { AProposIcon } from "@/app/assets/icons/aProposIcon";
 import useGoBack from "@/app/navigation/useGoBack";
 import { ScrollView } from "react-native-gesture-handler";
@@ -40,18 +40,18 @@ const MenuUtilisateur: React.FC = () => {
    };
 
   return (
-    <View style={theme.container}>
+    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
       <TopBar
         titre="Menu de"
         prenom={utilisateur?.prenom}
         iconeDroiteNom="close-outline"
         iconeDroiteAction={goBack}
       />
-      <ScrollView contentContainerStyle={theme.scrollViewContent}>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.row}>
           <View style={styles.iconContainer}>
             <TouchableOpacity onPress={goToProfil}>
-              <View style={theme.iconeShadow}>
+              <View style={theme.colors.effectShadow}>
                 <ProfilRondIcon
                   width={screenHeight * 0.25}
                   fill={theme === darkTheme ? "#FFCD69" : "#E7A74F"}
@@ -62,7 +62,7 @@ const MenuUtilisateur: React.FC = () => {
           </View>
           <View style={styles.iconContainer}>
             <TouchableOpacity onPress={handleLogout}>
-              <View style={theme.iconeShadow}>
+              <View style={theme.colors.effectShadow}>
                 <DeconnexionRondIcon
                   width={screenHeight * 0.25}
                   fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
@@ -74,7 +74,7 @@ const MenuUtilisateur: React.FC = () => {
 
           <View style={styles.iconContainer}>
             <TouchableOpacity>
-              <View style={theme.iconeShadow}>
+              <View style={theme.colors.effectShadow}>
                 <AProposIcon
                   width={screenHeight * 0.25}
                   fill={theme === darkTheme ? "#FAE6BB" : "#23363E"}
@@ -100,6 +100,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     margin: 20,
+  },
+  scrollViewContent: {
+    flexGrow: 1,
+    paddingHorizontal: 20,
+    justifyContent: "center",
   },
 });
 export default MenuUtilisateur;

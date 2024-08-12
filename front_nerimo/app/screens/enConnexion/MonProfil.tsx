@@ -4,7 +4,7 @@ import { useTheme } from "@/app/hooks/themeContext";
 import TopBar from "@/app/components/TopBar";
 import { Dimensions } from "react-native";
 import { ProfilRondIcon } from "@/app/assets/icons/profilRondIcon";
-import { darkTheme } from "@/app/constants/dark";
+import { darkTheme } from "@/app/themes/dark";
 import { useUser } from "../../hooks/userContext";
 import ProfilItems from "@/app/components/profilItems";
 import useGoBack from "@/app/navigation/useGoBack";
@@ -23,11 +23,11 @@ const MonProfil: React.FC = () => {
     };
   }
   return (
-    <View style={theme.container}>
+    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
       <TopBar titre="Profil de" prenom={utilisateur?.prenom} iconeDroiteAction={goBack} iconeDroiteNom={"close-outline"}/>
       <View style={styles.mainContainer}>
         <View style={styles.leftContainer}>
-          <View style={theme.iconeShadow}>
+          <View style={theme.colors.effectShadow}>
             <ProfilRondIcon
               width={screenHeight * 0.25}
               fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}

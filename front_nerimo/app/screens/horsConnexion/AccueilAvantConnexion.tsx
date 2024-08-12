@@ -11,7 +11,7 @@ import { RootStackParamList } from "@/app/types";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTheme } from "@/app/hooks/themeContext";
 import { useNavigation } from "@react-navigation/native";
-import { darkTheme } from "@/app/constants/dark";
+import { darkTheme } from "@/app/themes/dark";
 import { CompteIcon } from "@/app/assets/icons/compteIcon";
 import { ConnexionIcon } from "@/app/assets/icons/connexionIcon";
 import useGoToConnect from "@/app/navigation/useGoToConnect";
@@ -38,7 +38,7 @@ const AccueilAvantConnexion: React.FC = () => {
   };
 
   return (
-    <View style={theme.container}>
+    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
       <TopBar
         titre=""
         iconeDroiteNom="planet-outline"
@@ -46,8 +46,8 @@ const AccueilAvantConnexion: React.FC = () => {
       />
 
       <View style={styles.bottomIconsContainer}>
-        <TouchableOpacity onPress={goSeConnecter} style={styles.icon}>
-          <View style={theme.iconeShadow}>
+        <TouchableOpacity onPress={goSeConnecter} style={{paddingVertical: theme.paddingVerticalSmall}}>
+          <View style={theme.colors.effectShadow}>
             <ConnexionIcon
               width={screenWidth * 0.26}
               fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
@@ -55,8 +55,8 @@ const AccueilAvantConnexion: React.FC = () => {
             />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={goCreerUnCompte} style={styles.icon}>
-          <View style={theme.iconeShadow}>
+        <TouchableOpacity onPress={goCreerUnCompte} style={{paddingVertical: theme.paddingVerticalSmall}}>
+          <View style={theme.colors.effectShadow}>
             <CompteIcon
               width={screenWidth * 0.26}
               fill={theme === darkTheme ? "#FFCD69" : "#E7A74F"}
@@ -64,7 +64,10 @@ const AccueilAvantConnexion: React.FC = () => {
             />
           </View>
         </TouchableOpacity>
-        <Text onPress={mdpOublie} style={theme.titreSmall}>
+        <Text onPress={mdpOublie}         style={[
+          styles.titreSmall,
+          { fontSize: theme.typographySize.medium.fontSize, fontFamily: theme.typographySize.medium.fontFamily, color: theme.colors.text, paddingVertical: theme.paddingVerticalMedium }  
+        ]}>
           Mot de passe oublié ?
         </Text>
       </View>
@@ -81,8 +84,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 20,
   },
-  icon: {
-    paddingVertical: 5,
+  titreSmall: {
+    textAlign: "center",
+    textTransform: "uppercase",
   },
 });
 

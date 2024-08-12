@@ -4,6 +4,7 @@ import {
   Text,
   TouchableOpacity,
   Dimensions,
+  StyleSheet
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { ComponentProps } from "react";
@@ -44,27 +45,27 @@ const TopBar: React.FC<TopBarProps> = ({
   const { theme } = useTheme();
 
   return (
-    <View style={theme.containerTopBar}>
-    <View style={theme.iconsTopBar}>
-      <View style={theme.textContainerTopBar}>
-        <Text style={theme.titreLargeTopBar}>{titre}</Text>
-        <Text style={theme.titreLargeTopBar}>{prenom} </Text>
+    <View style={styles.containerTopBar}>
+    <View style={styles.iconsTopBar}>
+      <View style={styles.textContainerTopBar}>
+        <Text style={[styles.titreLargeTopBar, {color: theme.colors.text, fontFamily: theme.typographySize.large.fontFamily, fontSize: theme.typographySize.large.fontSize}]}>{titre}</Text>
+        <Text style={[styles.titreLargeTopBar, {color: theme.colors.text, fontFamily: theme.typographySize.large.fontFamily, fontSize: theme.typographySize.large.fontSize}]}>{prenom} </Text>
       </View>
     </View>
-    <View style={theme.iconsTopBar}>
+    <View style={styles.iconsTopBar}>
     {iconeZeroNom ? (
         <TouchableOpacity onPress={iconeZeroAction}>
-          <TabBarIcon name={iconeZeroNom} style={theme.iconTopBar} />
+          <TabBarIcon name={iconeZeroNom} style={styles.iconTopBar} />
         </TouchableOpacity>
       ) : null}
       {iconeGaucheNom ? (
         <TouchableOpacity onPress={iconeGaucheAction}>
-          <TabBarIcon name={iconeGaucheNom} style={theme.iconTopBar} />
+          <TabBarIcon name={iconeGaucheNom} style={styles.iconTopBar} />
         </TouchableOpacity>
       ) : null}
       {iconeDroiteNom ? (
         <TouchableOpacity onPress={iconeDroiteAction}>
-          <TabBarIcon name={iconeDroiteNom} style={theme.iconTopBar} />
+          <TabBarIcon name={iconeDroiteNom} style={styles.iconTopBar} />
         </TouchableOpacity>
       ) : null}
     </View>
@@ -72,3 +73,39 @@ const TopBar: React.FC<TopBarProps> = ({
   );
 };
 export default TopBar;
+
+const screenHeight = Dimensions.get('window').height;
+const screenWidth = Dimensions.get('window').width;
+const styles = StyleSheet.create({
+  containerTopBar: {
+    flexDirection: "row",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 56,
+    zIndex: 1,
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal:16,
+    marginVertical: 15,
+  },
+  textContainerTopBar: {
+    flexDirection: "column",
+    alignItems: "center",
+    paddingTop:10,
+  },
+  titreLargeTopBar: {
+    paddingVertical: 2,
+    paddingHorizontal:5,
+    textAlign: "center",
+  },
+  iconsTopBar: {
+    flexDirection: "row",
+  },
+  iconTopBar: {
+    color: "#FAE6BB",
+    paddingVertical: 2,
+    paddingHorizontal:5,
+  },
+})

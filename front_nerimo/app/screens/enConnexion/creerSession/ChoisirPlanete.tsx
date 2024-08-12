@@ -54,16 +54,16 @@ const ChoisirPlanete: React.FC = () => {
   const renderItem = ({ item }: { item: Planete }) => (
     <View style={styles.buttonContainer}>
       <TouchableOpacity onPress={() => handleSelectPlanete(item._id)}>
-        <View style={theme.listContainer}>
+        <View style={[styles.listContainer, theme.colors.effectShadow, {backgroundColor: theme.colors.background, borderColor: theme.colors.background, paddingVertical: theme.paddingVerticalMedium, marginVertical: theme.paddingVerticalMedium}]}>
           <Image source={getPlaneteImageURI(item.nom)} style={styles.icon} />
-          <Text style={theme.listTextPlanete}>{item.nom}</Text>
+          <Text style={[styles.listText, {fontFamily: theme.typographySize.medium.fontFamily, fontSize: theme.typographySize.medium.fontSize, color: theme.colors.text, paddingVertical: theme.paddingVerticalMedium}]}>{item.nom}</Text>
         </View>
       </TouchableOpacity>
     </View>
   );
 
   return (
-    <View style={theme.container}>
+    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
       <TopBar
         titre="Choisir une"
         prenom="planète"
@@ -83,7 +83,7 @@ const ChoisirPlanete: React.FC = () => {
   );
 };
 
-const { height: screenHeight } = Dimensions.get("window");
+const { height: screenHeight, width: screenWidth } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   icon: {
@@ -104,6 +104,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexGrow: 1,
+  },
+  listContainer:{
+    height: screenWidth*0.23,
+    width:screenWidth*0.23,
+    borderRadius: (screenWidth*0.23)/2,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 5,
+  },
+  listText: {
+    textTransform: 'uppercase',
+    textAlign: "center",
   },
 });
 

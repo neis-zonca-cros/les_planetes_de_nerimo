@@ -18,7 +18,7 @@ const Bienvenue: React.FC = () => {
   const iconSize = Math.min(screenHeight * 0.2, maxSize);
 
   return (
-    <View style={[theme.container]}>
+    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
       <TopBar titre="Bienvenue sur les" prenom="planètes de Nérimo !" />
       <View style={styles.contentContainer}>
         <Image
@@ -30,28 +30,25 @@ const Bienvenue: React.FC = () => {
         onPress={() => navigation.replace("AccueilAvantConnexion")}
         style={styles.iconButton}
       >
-        <View style={theme.iconeShadow}>
+        <View style={theme.colors.effectShadow}>
           <Ionicons
             name="arrow-forward-circle"
             size={iconSize}
-            style={theme.iconeColor}
+            color={theme.colors.neutralButton}
           />
         </View>
       </TouchableOpacity>
     </View>
   );
+
+
+
 };
 
 export default Bienvenue;
 
 const { height: screenHeight } = Dimensions.get("window");
 const styles = StyleSheet.create({
-  backgroundImage: {
-    flex: 1,
-    resizeMode: "cover",
-    justifyContent: "center",
-    alignItems: "center",
-  },
   contentContainer: {
     flex: 0.75,
     justifyContent: "center",

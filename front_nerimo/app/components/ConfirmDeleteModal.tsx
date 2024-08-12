@@ -1,4 +1,4 @@
-import { darkTheme } from "@/app/constants/dark";
+import { darkTheme } from "@/app/themes/dark";
 import { useTheme } from "@/app/hooks/themeContext";
 import React, { forwardRef } from "react";
 import {
@@ -24,13 +24,13 @@ const ConfirmDeleteModal = forwardRef<Modalize, ConfirmationModalProps>(
     const screenWidth = Dimensions.get("window").width;
     return (
       <Modalize ref={ref} adjustToContentHeight>
-        <View style={theme.containerModal}>
-          <Text style={theme.sessionText}>
+        <View style={[styles.containerModal, {backgroundColor: theme.colors.background}]}>
+          <Text style={[styles.sessionText, {fontFamily: theme.typographySize.medium.fontFamily, fontSize: theme.typographySize.medium.fontSize, color: theme.colors.text }]}>
             Supprimer la session de {sessionName} ?
           </Text>
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={onCancel}>
-              <View style={theme.iconeShadow}>
+              <View style={theme.colors.effectShadow}>
                 <NonIcon
                   width={screenWidth * 0.2}
                   fill={theme === darkTheme ? "#FFCD69" : "#825C6E"}
@@ -39,7 +39,7 @@ const ConfirmDeleteModal = forwardRef<Modalize, ConfirmationModalProps>(
               </View>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={onConfirm}>
-              <View style={theme.iconeShadow}>
+              <View style={theme.colors.effectShadow}>
                 <OuiIcon
                   width={screenWidth * 0.2}
                   fill={theme === darkTheme ? "#FFAD80" : "#E7A74F"}
@@ -69,6 +69,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 15,
   },
+    containerModal: {
+    padding: 20,
+    alignItems: "center",
+  },
+sessionText: {
+  alignItems:"center",
+  textAlign: "center",
+  justifyContent: "center",
+},
 });
 
 export default ConfirmDeleteModal;

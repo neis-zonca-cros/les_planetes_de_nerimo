@@ -1,4 +1,4 @@
-import { darkTheme } from "@/app/constants/dark";
+import { darkTheme } from "@/app/themes/dark";
 import { useTheme } from "@/app/hooks/themeContext";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
@@ -30,18 +30,18 @@ const SessionComposant: React.FC<SessionProps> = ({
   const { height: screenHeight } = Dimensions.get("window");
 
   return (
-    <TouchableOpacity onPress={onPress} style={theme.sessionCard}>
+    <TouchableOpacity onPress={onPress} style={[styles.sessionCard, theme.colors.effectShadow, {borderColor: theme.colors.background, backgroundColor: theme.colors.background}]}>
       <View style={{ flexDirection: "column", alignItems: "center", justifyContent:"center" }}>
         {imageSource && (
           <Image source={imageSource} style={styles.roundImage} />
         )}
-        <View style={theme.sessionContainer}>
-          <Text style={theme.sessionText}>{prenom}</Text>
-          <Text style={theme.sessionText}>
+        <View style={styles.sessionContainer}>
+          <Text style={[styles.sessionText, {fontFamily: theme.typographySize.medium.fontFamily, fontSize: theme.typographySize.medium.fontSize, color: theme.colors.text }]}>{prenom}</Text>
+          <Text style={[styles.sessionText, {fontFamily: theme.typographySize.medium.fontFamily, fontSize: theme.typographySize.medium.fontSize, color: theme.colors.text }]}>
             {textePlanet}
             {planeteNom}
           </Text>
-          <Text style={theme.sessionText}>
+          <Text style={[styles.sessionText, {fontFamily: theme.typographySize.medium.fontFamily, fontSize: theme.typographySize.medium.fontSize, color: theme.colors.text }]}>
             {textePersonnage}
             {personnageNom}
           </Text>
@@ -69,5 +69,25 @@ const styles = StyleSheet.create({
     alignItems: 'center', 
     justifyContent: 'center',
     marginVertical: 10,
+  },
+    sessionContainer: {
+    flexDirection: "column",
+    textAlign:"center",
+    paddingVertical:5,
+  },
+  sessionCard: {    
+    justifyContent: 'center',
+    height: screenWidth*0.23,
+    width:screenWidth*0.23,
+    borderRadius: (screenWidth*0.23)/2,  
+    marginBottom: 12,
+    paddingHorizontal: 8,
+    alignItems: 'center', 
+    borderWidth: 5,
+  },
+  sessionText: {
+    alignItems:"center",
+    textAlign: "center",
+    justifyContent: "center",
   },
 });

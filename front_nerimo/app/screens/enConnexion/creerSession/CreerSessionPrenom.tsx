@@ -11,7 +11,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "@/app/types";
 import { useTheme } from "@/app/hooks/themeContext";
 import TopBar from "@/app/components/TopBar";
-import { darkTheme } from "@/app/constants/dark";
+import { darkTheme } from "@/app/themes/dark";
 import { Ionicons } from "@expo/vector-icons";
 import useGoBack from "@/app/navigation/useGoBack";
 import { useSession } from "@/app/hooks/sessionContext";
@@ -44,7 +44,7 @@ const CreerSessionPrenom: React.FC = () => {
   };
 
   return (
-    <View style={theme.container}>
+    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
       <TopBar
         titre="Créer une"
         prenom="session"
@@ -55,22 +55,29 @@ const CreerSessionPrenom: React.FC = () => {
       />
 
       <View style={styles.bottomIconsContainer}>
-        <View style={theme.input}>
+        <View style={[
+                    styles.input,
+                    theme.colors.effectShadow,
+                    { backgroundColor: theme.colors.background, borderColor: theme.colors.background }
+                  ]}>
           <TextInput
-            style={theme.textInput}
+                                  style={[
+                                    styles.textInput,
+                                    { fontSize: theme.typographySize.medium.fontSize, fontFamily: theme.typographySize.medium.fontFamily, color: theme.colors.text, paddingVertical: theme.paddingVerticalSmall }
+                                  ]}
             value={prenom}
             onChangeText={setPrenom}
             placeholder="Écris ton surnom ici"
             placeholderTextColor={theme === darkTheme ? "#FAE6BB" : "#23363E"}
           />
         </View>
-        <View style={theme.iconeContainer}>
+        <View style={styles.iconeContainer}>
           <TouchableOpacity onPress={handleNext}>
-            <View style={theme.iconeShadow}>
+            <View style={theme.colors.effectShadow}>
               <Ionicons
                 name="arrow-forward-circle"
                 size={iconSize}
-                style={theme.iconeColor}
+                color= {theme.colors.neutralButton}
               />
             </View>
           </TouchableOpacity>
@@ -79,7 +86,8 @@ const CreerSessionPrenom: React.FC = () => {
     </View>
   );
 };
-
+const screenHeight = Dimensions.get('window').height;
+const screenWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   bottomIconsContainer: {
     position: "absolute",
@@ -91,6 +99,26 @@ const styles = StyleSheet.create({
   },
   icon: {
     paddingVertical: 5,
+  },
+  textInput: {
+    flex: 1,
+    textAlign: 'center',
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  input: {
+    height: screenHeight * 0.10,
+    width: screenWidth * 0.40,
+    borderRadius: 10,
+    borderWidth: 5,
+    paddingHorizontal: 8,
+    marginBottom: 10,
+  },
+  iconeContainer: {
+    alignItems: "center",
+    justifyContent: "flex-end",
+    flex: 1,
+    paddingBottom: 20,
   },
 });
 
