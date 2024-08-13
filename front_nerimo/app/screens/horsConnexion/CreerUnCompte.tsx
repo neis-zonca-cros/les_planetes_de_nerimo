@@ -23,6 +23,7 @@ import useGoToConnect from "@/app/navigation/useGoToConnect";
 import { creerUtilisateur } from "@/app/services/utilisateurFetch";
 import { useUser } from "@/app/hooks/userContext";
 import { normalizeKey } from "@/app/utils/normalizeKey";
+import { ThemedStyles } from "@/app/utils/styles";
 
 type CreerUnCompteScreen = StackNavigationProp<
   RootStackParamList,
@@ -36,6 +37,7 @@ const CreerUnCompte: React.FC = () => {
   const goBackToAccueil = () => {
     navigation.navigate("AccueilAvantConnexion");
   };
+  const styleTheme = ThemedStyles(theme);
   const seConnecter = useGoToConnect();
   const screenWidth = Dimensions.get("window").width;
   const signUpValidationSchema = Yup.object().shape({
@@ -80,10 +82,10 @@ const CreerUnCompte: React.FC = () => {
       console.error("Erreur lors de la création du compte:", error);
     }
   };
-  
+
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+    <View style={styleTheme.container}>
       <TopBar
         titre="Créer un compte"
         prenom="Nérimo"
@@ -94,7 +96,7 @@ const CreerUnCompte: React.FC = () => {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}
       >
-        <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <ScrollView contentContainerStyle={styleTheme.scrollViewContent}>
           <Formik
             initialValues={{
               firstName: "",
@@ -116,18 +118,15 @@ const CreerUnCompte: React.FC = () => {
               <>
                 <View style={styles.inputContainer}>
                   <View style={[
-                        styles.input,
-                        theme.colors.effectShadow,
-                        { backgroundColor: theme.colors.background, borderColor: theme.colors.background}  
-                      ]}>
+                    styleTheme.rectangleForm,
+                    theme.colors.effectShadow,
+
+                  ]}>
                     <TextInput
-                      style={[
-                        styles.textInput,
-                        { fontSize: theme.typographySize.medium.fontSize, fontFamily: theme.typographySize.medium.fontFamily, color: theme.colors.text, paddingVertical: theme.paddingVerticalSmall }  
-                      ]}
+                      style={styleTheme.text}
                       placeholder="Prénom"
                       placeholderTextColor={
-                        theme === darkTheme ? "#FAE6BB" : "#23363E"
+                        theme.colors.text
                       }
                       onChangeText={handleChange("firstName")}
                       onBlur={handleBlur("firstName")}
@@ -135,23 +134,18 @@ const CreerUnCompte: React.FC = () => {
                     />
                   </View>
                   {errors.firstName && touched.firstName && (
-                    <Text style={[styles.errorText,
-                      {fontFamily: theme.typographySize.error.fontFamily, fontSize: theme.typographySize.error.fontSize, color: theme.colors.errorText}
-                    ]}>{errors.firstName}</Text>
+                    <Text style={styleTheme.errorText}>{errors.firstName}</Text>
                   )}
                   <View style={[
-                        styles.input,
-                        theme.colors.effectShadow,
-                        { backgroundColor: theme.colors.background, borderColor: theme.colors.background}  
-                      ]}>
+                    styleTheme.rectangleForm,
+                    theme.colors.effectShadow,
+
+                  ]}>
                     <TextInput
-                      style={[
-                        styles.textInput,
-                        { fontSize: theme.typographySize.medium.fontSize, fontFamily: theme.typographySize.medium.fontFamily, color: theme.colors.text, paddingVertical: theme.paddingVerticalSmall }  
-                      ]}
+                      style={styleTheme.text}
                       placeholder="Adresse mail"
                       placeholderTextColor={
-                        theme === darkTheme ? "#FAE6BB" : "#23363E"
+                        theme.colors.text
                       }
                       onChangeText={handleChange("email")}
                       onBlur={handleBlur("email")}
@@ -160,23 +154,16 @@ const CreerUnCompte: React.FC = () => {
                     />
                   </View>
                   {errors.email && touched.email && (
-                    <Text style={[styles.errorText,
-                      {fontFamily: theme.typographySize.error.fontFamily, fontSize: theme.typographySize.error.fontSize, color: theme.colors.errorText}
-                    ]}>{errors.email}</Text>
+                    <Text style={styleTheme.errorText}>{errors.email}</Text>
                   )}
                   <View style={[
-                        styles.input,
-                        theme.colors.effectShadow,
-                        { backgroundColor: theme.colors.background, borderColor: theme.colors.background}  
-                      ]}>
+                    theme.colors.effectShadow, styleTheme.rectangleForm
+                  ]}>
                     <TextInput
-                      style={[
-                        styles.textInput,
-                        { fontSize: theme.typographySize.medium.fontSize, fontFamily: theme.typographySize.medium.fontFamily, color: theme.colors.text, paddingVertical: theme.paddingVerticalSmall }  
-                      ]}
+                      style={styleTheme.text}
                       placeholder="Mot de passe"
                       placeholderTextColor={
-                        theme === darkTheme ? "#FAE6BB" : "#23363E"
+                        theme.colors.text
                       }
                       onChangeText={handleChange("password")}
                       onBlur={handleBlur("password")}
@@ -185,23 +172,18 @@ const CreerUnCompte: React.FC = () => {
                     />
                   </View>
                   {errors.password && touched.password && (
-                    <Text style={[styles.errorText,
-                      {fontFamily: theme.typographySize.error.fontFamily, fontSize: theme.typographySize.error.fontSize, color: theme.colors.errorText}
-                    ]}>{errors.password}</Text>
+                    <Text style={styleTheme.errorText}>{errors.password}</Text>
                   )}
                   <View style={[
-                        styles.input,
-                        theme.colors.effectShadow,
-                        { backgroundColor: theme.colors.background, borderColor: theme.colors.background}  
-                      ]}>
+                    styleTheme.rectangleForm,
+                    theme.colors.effectShadow,
+
+                  ]}>
                     <TextInput
-                      style={[
-                        styles.textInput,
-                        { fontSize: theme.typographySize.medium.fontSize, fontFamily: theme.typographySize.medium.fontFamily, color: theme.colors.text, paddingVertical: theme.paddingVerticalSmall }  
-                      ]}
+                      style={styleTheme.text}
                       placeholder="Répétez le mot de passe"
                       placeholderTextColor={
-                        theme === darkTheme ? "#FAE6BB" : "#23363E"
+                        theme.colors.text
                       }
                       onChangeText={handleChange("confirmPassword")}
                       onBlur={handleBlur("confirmPassword")}
@@ -210,9 +192,7 @@ const CreerUnCompte: React.FC = () => {
                     />
                   </View>
                   {errors.confirmPassword && touched.confirmPassword && (
-                    <Text style={[styles.errorText,
-                      {fontFamily: theme.typographySize.error.fontFamily, fontSize: theme.typographySize.error.fontSize, color: theme.colors.errorText}
-                    ]}>
+                    <Text style={styleTheme.errorText}>
                       {errors.confirmPassword}
                     </Text>
                   )}
@@ -225,15 +205,15 @@ const CreerUnCompte: React.FC = () => {
                     >
                       <View style={theme.colors.effectShadow}>
                         <CompteIcon
-                          width={screenWidth * 0.26}
-                          fill={theme === darkTheme ? "#FFCD69" : "#E7A74F"}
-                          background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
+                          width={screenWidth * 0.22}
+                          fill={theme.colors.secondaryButton}
+                          background={theme.colors.background}
                         />
                       </View>
                     </TouchableOpacity>
                   </View>
                   <View style={styles.buttonContainer}>
-                    <Text onPress={seConnecter} style={[styles.titreSmall, {fontFamily: theme.typographySize.medium.fontFamily, fontSize: theme.typographySize.medium.fontSize, color: theme.colors.text, paddingVertical: theme.paddingVerticalMedium}]}>
+                    <Text onPress={seConnecter} style={styleTheme.text}>
                       Déjà un compte ?
                     </Text>
                   </View>
@@ -255,9 +235,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   marginBottomContainer: {
-    marginBottom: screenHeight*0.03,
+    marginBottom: 20,
   },
   buttonContainer: {
+    paddingTop: 5,
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
@@ -266,40 +247,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 10,
   },
-  scrollViewContent: {
-    flexGrow: 1,
-    paddingHorizontal: 20,
-    justifyContent: "center",
-  },
   inputContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-end',
 
   },
-  textInput: {
-    flex: 1,
-    textAlign:'center',
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  input: {
-    height: screenHeight*0.10,
-    width: screenWidth*0.40,
-    borderRadius: 10,
-    borderWidth: 5,
-    paddingHorizontal: 8,
-    marginBottom: 10,
-  },
-  errorText: {
-    textTransform: "uppercase",
-    paddingBottom: 10,
-  },
-  titreSmall: {
-    textAlign: "center",
-    textTransform: "uppercase",
-  },
-
 });
 
 export default CreerUnCompte;

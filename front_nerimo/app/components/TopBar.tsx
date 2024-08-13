@@ -9,15 +9,15 @@ import {
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { ComponentProps } from "react";
 import { useTheme } from "@/app/hooks/themeContext";
+import { ThemedStyles } from "../utils/styles";
 
 export function TabBarIcon({
   style,
   ...rest
-}: ComponentProps<typeof Ionicons>) 
-
-{const screenHeight = Dimensions.get("window").height;
-  const maxSize = 56; 
-  const iconSize = Math.min(screenHeight * 0.10, maxSize); 
+}: ComponentProps<typeof Ionicons>) {
+  const screenHeight = Dimensions.get("window").height;
+  const maxSize = 56;
+  const iconSize = Math.min(screenHeight * 0.10, maxSize);
   return <Ionicons size={iconSize} style={[style]} {...rest} />;
 }
 
@@ -43,40 +43,43 @@ const TopBar: React.FC<TopBarProps> = ({
   iconeZeroNom,
 }) => {
   const { theme } = useTheme();
+  const styleTheme = ThemedStyles(theme);
 
   return (
     <View style={styles.containerTopBar}>
-    <View style={styles.iconsTopBar}>
-      <View style={styles.textContainerTopBar}>
-        <Text style={[styles.titreLargeTopBar, {color: theme.colors.text, fontFamily: theme.typographySize.large.fontFamily, fontSize: theme.typographySize.large.fontSize}]}>{titre}</Text>
-        <Text style={[styles.titreLargeTopBar, {color: theme.colors.text, fontFamily: theme.typographySize.large.fontFamily, fontSize: theme.typographySize.large.fontSize}]}>{prenom} </Text>
+      <View style={styles.pointerEvent}>
+        <View style={styles.directionIconsTopBar}>
+          <View style={styles.textContainerTopBar}>
+            <Text style={styleTheme.textLarge}>{titre}</Text>
+            <Text style={styleTheme.textLarge}>{prenom} </Text>
+          </View>
+        </View></View>
+      <View style={styles.directionIconsTopBar}>
+        {iconeZeroNom ? (
+          <TouchableOpacity onPress={iconeZeroAction}>
+            <TabBarIcon name={iconeZeroNom} style={styleTheme.icon} />
+          </TouchableOpacity>
+        ) : null}
+        {iconeGaucheNom ? (
+          <TouchableOpacity onPress={iconeGaucheAction}>
+            <TabBarIcon name={iconeGaucheNom} style={styleTheme.icon} />
+          </TouchableOpacity>
+        ) : null}
+        {iconeDroiteNom ? (
+          <TouchableOpacity onPress={iconeDroiteAction}>
+            <TabBarIcon name={iconeDroiteNom} style={styleTheme.icon} />
+          </TouchableOpacity>
+        ) : null}
       </View>
     </View>
-    <View style={styles.iconsTopBar}>
-    {iconeZeroNom ? (
-        <TouchableOpacity onPress={iconeZeroAction}>
-          <TabBarIcon name={iconeZeroNom} style={styles.iconTopBar} />
-        </TouchableOpacity>
-      ) : null}
-      {iconeGaucheNom ? (
-        <TouchableOpacity onPress={iconeGaucheAction}>
-          <TabBarIcon name={iconeGaucheNom} style={styles.iconTopBar} />
-        </TouchableOpacity>
-      ) : null}
-      {iconeDroiteNom ? (
-        <TouchableOpacity onPress={iconeDroiteAction}>
-          <TabBarIcon name={iconeDroiteNom} style={styles.iconTopBar} />
-        </TouchableOpacity>
-      ) : null}
-    </View>
-  </View>
   );
 };
 export default TopBar;
 
-const screenHeight = Dimensions.get('window').height;
-const screenWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
+  pointerEvent: {
+    pointerEvents: 'none',
+  },
   containerTopBar: {
     flexDirection: "row",
     position: "absolute",
@@ -87,25 +90,16 @@ const styles = StyleSheet.create({
     zIndex: 1,
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal:16,
+    paddingHorizontal: 16,
     marginVertical: 15,
+
   },
   textContainerTopBar: {
     flexDirection: "column",
     alignItems: "center",
-    paddingTop:10,
+    paddingTop: 10,
   },
-  titreLargeTopBar: {
-    paddingVertical: 2,
-    paddingHorizontal:5,
-    textAlign: "center",
-  },
-  iconsTopBar: {
+  directionIconsTopBar: {
     flexDirection: "row",
-  },
-  iconTopBar: {
-    color: "#FAE6BB",
-    paddingVertical: 2,
-    paddingHorizontal:5,
   },
 })

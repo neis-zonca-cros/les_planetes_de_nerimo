@@ -16,6 +16,7 @@ import { CompteIcon } from "@/app/assets/icons/compteIcon";
 import { ConnexionIcon } from "@/app/assets/icons/connexionIcon";
 import useGoToConnect from "@/app/navigation/useGoToConnect";
 import useGoToCreerUnCompte from "@/app/navigation/useGoToCreerCompte";
+import { ThemedStyles } from "@/app/utils/styles";
 
 type AccueilAvantConnexionScreen = StackNavigationProp<
   RootStackParamList,
@@ -27,6 +28,7 @@ const AccueilAvantConnexion: React.FC = () => {
   const goSeConnecter = useGoToConnect();
   const goCreerUnCompte = useGoToCreerUnCompte();
   const screenWidth = Dimensions.get("window").width;
+  const styleTheme = ThemedStyles(theme);
 
   const iconeDroitePress = () => {
     navigation.navigate("MenuInitial");
@@ -38,7 +40,7 @@ const AccueilAvantConnexion: React.FC = () => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+    <View style={styleTheme.container}>
       <TopBar
         titre=""
         iconeDroiteNom="planet-outline"
@@ -46,31 +48,29 @@ const AccueilAvantConnexion: React.FC = () => {
       />
 
       <View style={styles.bottomIconsContainer}>
-        <TouchableOpacity onPress={goSeConnecter} style={{paddingVertical: theme.paddingVerticalSmall}}>
+        <TouchableOpacity onPress={goSeConnecter} style={{ paddingVertical: 2 }}>
           <View style={theme.colors.effectShadow}>
             <ConnexionIcon
-              width={screenWidth * 0.26}
-              fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
-              background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
+              width={screenWidth * 0.22}
+              fill={theme.colors.primaryButton}
+              background={theme.colors.background}
             />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={goCreerUnCompte} style={{paddingVertical: theme.paddingVerticalSmall}}>
+        <TouchableOpacity onPress={goCreerUnCompte} style={{ paddingVertical: 2 }}>
           <View style={theme.colors.effectShadow}>
             <CompteIcon
-              width={screenWidth * 0.26}
-              fill={theme === darkTheme ? "#FFCD69" : "#E7A74F"}
-              background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
+              width={screenWidth * 0.22}
+              fill={theme.colors.secondaryButton}
+              background={theme.colors.background}
             />
           </View>
         </TouchableOpacity>
-        <Text onPress={mdpOublie}         style={[
-          styles.titreSmall,
-          { fontSize: theme.typographySize.medium.fontSize, fontFamily: theme.typographySize.medium.fontFamily, color: theme.colors.text, paddingVertical: theme.paddingVerticalMedium }  
-        ]}>
+        <View style={styles.buttonContainer}>
+        <Text onPress={mdpOublie} style={styleTheme.text}>
           Mot de passe oublié ?
         </Text>
-      </View>
+      </View></View>
     </View>
   );
 };
@@ -84,10 +84,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 20,
   },
-  titreSmall: {
-    textAlign: "center",
-    textTransform: "uppercase",
-  },
+  buttonContainer: {
+    paddingTop: 5,
+  }
 });
 
 export default AccueilAvantConnexion;

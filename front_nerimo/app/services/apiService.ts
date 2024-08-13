@@ -1,6 +1,6 @@
 import Constants from "expo-constants";
 
-const API_BASE_URL_IOS = "http://10.33.163.239:3000/api";
+const API_BASE_URL_IOS = "http://192.168.1.17:3000/api";
 const API_BASE_URL_ANDROID = "http://10.0.2.2:3000/api";
 
 const API_BASE_URL = Constants.platform?.ios

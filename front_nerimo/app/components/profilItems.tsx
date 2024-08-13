@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { View, Text, TouchableOpacity, StyleSheet, Switch, Dimensions } from 'react-native';
 import { useTheme } from '../hooks/themeContext';
+import { ThemedStyles } from '../utils/styles';
 
 type ProfilItemsProps = {
   text: string;
@@ -13,6 +14,7 @@ type ProfilItemsProps = {
 const ProfilItems: React.FC<ProfilItemsProps> = ({ text, iconName, isSwitch, onSwitchToggle }) => {
   const { theme } = useTheme();
   const [switchValue, setSwitchValue] = useState(false);
+  const styleTheme = ThemedStyles(theme);
 
   const toggleSwitch = () => {
     const newValue = !switchValue;
@@ -24,8 +26,9 @@ const ProfilItems: React.FC<ProfilItemsProps> = ({ text, iconName, isSwitch, onS
 
   return (
     <TouchableOpacity onPress={isSwitch ? toggleSwitch : undefined}>
-      <View style={[styles.containerProfilItems, theme.colors.effectShadow, {backgroundColor: theme.colors.background, borderColor: theme.colors.background}]}>
-        <Text style={{fontFamily: theme.typographySize.medium.fontFamily, fontSize: theme.typographySize.medium.fontSize, color: theme.colors.text}}>{text}</Text>
+
+      <View style={[styleTheme.rectangleForm, theme.colors.effectShadow, styles.containerProfilItems]}>
+        <Text style={[styleTheme.text]}>{text}</Text>
         {isSwitch ? (
           <Switch
             value={switchValue}
@@ -34,7 +37,7 @@ const ProfilItems: React.FC<ProfilItemsProps> = ({ text, iconName, isSwitch, onS
           // thumbColor={switchValue ? theme.switchThumbTrue.color : theme.switchThumbFalse.color}
           />
         ) : (
-          iconName && <Ionicons name={iconName} size={26} style={[styles.iconeProfilItems, {color: theme.colors.neutralButton}]} />
+          iconName && <Ionicons name={iconName} size={26} style={[styleTheme.icon, { paddingLeft: 20 }]} />
         )}
       </View>
     </TouchableOpacity>
@@ -42,18 +45,13 @@ const ProfilItems: React.FC<ProfilItemsProps> = ({ text, iconName, isSwitch, onS
 };
 
 export default ProfilItems;
-const { height: screenHeight, width: screenWidth } = Dimensions.get("window");
 const styles = StyleSheet.create({
   containerProfilItems: {
-    marginBottom: 15,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    width: "60%",
-    height: screenHeight * 0.10,
-
+    width: '60%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 10,
   },
   iconeProfilItems: {
     paddingHorizontal: 10,

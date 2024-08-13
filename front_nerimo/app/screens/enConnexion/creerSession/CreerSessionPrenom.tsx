@@ -15,6 +15,7 @@ import { darkTheme } from "@/app/themes/dark";
 import { Ionicons } from "@expo/vector-icons";
 import useGoBack from "@/app/navigation/useGoBack";
 import { useSession } from "@/app/hooks/sessionContext";
+import { ThemedStyles } from "@/app/utils/styles";
 
 type CreerSessionPrenomScreenProp = StackNavigationProp<
   RootStackParamList,
@@ -28,8 +29,9 @@ const CreerSessionPrenom: React.FC = () => {
   const { setCurrentSession } = useSession();
   const [prenom, setPrenom] = useState("");
   const screenHeight = Dimensions.get("window").height;
-  const maxSize = 150; 
+  const maxSize = 150;
   const iconSize = Math.min(screenHeight * 0.20, maxSize);
+  const styleTheme = ThemedStyles(theme);
 
   const handleNext = () => {
     if (prenom) {
@@ -44,7 +46,7 @@ const CreerSessionPrenom: React.FC = () => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+    <View style={styleTheme.container}>
       <TopBar
         titre="Créer une"
         prenom="session"
@@ -56,19 +58,15 @@ const CreerSessionPrenom: React.FC = () => {
 
       <View style={styles.bottomIconsContainer}>
         <View style={[
-                    styles.input,
-                    theme.colors.effectShadow,
-                    { backgroundColor: theme.colors.background, borderColor: theme.colors.background }
-                  ]}>
+          styleTheme.rectangleForm,
+          theme.colors.effectShadow,
+        ]}>
           <TextInput
-                                  style={[
-                                    styles.textInput,
-                                    { fontSize: theme.typographySize.medium.fontSize, fontFamily: theme.typographySize.medium.fontFamily, color: theme.colors.text, paddingVertical: theme.paddingVerticalSmall }
-                                  ]}
+            style={styleTheme.text}
             value={prenom}
             onChangeText={setPrenom}
             placeholder="Écris ton surnom ici"
-            placeholderTextColor={theme === darkTheme ? "#FAE6BB" : "#23363E"}
+            placeholderTextColor={theme.colors.text}
           />
         </View>
         <View style={styles.iconeContainer}>
@@ -77,7 +75,7 @@ const CreerSessionPrenom: React.FC = () => {
               <Ionicons
                 name="arrow-forward-circle"
                 size={iconSize}
-                color= {theme.colors.neutralButton}
+                color={theme.colors.neutralButton}
               />
             </View>
           </TouchableOpacity>
@@ -99,20 +97,6 @@ const styles = StyleSheet.create({
   },
   icon: {
     paddingVertical: 5,
-  },
-  textInput: {
-    flex: 1,
-    textAlign: 'center',
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  input: {
-    height: screenHeight * 0.10,
-    width: screenWidth * 0.40,
-    borderRadius: 10,
-    borderWidth: 5,
-    paddingHorizontal: 8,
-    marginBottom: 10,
   },
   iconeContainer: {
     alignItems: "center",

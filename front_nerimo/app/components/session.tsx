@@ -4,6 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { ThemedStyles } from "../utils/styles";
 
 interface SessionProps {
   prenom: string;
@@ -11,7 +12,7 @@ interface SessionProps {
   planeteNom?: string;
   textePersonnage?: string;
   personnageNom?: string;
-  imageSource?: ReturnType<typeof require>; 
+  imageSource?: ReturnType<typeof require>;
   onPress?: () => void;
   icon?: keyof typeof Ionicons.glyphMap;
 }
@@ -28,29 +29,30 @@ const SessionComposant: React.FC<SessionProps> = ({
 }) => {
   const { theme } = useTheme();
   const { height: screenHeight } = Dimensions.get("window");
+  const styleTheme = ThemedStyles(theme);
 
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.sessionCard, theme.colors.effectShadow, {borderColor: theme.colors.background, backgroundColor: theme.colors.background}]}>
-      <View style={{ flexDirection: "column", alignItems: "center", justifyContent:"center" }}>
+    <TouchableOpacity onPress={onPress} style={[styles.sessionCard, theme.colors.effectShadow, { borderColor: theme.colors.background, backgroundColor: theme.colors.background }]}>
+      <View style={{ flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
         {imageSource && (
           <Image source={imageSource} style={styles.roundImage} />
         )}
         <View style={styles.sessionContainer}>
-          <Text style={[styles.sessionText, {fontFamily: theme.typographySize.medium.fontFamily, fontSize: theme.typographySize.medium.fontSize, color: theme.colors.text }]}>{prenom}</Text>
-          <Text style={[styles.sessionText, {fontFamily: theme.typographySize.medium.fontFamily, fontSize: theme.typographySize.medium.fontSize, color: theme.colors.text }]}>
+          <Text style={styleTheme.text}>{prenom}</Text>
+          <Text style={styleTheme.text}>
             {textePlanet}
             {planeteNom}
           </Text>
-          <Text style={[styles.sessionText, {fontFamily: theme.typographySize.medium.fontFamily, fontSize: theme.typographySize.medium.fontSize, color: theme.colors.text }]}>
+          <Text style={styleTheme.text}>
             {textePersonnage}
             {personnageNom}
           </Text>
         </View>
         <Ionicons
-          name={icon} 
+          name={icon}
           size={screenHeight * 0.060}
-          color={theme === darkTheme ? "#FAE6BB" : "#23363E"}
-          style={{ alignItems:"center", justifyContent:"center", paddingVertical: 1 }}
+          color={theme.colors.text}
+          style={{ alignItems: "center", justifyContent: "center", paddingBottom: 5 }}
         />
       </View>
     </TouchableOpacity>
@@ -66,28 +68,23 @@ const styles = StyleSheet.create({
     width: screenWidth * 0.10,
     resizeMode: "contain",
     marginHorizontal: 10,
-    alignItems: 'center', 
+    alignItems: 'center',
     justifyContent: 'center',
     marginVertical: 10,
   },
-    sessionContainer: {
+  sessionContainer: {
     flexDirection: "column",
-    textAlign:"center",
-    paddingVertical:5,
-  },
-  sessionCard: {    
-    justifyContent: 'center',
-    height: screenWidth*0.23,
-    width:screenWidth*0.23,
-    borderRadius: (screenWidth*0.23)/2,  
-    marginBottom: 12,
-    paddingHorizontal: 8,
-    alignItems: 'center', 
-    borderWidth: 5,
-  },
-  sessionText: {
-    alignItems:"center",
     textAlign: "center",
-    justifyContent: "center",
+    paddingVertical: 5,
+  },
+  sessionCard: {
+    justifyContent: 'center',
+    height: screenWidth * 0.23,
+    width: screenWidth * 0.23,
+    borderRadius: (screenWidth * 0.23) / 2,
+    marginBottom: 12,
+    marginLeft: 10,
+    alignItems: 'center',
+    borderWidth: 5,
   },
 });

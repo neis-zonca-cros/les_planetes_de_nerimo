@@ -7,6 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/app/hooks/themeContext";
 import TopBar from "@/app/components/TopBar";
 import { Dimensions, Image, StyleSheet, ImageBackground } from "react-native";
+import { ThemedStyles } from "@/app/utils/styles";
 
 type BienvenueScreen = StackNavigationProp<RootStackParamList, "Bienvenue">;
 
@@ -16,9 +17,10 @@ const Bienvenue: React.FC = () => {
   const screenHeight = Dimensions.get("window").height;
   const maxSize = 150;
   const iconSize = Math.min(screenHeight * 0.2, maxSize);
+  const styleTheme = ThemedStyles(theme);
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+    <View style={styleTheme.container}>
       <TopBar titre="Bienvenue sur les" prenom="planètes de Nérimo !" />
       <View style={styles.contentContainer}>
         <Image
@@ -40,9 +42,6 @@ const Bienvenue: React.FC = () => {
       </TouchableOpacity>
     </View>
   );
-
-
-
 };
 
 export default Bienvenue;
@@ -55,14 +54,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: screenHeight * 0.7,
-    height: screenHeight * 0.7,
+    width: screenHeight * 0.6,
+    height: screenHeight * 0.6,
     resizeMode: "contain",
-    marginBottom: 20,
   },
   iconButton: {
     position: "absolute",
-    paddingTop: 20,
     bottom: 20,
     alignSelf: "center",
   },

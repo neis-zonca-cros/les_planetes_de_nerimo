@@ -1,6 +1,6 @@
 import * as React from "react";
 import Svg, { G, Circle, Path, Defs } from "react-native-svg";
-import { IconProps } from "@/themes/icones/iconProps";
+import { IconProps } from "./iconProps";
 
 const DarkThemeIcon: React.FC<IconProps> = ({ width, background }) => (
   <Svg

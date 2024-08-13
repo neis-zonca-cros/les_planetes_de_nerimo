@@ -23,6 +23,7 @@ import { darkTheme } from '@/app/themes/dark';
 import TopBar from '@/app/components/TopBar';
 import useGoToCreerUnCompte from '@/app/navigation/useGoToCreerCompte';
 import { useUser } from '@/app/hooks/userContext';
+import { ThemedStyles } from '@/app/utils/styles';
 
 type SeConnecterScreen = StackNavigationProp<RootStackParamList, 'SeConnecter'>;
 
@@ -35,6 +36,7 @@ const SeConnecter: React.FC = () => {
   const creerUnCompte = useGoToCreerUnCompte();
   const screenWidth = Dimensions.get('window').width;
   const { connexion } = useUser();
+  const styleTheme = ThemedStyles(theme);
 
   const handleLogin = async (values: { email: string; mdp: string }) => {
     try {
@@ -55,7 +57,7 @@ const SeConnecter: React.FC = () => {
   });
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+    <View style={styleTheme.container}>
       <TopBar
         titre="Rentrer dans le "
         prenom="monde de Nérimo"
@@ -66,7 +68,7 @@ const SeConnecter: React.FC = () => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
-        <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <ScrollView contentContainerStyle={styleTheme.scrollViewContent}>
           <Formik
             initialValues={{ email: '', mdp: '' }}
             validationSchema={loginValidationSchema}
@@ -83,18 +85,14 @@ const SeConnecter: React.FC = () => {
               <>
                 <View style={styles.inputContainer}>
                   <View style={[
-                    styles.input,
+                    styleTheme.rectangleForm,
                     theme.colors.effectShadow,
-                    { backgroundColor: theme.colors.background, borderColor: theme.colors.background }
                   ]}>
                     <TextInput
-                      style={[
-                        styles.textInput,
-                        { fontSize: theme.typographySize.medium.fontSize, fontFamily: theme.typographySize.medium.fontFamily, color: theme.colors.text, paddingVertical: theme.paddingVerticalSmall }
-                      ]}
+                      style={styleTheme.text}
                       placeholder="Adresse mail"
                       placeholderTextColor={
-                        theme === darkTheme ? '#FAE6BB' : '#23363E'
+                        theme.colors.text
                       }
                       onChangeText={handleChange('email')}
                       onBlur={handleBlur('email')}
@@ -103,24 +101,19 @@ const SeConnecter: React.FC = () => {
                     />
                   </View>
                   {errors.email && touched.email && (
-                    <Text style={[styles.errorText,
-                    { fontFamily: theme.typographySize.error.fontFamily, fontSize: theme.typographySize.error.fontSize, color: theme.colors.errorText }
-                    ]}>{errors.email}</Text>
+                    <Text style={styleTheme.errorText}>{errors.email}</Text>
                   )}
 
                   <View style={[
-                    styles.input,
+                    styleTheme.rectangleForm,
                     theme.colors.effectShadow,
-                    { backgroundColor: theme.colors.background, borderColor: theme.colors.background }
+
                   ]}>
                     <TextInput
-                      style={[
-                        styles.textInput,
-                        { fontSize: theme.typographySize.medium.fontSize, fontFamily: theme.typographySize.medium.fontFamily, color: theme.colors.text, paddingVertical: theme.paddingVerticalSmall }
-                      ]}
+                      style={styleTheme.text}
                       placeholder="Mot de passe"
                       placeholderTextColor={
-                        theme === darkTheme ? '#FAE6BB' : '#23363E'
+                        theme.colors.text
                       }
                       onChangeText={handleChange('mdp')}
                       onBlur={handleBlur('mdp')}
@@ -129,9 +122,7 @@ const SeConnecter: React.FC = () => {
                     />
                   </View>
                   {errors.mdp && touched.mdp && (
-                    <Text style={[styles.errorText,
-                    { fontFamily: theme.typographySize.error.fontFamily, fontSize: theme.typographySize.error.fontSize, color: theme.colors.errorText }
-                    ]}>{errors.mdp}</Text>
+                    <Text style={styleTheme.errorText}>{errors.mdp}</Text>
                   )}
                 </View>
                 <View style={styles.marginBottomContainer}>
@@ -142,17 +133,17 @@ const SeConnecter: React.FC = () => {
                     >
                       <View style={theme.colors.effectShadow}>
                         <ConnexionIcon
-                          width={screenWidth * 0.26}
-                          fill={theme === darkTheme ? '#FFAD80' : '#825C6E'}
+                          width={screenWidth * 0.22}
+                          fill={theme.colors.primaryButton}
                           background={
-                            theme === darkTheme ? '#23363E' : '#FAE6BB'
+                            theme.colors.background
                           }
                         />
                       </View>
                     </TouchableOpacity>
                   </View>
                   <View style={styles.buttonContainer}>
-                    <Text onPress={creerUnCompte} style={[styles.titreSmall, { fontFamily: theme.typographySize.medium.fontFamily, fontSize: theme.typographySize.medium.fontSize, color: theme.colors.text, paddingVertical: theme.paddingVerticalMedium }]}>
+                    <Text onPress={creerUnCompte} style={styleTheme.text}>
                       Pas inscrit ?
                     </Text>
                   </View>
@@ -171,52 +162,25 @@ const screenWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   marginBottomContainer: {
-    marginBottom: screenHeight * 0.03,
+    marginBottom: 20,
   },
   buttonContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
+    paddingTop: 5,
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
   },
   icon: {
-    alignItems: 'center',
+    alignItems: "center",
     paddingTop: 10,
-  },
-  scrollViewContent: {
-    flexGrow: 1,
-    paddingHorizontal: 20,
-    justifyContent: "center",
   },
   inputContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-end',
-
-  },
-  textInput: {
-    flex: 1,
-    textAlign: 'center',
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  input: {
-    height: screenHeight * 0.10,
-    width: screenWidth * 0.40,
-    borderRadius: 10,
-    borderWidth: 5,
-    paddingHorizontal: 8,
-    marginBottom: 10,
-  },
-  errorText: {
-    textTransform: "uppercase",
-    paddingBottom: 10,
-  },
-  titreSmall: {
-    textAlign: "center",
-    textTransform: "uppercase",
   },
 });
 

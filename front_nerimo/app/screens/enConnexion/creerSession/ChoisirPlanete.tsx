@@ -18,6 +18,7 @@ import TopBar from "@/app/components/TopBar";
 import { getPlaneteImageURI } from "@/app/components/imageSession";
 import useGoBack from "@/app/navigation/useGoBack";
 import { useSession } from "@/app/hooks/sessionContext";
+import { ThemedStyles } from "@/app/utils/styles";
 
 type ChoisirPlaneteScreenProp = StackNavigationProp<
   RootStackParamList,
@@ -30,6 +31,7 @@ const ChoisirPlanete: React.FC = () => {
   const goBack = useGoBack();
   const { setCurrentSession } = useSession(); 
   const [planetes, setPlanetes] = useState<Planete[]>([]);
+  const styleTheme = ThemedStyles(theme);
 
   useEffect(() => {
     const fetchPlanetes = async () => {
@@ -54,16 +56,16 @@ const ChoisirPlanete: React.FC = () => {
   const renderItem = ({ item }: { item: Planete }) => (
     <View style={styles.buttonContainer}>
       <TouchableOpacity onPress={() => handleSelectPlanete(item._id)}>
-        <View style={[styles.listContainer, theme.colors.effectShadow, {backgroundColor: theme.colors.background, borderColor: theme.colors.background, paddingVertical: theme.paddingVerticalMedium, marginVertical: theme.paddingVerticalMedium}]}>
+        <View style={[styles.listContainer, theme.colors.effectShadow, {backgroundColor: theme.colors.background, borderColor: theme.colors.background }]}>
           <Image source={getPlaneteImageURI(item.nom)} style={styles.icon} />
-          <Text style={[styles.listText, {fontFamily: theme.typographySize.medium.fontFamily, fontSize: theme.typographySize.medium.fontSize, color: theme.colors.text, paddingVertical: theme.paddingVerticalMedium}]}>{item.nom}</Text>
+          <Text style={styleTheme.text}>{item.nom}</Text>
         </View>
       </TouchableOpacity>
     </View>
   );
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+    <View style={styleTheme.container}>
       <TopBar
         titre="Choisir une"
         prenom="planète"
@@ -113,10 +115,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 5,
-  },
-  listText: {
-    textTransform: 'uppercase',
-    textAlign: "center",
+    marginBottom: 12,
+    marginLeft: 10,
   },
 });
 

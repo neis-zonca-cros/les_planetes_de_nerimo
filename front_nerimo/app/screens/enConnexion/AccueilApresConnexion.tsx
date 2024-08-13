@@ -19,6 +19,7 @@ import { useUser } from "@/app/hooks/userContext";
 import { getPersonnageImageURI } from "@/app/components/imageSession";
 import { useSession } from "@/app/hooks/sessionContext";
 import { Session } from "@/app/services/sessionFetch";
+import { ThemedStyles } from "@/app/utils/styles";
 
 type AccueilApresConnexionScreenProp = StackNavigationProp<
   RootStackParamList,
@@ -28,6 +29,7 @@ type AccueilApresConnexionScreenProp = StackNavigationProp<
 const AccueilApresConnexion: React.FC = () => {
   const navigation = useNavigation<AccueilApresConnexionScreenProp>();
   const { theme } = useTheme();
+  const styleTheme = ThemedStyles(theme);
   const { utilisateur } = useUser();
   const { sessions, refreshSessions, removeSession } = useSession();
   const [loading, setLoading] = useState<boolean>(true);
@@ -114,7 +116,7 @@ const AccueilApresConnexion: React.FC = () => {
   const organizedSessions = organizeSessionsInColumns(sessions || []);
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+    <View style={styleTheme.container}>
       {loading ? (
         <View style={styles.imageContainer}>
           <Image
@@ -135,11 +137,9 @@ const AccueilApresConnexion: React.FC = () => {
             iconeGaucheAction={editMode ? undefined : addSession}
           />
 
-          <ScrollView contentContainerStyle={styles.scrollViewContent}>
-            {error ? (
-              <Text style={[styles.listText, {fontFamily: theme.typographySize.medium.fontFamily, fontSize: theme.typographySize.medium.fontSize, color: theme.colors.text}]}>{error}</Text>
-            ) : sessions && sessions.length === 0 ? (
-              <Text style={[styles.listText, {fontFamily: theme.typographySize.medium.fontFamily, fontSize: theme.typographySize.medium.fontSize, color: theme.colors.text}]}>
+          <ScrollView contentContainerStyle={styleTheme.scrollViewContent}>
+            {sessions && sessions.length === 0 ? (
+              <Text style={styleTheme.text}>
                 Pour commencer, ajoutez une session
               </Text>
             ) : (
@@ -192,21 +192,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-
   backgroundImage: {
     resizeMode: "contain",
-
     width: screenHeight * 0.5,
     height: screenHeight * 0.5,
-  },
-  scrollViewContent: {
-    flexGrow: 1,
-    paddingHorizontal: 20,
   },
   gridContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingTop: screenHeight * 0.3,
   },
   column: {
     flexDirection: "column",
@@ -216,11 +209,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 10,
-  },
-  listText: {
-    textTransform: 'uppercase',
-    textAlign: "center",
-    paddingTop: 10,
   },
 });
 

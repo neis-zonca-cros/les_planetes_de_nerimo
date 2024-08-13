@@ -20,6 +20,7 @@ import TopBar from "@/app/components/TopBar";
 import { getPersonnageImageURI } from "@/app/components/imageSession";
 import useGoBack from "@/app/navigation/useGoBack";
 import { useSession } from "@/app/hooks/sessionContext";
+import { ThemedStyles } from "@/app/utils/styles";
 
 type ChoisirPersonnageScreenProp = StackNavigationProp<
   RootStackParamList,
@@ -32,6 +33,7 @@ const ChoisirPersonnage: React.FC = () => {
   const goBack = useGoBack();
   const { currentSession, createNewSession } = useSession();
   const [personnages, setPersonnages] = useState<Personnage[]>([]);
+  const styleTheme = ThemedStyles(theme);
 
   const prenom = currentSession?.prenom || "";
   const planeteRef = currentSession?.planeteRef || "";
@@ -79,19 +81,17 @@ const ChoisirPersonnage: React.FC = () => {
   const renderItem = ({ item }: { item: Personnage }) => (
     <View style={styles.buttonContainer}>
       <TouchableOpacity
-        onPress={() => handleSelectPersonnage(item)}
-        style={{ alignItems: "center" }}
-      >
-        <View style={[styles.listContainer, theme.colors.effectShadow, {backgroundColor: theme.colors.background, borderColor: theme.colors.background, paddingVertical: theme.paddingVerticalMedium, marginVertical: theme.paddingVerticalMedium}]}>
+        onPress={() => handleSelectPersonnage(item)}>
+        <View style={[styles.listContainer, theme.colors.effectShadow, {backgroundColor: theme.colors.background, borderColor: theme.colors.background}]}>
           <Image source={getPersonnageImageURI(item.nom)} style={styles.icon} />
-          <Text style={[styles.listText, {fontFamily: theme.typographySize.medium.fontFamily, fontSize: theme.typographySize.medium.fontSize, color: theme.colors.text, paddingVertical: theme.paddingVerticalMedium}]}>{item.nom}</Text>
+          <Text style={styleTheme.text}>{item.nom}</Text>
         </View>
       </TouchableOpacity>
     </View>
   );
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+    <View style={styleTheme.container}>
       <TopBar
         titre="Choisir un"
         prenom="personnage"
@@ -114,18 +114,16 @@ const { height: screenHeight, width: screenWidth } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   icon: {
-    width: screenHeight * 0.17,
-    height: screenHeight * 0.17,
+    width: screenHeight * 0.22,
+    height: screenHeight * 0.22,
     resizeMode: "contain",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 12,
   },
   buttonContainer: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    width: "100%",
     paddingHorizontal: 20,
   },
   row: {
@@ -142,10 +140,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 5,
-  },
-    listText: {
-    textTransform: 'uppercase',
-    textAlign: "center",
+    marginBottom: 12,
+    marginLeft: 10,
   },
 });
 

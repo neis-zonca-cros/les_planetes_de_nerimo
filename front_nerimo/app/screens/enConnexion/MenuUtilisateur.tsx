@@ -7,7 +7,6 @@ import {
 } from "react-native";
 import { useTheme } from "@/app/hooks/themeContext";
 import TopBar from "@/app/components/TopBar";
-import { darkTheme } from "@/app/themes/dark";
 import { AProposIcon } from "@/app/assets/icons/aProposIcon";
 import useGoBack from "@/app/navigation/useGoBack";
 import { ScrollView } from "react-native-gesture-handler";
@@ -17,15 +16,17 @@ import { useUser } from "../../hooks/userContext";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "@/app/types";
 import { useNavigation } from "@react-navigation/native";
+import { ThemedStyles } from "@/app/utils/styles";
 
 type MenuUtilisateurScreen = StackNavigationProp<RootStackParamList, "MenuUtilisateur">;
 
 const MenuUtilisateur: React.FC = () => {
   const navigation = useNavigation<MenuUtilisateurScreen>();
-  const { utilisateur, deconnexion } = useUser(); 
+  const { utilisateur, deconnexion } = useUser();
   const { theme } = useTheme();
   const goBack = useGoBack();
   const screenHeight = Dimensions.get("window").height;
+  const styleTheme = ThemedStyles(theme);
   const handleLogout = async () => {
     try {
       await deconnexion();
@@ -35,27 +36,27 @@ const MenuUtilisateur: React.FC = () => {
     }
   };
 
-  const goToProfil = () => { 
+  const goToProfil = () => {
     navigation.navigate("MonProfil");
-   };
+  };
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+    <View style={styleTheme.container}>
       <TopBar
         titre="Menu de"
         prenom={utilisateur?.prenom}
         iconeDroiteNom="close-outline"
         iconeDroiteAction={goBack}
       />
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+      <ScrollView contentContainerStyle={styleTheme.scrollViewContent}>
         <View style={styles.row}>
           <View style={styles.iconContainer}>
             <TouchableOpacity onPress={goToProfil}>
               <View style={theme.colors.effectShadow}>
                 <ProfilRondIcon
                   width={screenHeight * 0.25}
-                  fill={theme === darkTheme ? "#FFCD69" : "#E7A74F"}
-                  background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
+                  fill={theme.colors.primaryButton}
+                  background={theme.colors.background}
                 />
               </View>
             </TouchableOpacity>
@@ -65,8 +66,8 @@ const MenuUtilisateur: React.FC = () => {
               <View style={theme.colors.effectShadow}>
                 <DeconnexionRondIcon
                   width={screenHeight * 0.25}
-                  fill={theme === darkTheme ? "#FFAD80" : "#825C6E"}
-                  background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
+                  fill={theme.colors.secondaryButton}
+                  background={theme.colors.background}
                 />
               </View>
             </TouchableOpacity>
@@ -77,8 +78,8 @@ const MenuUtilisateur: React.FC = () => {
               <View style={theme.colors.effectShadow}>
                 <AProposIcon
                   width={screenHeight * 0.25}
-                  fill={theme === darkTheme ? "#FAE6BB" : "#23363E"}
-                  background={theme === darkTheme ? "#23363E" : "#FAE6BB"}
+                  fill={theme.colors.neutralButton}
+                  background={theme.colors.background}
                 />
               </View>
             </TouchableOpacity>
@@ -95,7 +96,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-
   iconContainer: {
     justifyContent: "center",
     alignItems: "center",
