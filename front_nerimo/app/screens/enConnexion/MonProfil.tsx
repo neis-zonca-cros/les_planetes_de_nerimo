@@ -9,13 +9,29 @@ import { useUser } from "../../hooks/userContext";
 import ProfilItems from "@/app/components/profilItems";
 import useGoBack from "@/app/navigation/useGoBack";
 import { ThemedStyles } from "@/app/utils/styles";
+import { RootStackParamList } from "@/app/types";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { useNavigation } from "@react-navigation/native";
+
+
+type MonProfilScreen = StackNavigationProp<RootStackParamList, "MonProfil">;
 
 const MonProfil: React.FC = () => {
+  const navigation = useNavigation<MonProfilScreen>();
   const { theme } = useTheme();
-  const { utilisateur } = useUser();
+  const { utilisateur, deconnexion } = useUser();
   const screenHeight = Dimensions.get("window").height;
   const goBack = useGoBack();
   const styleTheme = ThemedStyles(theme);
+
+  const handleLogout = async () => {
+    try {
+      await deconnexion();
+      navigation.navigate("Bienvenue");
+    } catch (error) {
+      console.error("Erreur lors de la déconnexion:", error);
+    }
+  };
 
   function toggleMusic(value: boolean): void {
     if (value) {
@@ -42,7 +58,7 @@ const MonProfil: React.FC = () => {
             <ProfilItems text="Mes informations" iconName="arrow-forward-outline"></ProfilItems>
             <ProfilItems text="Musique" isSwitch={true} onSwitchToggle={toggleMusic}></ProfilItems>
             <ProfilItems text="Lightmode" isSwitch={true}></ProfilItems>
-            <ProfilItems text="Partir" iconName="log-out-sharp"></ProfilItems>
+            <ProfilItems text="Partir" iconName="log-out-sharp" onPress={handleLogout}></ProfilItems>
           </View></View>
       </View>
     </View>

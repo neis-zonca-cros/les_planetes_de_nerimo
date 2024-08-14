@@ -21,7 +21,13 @@ export const lightColors = {
             },
           }),
 
-    }
+    },
+    switchTrackTrue: 'rgba(35,54,62,1)',
+    switchTrackFalse: 'rgba(250, 230, 187, 0.1)',
+    switchThumbFalse: 'rgba(250, 230, 187, 1)',
+    switchThumbTrue: 'rgba(250, 230, 187, 1)',
+
+
 
 };
 
@@ -46,6 +52,10 @@ export const darkColors = {
             },
           }),
         
-    }
+    },
+    switchTrackTrue: 'rgba(250, 230, 187, 1)',
+    switchTrackFalse: 'rgba(35,54,62, 0.1)',
+    switchThumbFalse: 'rgba(35,54,62, 1)',
+    switchThumbTrue: 'rgba(35,54,62, 1)',
 
 };

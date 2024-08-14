@@ -9,12 +9,16 @@ type ProfilItemsProps = {
   iconName?: keyof typeof Ionicons.glyphMap;
   isSwitch?: boolean;
   onSwitchToggle?: (value: boolean) => void;
+  onPress?: () => void; // Nouvelle propriété pour gérer les pressions
 };
 
-const ProfilItems: React.FC<ProfilItemsProps> = ({ text, iconName, isSwitch, onSwitchToggle }) => {
+const ProfilItems: React.FC<ProfilItemsProps> = ({ text, iconName, isSwitch, onSwitchToggle, onPress }) => {
   const { theme } = useTheme();
   const [switchValue, setSwitchValue] = useState(false);
   const styleTheme = ThemedStyles(theme);
+  const screenHeight = Dimensions.get("window").height;
+  const maxSize = 40;
+  const iconSize = Math.min(screenHeight * 0.10, maxSize);
 
   const toggleSwitch = () => {
     const newValue = !switchValue;
@@ -24,20 +28,29 @@ const ProfilItems: React.FC<ProfilItemsProps> = ({ text, iconName, isSwitch, onS
     }
   };
 
-  return (
-    <TouchableOpacity onPress={isSwitch ? toggleSwitch : undefined} style={{pointerEvents: 'auto', zIndex: 1}}>
+  // Appeler onPress si défini
+  const handlePress = () => {
+    if (onPress) {
+      onPress();
+    }
+  };
 
+  return (
+    <TouchableOpacity
+      onPress={isSwitch ? undefined : handlePress} // Appeler handlePress seulement si ce n'est pas un Switch
+      style={{pointerEvents: 'auto', zIndex: 1}}
+    >
       <View style={[styleTheme.rectangleForm, theme.colors.effectShadow, styles.containerProfilItems]}>
         <Text style={[styleTheme.text]}>{text}</Text>
         {isSwitch ? (
           <Switch
             value={switchValue}
             onValueChange={toggleSwitch}
-          // trackColor={{ false: theme.switchTrackFalse.color, true: theme.switchTrackTrue.color }}
-          // thumbColor={switchValue ? theme.switchThumbTrue.color : theme.switchThumbFalse.color}
+            trackColor={{ false: theme.colors.switchTrackFalse, true: theme.colors.switchTrackTrue }}
+            thumbColor={switchValue ? theme.colors.switchThumbTrue : theme.colors.switchThumbFalse}
           />
         ) : (
-          iconName && <Ionicons name={iconName} size={26} style={[styleTheme.icon, { paddingLeft: 20 }]} />
+          iconName && <Ionicons name={iconName} size={iconSize} style={[styleTheme.icon, { paddingLeft: 20 }]} />
         )}
       </View>
     </TouchableOpacity>
@@ -45,6 +58,7 @@ const ProfilItems: React.FC<ProfilItemsProps> = ({ text, iconName, isSwitch, onS
 };
 
 export default ProfilItems;
+
 const styles = StyleSheet.create({
   containerProfilItems: {
     width: '60%',
@@ -58,4 +72,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-})
+});
