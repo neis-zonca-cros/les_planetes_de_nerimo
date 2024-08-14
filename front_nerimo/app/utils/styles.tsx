@@ -39,6 +39,7 @@ export const ThemedStyles = (theme : Theme) => StyleSheet.create({
     flexGrow: 1,
     paddingHorizontal: 10,
     justifyContent: "center",
+    paddingTop: 60,
   },
   rectangleForm: {
     height: 'auto',

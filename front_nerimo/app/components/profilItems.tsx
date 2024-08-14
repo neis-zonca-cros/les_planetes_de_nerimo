@@ -25,7 +25,7 @@ const ProfilItems: React.FC<ProfilItemsProps> = ({ text, iconName, isSwitch, onS
   };
 
   return (
-    <TouchableOpacity onPress={isSwitch ? toggleSwitch : undefined}>
+    <TouchableOpacity onPress={isSwitch ? toggleSwitch : undefined} style={{pointerEvents: 'auto', zIndex: 1}}>
 
       <View style={[styleTheme.rectangleForm, theme.colors.effectShadow, styles.containerProfilItems]}>
         <Text style={[styleTheme.text]}>{text}</Text>
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 10,
+    padding: 5,
   },
   iconeProfilItems: {
     paddingHorizontal: 10,

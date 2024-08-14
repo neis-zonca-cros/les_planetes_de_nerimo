@@ -123,8 +123,9 @@ const CreerUnCompte: React.FC = () => {
 
                   ]}>
                     <TextInput
-                      style={styleTheme.text}
+                      style={[styleTheme.text]}
                       placeholder="Prénom"
+                      pointerEvents="auto" 
                       placeholderTextColor={
                         theme.colors.text
                       }
