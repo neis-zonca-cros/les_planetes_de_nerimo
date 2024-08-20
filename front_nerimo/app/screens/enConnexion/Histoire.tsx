@@ -3,11 +3,8 @@ import {
   View,
   Text,
   StyleSheet,
-  ImageBackground,
   TouchableOpacity,
   Dimensions,
-  StyleProp,
-  ViewStyle,
 } from "react-native";
 import Modal from "react-native-modal";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -99,70 +96,70 @@ const Histoire: React.FC = () => {
       backgroundImage={backgroundImage}
       style={styleTheme.container}
     >
-        <TopBar iconeDroiteNom="close-outline" iconeDroiteAction={goToAccueil} />
-        <View style={styles.containerHistoire}>
-          <TouchableOpacity
-            onPress={() => setModalVisible(true)}
-            style={[styles.modalOpenButton, { backgroundColor: theme.colors.background }]}
-          >
-            <Ionicons
-              name="chatbubble-ellipses-outline"
-              size={iconSize}
-              color={theme.colors.neutralButton}
-            />
-          </TouchableOpacity>
+      <TopBar iconeDroiteNom="close-outline" iconeDroiteAction={goToAccueil} />
+      <View style={styles.containerHistoire}>
+        <TouchableOpacity
+          onPress={() => setModalVisible(true)}
+          style={[styles.modalOpenButton, { backgroundColor: theme.colors.background }]}
+        >
+          <Ionicons
+            name="chatbubble-ellipses-outline"
+            size={iconSize}
+            color={theme.colors.neutralButton}
+          />
+        </TouchableOpacity>
 
-          <Modal
-            isVisible={modalVisible}
-            onBackdropPress={() => setModalVisible(false)}
-            animationIn="slideInUp"
-            animationOut="slideOutDown"
-          >
-            <View style={styles.modalContainer}>
-              <View
-                style={[
-                  styles.modalContent,
-                  { backgroundColor: theme.colors.background },
-                ]}
-              >
-                <Text style={[styleTheme.text, { lineHeight: 25 }]}>
-                  {currentText}
-                </Text>
-                <View style={styles.choixHistoire}>
-                  {choices.map((choice, index) => (
-                    <TouchableOpacity
-                      key={index}
-                      style={[
-                        styles.choixBouttonHistoire,
-                        theme.colors.effectShadow,
-                        {
-                          backgroundColor: theme.colors.background,
-                          borderColor: theme.colors.background,
-                        },
-                      ]}
-                      onPress={() => makeChoice(index)}
-                    >
-                      <Text style={[styleTheme.text, { lineHeight: 20 }]}>
-                        {choice.text}
-                      </Text>
-                    </TouchableOpacity>
-                  ))}
-                </View>
-                <TouchableOpacity
-                  onPress={() => setModalVisible(false)}
-                  style={styles.modalCloseButton}
-                >
-                  <Ionicons
-                    name="close-outline"
-                    size={iconSize}
-                    color={theme.colors.neutralButton}
-                  />
-                </TouchableOpacity>
+        <Modal
+          isVisible={modalVisible}
+          onBackdropPress={() => setModalVisible(false)}
+          animationIn="slideInUp"
+          animationOut="slideOutDown"
+        >
+          <View style={styles.modalContainer}>
+            <View
+              style={[
+                styles.modalContent,
+                { backgroundColor: theme.colors.background },
+              ]}
+            >
+              <Text style={[styleTheme.text, { lineHeight: 25 }]}>
+                {currentText}
+              </Text>
+              <View style={styles.choixHistoire}>
+                {choices.map((choice, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={[
+                      styles.choixBouttonHistoire,
+                      theme.colors.effectShadow,
+                      {
+                        backgroundColor: theme.colors.background,
+                        borderColor: theme.colors.background,
+                      },
+                    ]}
+                    onPress={() => makeChoice(index)}
+                  >
+                    <Text style={[styleTheme.text, { lineHeight: 20 }]}>
+                      {choice.text}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
               </View>
+              <TouchableOpacity
+                onPress={() => setModalVisible(false)}
+                style={styles.modalCloseButton}
+              >
+                <Ionicons
+                  name="close-outline"
+                  size={iconSize}
+                  color={theme.colors.neutralButton}
+                />
+              </TouchableOpacity>
             </View>
-          </Modal>
-        </View>
-      </BackgroundContainer>
+          </View>
+        </Modal>
+      </View>
+    </BackgroundContainer>
 
   );
 };

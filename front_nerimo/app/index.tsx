@@ -7,9 +7,21 @@ import { ThemeProvider } from '@/app/hooks/themeContext';
 import { UserProvider, useUser } from './hooks/userContext';
 import PublicStack from "./navigation/publickStack"
 import PrivateStack from './navigation/privateStack'; 
+import * as ScreenOrientation from 'expo-screen-orientation';
+
+
 
 const AppNavigator: React.FC = () => {
   const { utilisateur } = useUser(); 
+  useEffect(() => {
+    const lockOrientation = async () => {
+      await ScreenOrientation.unlockAsync(); 
+      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE); 
+    };
+
+    lockOrientation();
+  }, []);
+
   return utilisateur ? <PrivateStack /> : <PublicStack />;
 };
 
@@ -21,7 +33,6 @@ const Index: React.FC = () => {
   if (!fontsLoaded) {
     return <AppLoading />;
   }
-
   return (
     <SafeAreaProvider>
       <ThemeProvider>

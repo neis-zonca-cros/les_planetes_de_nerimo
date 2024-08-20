@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -14,7 +14,6 @@ import { useTheme } from "@/app/hooks/themeContext";
 import TopBar from "@/app/components/TopBar";
 import Sessions from "@/app/components/session";
 import ConfirmDeleteModal from "@/app/components/ConfirmDeleteModal";
-import { Modalize } from "react-native-modalize";
 import { useUser } from "@/app/hooks/userContext";
 import { getPersonnageImageURI } from "@/app/components/imageSession";
 import { useSession } from "@/app/hooks/sessionContext";
@@ -36,7 +35,7 @@ const AccueilApresConnexion: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [sessionToDelete, setSessionToDelete] = useState<Session | null>(null);
-  const modalizeRef = useRef<Modalize>(null);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -47,7 +46,7 @@ const AccueilApresConnexion: React.FC = () => {
   }, []);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       if (navigation.isFocused()) {
         refreshSessions().catch((err) => {
           setError("Erreur lors de la récupération des données");
@@ -62,7 +61,6 @@ const AccueilApresConnexion: React.FC = () => {
   };
 
   const BoutonSession = (session: Session) => {
-    console.log("Session sélectionnée:", session);
     navigation.navigate("Histoire", {
       histoire: session.personnageRef.histoire,
       personnageNom: session.personnageRef.nom,
@@ -72,6 +70,10 @@ const AccueilApresConnexion: React.FC = () => {
 
   const menuUtilisateur = () => {
     navigation.navigate("MenuUtilisateur");
+  };
+  const handleCancel = () => {
+    setEditMode(false);
+    setModalVisible(false);
   };
 
   const toggleEditMode = () => {
@@ -87,15 +89,8 @@ const AccueilApresConnexion: React.FC = () => {
   };
 
   const openDialog = (session: Session) => {
-    console.log("Ouverture de la modal pour la session :", session);
     setSessionToDelete(session);
-    console.log("sessionToDelete après mise à jour :", sessionToDelete);
-    if (modalizeRef.current) {
-      console.log("Modalize est prêt à ouvrir");
-      modalizeRef.current.open();
-    } else {
-      console.log("Modalize n'est pas encore prêt");
-    }
+    setModalVisible(true);
   };
 
   const handleDelete = async () => {
@@ -106,9 +101,7 @@ const AccueilApresConnexion: React.FC = () => {
       } catch (err) {
         console.error("Failed to delete session:", err);
       } finally {
-        if (modalizeRef.current) {
-          modalizeRef.current.close();
-        }
+        setModalVisible(false);
       }
     }
   };
@@ -170,20 +163,18 @@ const AccueilApresConnexion: React.FC = () => {
             )}
           </ScrollView>
 
-          {sessionToDelete && (
-            <ConfirmDeleteModal
-              ref={modalizeRef}
-              onConfirm={handleDelete}
-              onCancel={() => modalizeRef.current?.close()}
-              sessionName={sessionToDelete.prenom}
-            />
-          )}
+          <ConfirmDeleteModal
+            onConfirm={handleDelete}
+            onCancel={handleCancel}
+            sessionName={sessionToDelete?.prenom || ""}
+            visible={modalVisible}
+            onRequestClose={() => setModalVisible(false)}
+          />
         </>
       )}
     </View>
   );
 };
-
 const { height: screenHeight } = Dimensions.get("window");
 
 const styles = StyleSheet.create({

@@ -9,7 +9,7 @@ type ProfilItemsProps = {
   iconName?: keyof typeof Ionicons.glyphMap;
   isSwitch?: boolean;
   onSwitchToggle?: (value: boolean) => void;
-  onPress?: () => void; // Nouvelle propriété pour gérer les pressions
+  onPress?: () => void;
 };
 
 const ProfilItems: React.FC<ProfilItemsProps> = ({ text, iconName, isSwitch, onSwitchToggle, onPress }) => {
@@ -28,7 +28,6 @@ const ProfilItems: React.FC<ProfilItemsProps> = ({ text, iconName, isSwitch, onS
     }
   };
 
-  // Appeler onPress si défini
   const handlePress = () => {
     if (onPress) {
       onPress();
@@ -37,8 +36,8 @@ const ProfilItems: React.FC<ProfilItemsProps> = ({ text, iconName, isSwitch, onS
 
   return (
     <TouchableOpacity
-      onPress={isSwitch ? undefined : handlePress} // Appeler handlePress seulement si ce n'est pas un Switch
-      style={{pointerEvents: 'auto', zIndex: 1}}
+      onPress={isSwitch ? undefined : handlePress}
+      style={{ pointerEvents: 'auto', zIndex: 1 }}
     >
       <View style={[styleTheme.rectangleForm, theme.colors.effectShadow, styles.containerProfilItems]}>
         <Text style={[styleTheme.text]}>{text}</Text>
