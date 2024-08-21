@@ -83,7 +83,8 @@ beforeEach(async () => {
     utilisateurRef: utilisateurAdminId,
     planeteRef: planeteId,
     personnageRef: personnageId,
-    sauvegarde: "oui",
+    choixSauvegarde: "choix non sauvegardé 1",
+    texteSauvegarde: "texte non sauvegardé 1",
     prenom: "Deuxième session de l'Admin"
   });
   await nouvelleSessionAdmin2.save();
@@ -92,7 +93,8 @@ beforeEach(async () => {
     utilisateurRef: utilisateurNonAdminId,
     planeteRef: planeteId,
     personnageRef: personnageId,
-    sauvegarde: "oui",
+    choixSauvegarde: "choix non sauvegardé 2",
+    texteSauvegarde: "texte non sauvegardé 2",
     prenom: "Première session du non Admin"
   });
   await nouvelleSessionNonAdmin.save();
@@ -168,7 +170,7 @@ describe('GET /api/session', () => {
 
 describe('PUT /api/session/:id', () => {
   it('PUT /api/session/{id}: Met à jour une session existante avec des champs valides', async () => {
-    const updatedData = { prenom: "Néïs session modifiée", sauvegarde: "non" };
+    const updatedData = { choixSauvegarde: "choix sauvegardé", texteSauvegarde: "texte sauvegardé" };
 
     const response = await request(app)
       .put(`/api/session/${sessionAdmin}`)
@@ -177,13 +179,13 @@ describe('PUT /api/session/:id', () => {
 
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('Session mise à jour');
-    expect(response.body.data).toHaveProperty('prenom', updatedData.prenom);
-    expect(response.body.data).toHaveProperty('sauvegarde', updatedData.sauvegarde);
+    expect(response.body.data).toHaveProperty('choixSauvegarde', updatedData.choixSauvegarde);
+    expect(response.body.data).toHaveProperty('texteSauvegarde', updatedData.texteSauvegarde);
 
     const session = await Session.findById(sessionAdmin);
     expect(session).not.toBeNull();
-    expect(session.prenom).toBe(updatedData.prenom);
-    expect(session.sauvegarde).toBe(updatedData.sauvegarde);
+    expect(session.choixSauvegarde).toBe(updatedData.choixSauvegarde);
+    expect(session.texteSauvegarde).toBe(updatedData.texteSauvegarde);
   });
 
   it('PUT /api/session/{id}: Retourne une erreur 404 si la session n\'existe pas', async () => {
