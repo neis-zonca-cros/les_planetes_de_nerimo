@@ -4,8 +4,8 @@ import { getCredentials } from "./credentials/getCredentials";
 export interface Session {
   _id: string;
   prenom: string;
-  sauvegarde?: string,
-  texte?: string,
+  choixSauvegarde?: string,
+  texteSauvegarde?: string,
   utilisateurRef: {
     _id: string;
     prenom: string;
@@ -26,8 +26,8 @@ interface UpdateSessionResponse {
   data: Session;
 }
 interface UpdateSessionData {
-  sauvegarde: string; 
-  texte: string;
+  choixSauvegarde: string;
+  texteSauvegarde: string;
 }
 
 type DeleteSessionResponse = {
@@ -85,8 +85,8 @@ export async function deleteSession(sessionId: string): Promise<Session> {
 
 export async function updateSession(
   sessionId: string,
-  sauvegarde: string,
-  texte: string,
+  choixSauvegarde: string,
+  texteSauvegarde: string,
 ): Promise<Session> {
   try {
     const { token } = await getCredentials();
@@ -94,7 +94,7 @@ export async function updateSession(
       throw new Error("Token non trouvé");
     }
 
-    const body: UpdateSessionData = { sauvegarde, texte };
+    const body: UpdateSessionData = { choixSauvegarde: choixSauvegarde, texteSauvegarde: texteSauvegarde };
 
     const response = await apiFetch<UpdateSessionResponse>(`session/${sessionId}`, {
       method: "PUT",

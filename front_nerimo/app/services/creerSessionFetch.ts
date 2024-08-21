@@ -19,7 +19,6 @@ export interface Personnage {
 
 export interface CreateSessionData {
   prenom: string;
-  sauvegarde?: string;
   planeteRef: string;
   personnageRef: string;
 }

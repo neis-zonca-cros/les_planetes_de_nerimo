@@ -5,11 +5,11 @@ const sessionSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    sauvegarde: {
+    choixSauvegarde: {
         type: String,
         required: false
     },
-    texte: {
+    texteSauvegarde: {
         type: String,
         required: false, 
     },

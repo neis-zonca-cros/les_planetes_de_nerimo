@@ -42,8 +42,8 @@ const Histoire: React.FC = () => {
       try {
         if (sessionId) {
           const sessionData = await getSession(sessionId);
-          const sauvegarde = sessionData?.sauvegarde;
-          const savedText = sessionData?.texte || "";
+          const sauvegarde = sessionData?.choixSauvegarde;
+          const savedText = sessionData?.texteSauvegarde || "";
 
           if (sauvegarde) {
             const inkStory = new Story(histoire);

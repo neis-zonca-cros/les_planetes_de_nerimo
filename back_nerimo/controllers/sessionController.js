@@ -76,11 +76,11 @@ export async function modifierSession(req, res) {
   try {
     const utilisateurId = req.user.utilisateurId;
     const sessionId = req.params.id;
-    const { sauvegarde, texte } = req.body;
+    const { choixSauvegarde, texteSauvegarde } = req.body;
 
     const miseAJour = {};
-    if (sauvegarde) miseAJour.sauvegarde = sauvegarde;
-    if (texte) miseAJour.texte = texte;
+    if (choixSauvegarde) miseAJour.choixSauvegarde = choixSauvegarde;
+    if (texteSauvegarde) miseAJour.texteSauvegarde = texteSauvegarde;
     console.log(miseAJour)
 
     const session = await Session.findOneAndUpdate(
