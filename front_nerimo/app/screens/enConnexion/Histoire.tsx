@@ -43,13 +43,17 @@ const Histoire: React.FC = () => {
         if (sessionId) {
           const sessionData = await getSession(sessionId);
           const sauvegarde = sessionData?.sauvegarde;
-  
+          const savedText = sessionData?.texte || "";
+
           if (sauvegarde) {
             const inkStory = new Story(histoire);
             inkStory.variablesState["sessionPrenom"] = sessionPrenom;
             inkStory.state.LoadJson(sauvegarde);
             setStory(inkStory);
-            continueStory(inkStory);
+            if (savedText) {
+              setCurrentText(savedText);
+            }
+            continueStory(inkStory, savedText);
           } else {
             const inkStory = new Story(histoire);
             inkStory.variablesState["sessionPrenom"] = sessionPrenom;
@@ -66,19 +70,21 @@ const Histoire: React.FC = () => {
         console.error("Erreur lors du chargement de la sauvegarde de l'histoire:", error);
       }
     };
-  
+
     fetchAndLoadStory();
   }, [histoire, sessionPrenom, sessionId]);
-  
 
-  const continueStory = (inkStory: Story) => {
-    let text = "";
+
+  const continueStory = (inkStory: Story, savedText?: string) => {
+    let text = savedText ?? "";
     let newBackgroundImage: string | null = null;
 
     while (inkStory.canContinue) {
-      const currentText = inkStory.Continue();
-      text += currentText;
+      const currentText = inkStory.Continue() ?? "";
 
+      if (currentText.trim().length > 0) {
+        text += currentText.trim();
+      }
       const tags = inkStory.currentTags;
       if (tags) {
         tags.forEach((tag) => {
@@ -104,6 +110,7 @@ const Histoire: React.FC = () => {
     setChoices(inkStory.currentChoices);
   };
 
+
   const makeChoice = (choiceIndex: number) => {
     if (story) {
       setTimeout(() => {
@@ -118,11 +125,8 @@ const Histoire: React.FC = () => {
     if (story) {
       try {
         const storyStateJson = story.state.ToJson();
-        
-        
         if (sessionId) {
-          await updateSession(sessionId, storyStateJson); 
-          console.log("État de la story sauvegardé avec succès.", storyStateJson);
+          await updateSession(sessionId, storyStateJson, currentText);
         } else {
           console.error("ID de la session manquant.");
         }
@@ -130,11 +134,8 @@ const Histoire: React.FC = () => {
         console.error("Erreur lors de la sauvegarde de l'état de la story :", error);
       }
     }
-  
     navigation.navigate("AccueilApresConnexion", { refresh: true });
   };
-  
-
 
   return (
     <BackgroundContainer
@@ -210,8 +211,6 @@ const Histoire: React.FC = () => {
 };
 
 export default Histoire;
-
-const screenWidth = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({
   imageHistoire: {

@@ -72,24 +72,33 @@ export async function recupererToutesLesSessions(req, res) {
     }
 }
 
-  export async function modifierSession(req, res) {
-    try {
-        const utilisateurId = req.user.utilisateurId;
+export async function modifierSession(req, res) {
+  try {
+    const utilisateurId = req.user.utilisateurId;
+    const sessionId = req.params.id;
+    const { sauvegarde, texte } = req.body;
 
-        const sessionId = req.params.id;
-        const miseAJour = req.body; 
+    const miseAJour = {};
+    if (sauvegarde) miseAJour.sauvegarde = sauvegarde;
+    if (texte) miseAJour.texte = texte;
+    console.log(miseAJour)
 
-        const session = await Session.findOneAndUpdate({ _id: sessionId, utilisateurRef: utilisateurId }, miseAJour, { new: true });
+    const session = await Session.findOneAndUpdate(
+      { _id: sessionId, utilisateurRef: utilisateurId },
+      miseAJour,
+      { new: true }
+    );
 
-        if (!session) {
-            return res.status(404).json({ message: "Session non trouvée" });
-        }
-
-        res.status(200).json({ message: 'Session mise à jour', data: session });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    if (!session) {
+      return res.status(404).json({ message: "Session non trouvée" });
     }
+
+    res.status(200).json({ message: 'Session mise à jour', data: session });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 }
+
 
   export async function supprimerSession(req, res) {
     try {

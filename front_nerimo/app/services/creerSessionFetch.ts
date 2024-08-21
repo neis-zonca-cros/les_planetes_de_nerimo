@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import apiFetch from "./apiService";
 import { getCredentials } from "./credentials/getCredentials";
 import { Session } from "./sessionFetch";
@@ -18,19 +17,19 @@ export interface Personnage {
   };
 }
 
+export interface CreateSessionData {
+  prenom: string;
+  sauvegarde?: string;
+  planeteRef: string;
+  personnageRef: string;
+}
+
 interface PlanetesResponse {
   data: Planete[];
 }
 
 interface PersonnagesResponse {
   data: Personnage[];
-}
-
-export interface CreateSessionData {
-  prenom: string;
-  sauvegarde?: string;
-  planeteRef: string;
-  personnageRef: string;
 }
 
 interface CreateSessionResponse {
@@ -104,7 +103,6 @@ export async function createSession(
     });
 
     console.log("Réponse du backend après création de session :", response);
-
     return response.data;
   } catch (error) {
     console.error("Erreur lors de la création de la session:", error);

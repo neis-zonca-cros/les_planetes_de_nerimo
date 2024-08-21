@@ -5,6 +5,7 @@ export interface Session {
   _id: string;
   prenom: string;
   sauvegarde?: string,
+  texte?: string,
   utilisateurRef: {
     _id: string;
     prenom: string;
@@ -19,6 +20,20 @@ export interface Session {
     histoire: string;
   };
 }
+
+interface UpdateSessionResponse {
+  message: string;
+  data: Session;
+}
+interface UpdateSessionData {
+  sauvegarde: string; 
+  texte: string;
+}
+
+type DeleteSessionResponse = {
+  message: string;
+  data: Session;
+};
 
 interface SessionsResponse {
   data: Session[];
@@ -45,14 +60,6 @@ export async function getSessions(): Promise<Session[]> {
   }
 }
 
-
-
-type DeleteSessionResponse = {
-  message: string;
-  data: Session;
-};
-
-
 export async function deleteSession(sessionId: string): Promise<Session> {
   try {
     const { token } = await getCredentials();
@@ -76,19 +83,10 @@ export async function deleteSession(sessionId: string): Promise<Session> {
   }
 }
 
-
-interface UpdateSessionResponse {
-  message: string;
-  data: Session;
-}
-interface UpdateSessionData {
-  sauvegarde: string; 
-}
-
-
 export async function updateSession(
   sessionId: string,
-  sauvegarde: string
+  sauvegarde: string,
+  texte: string,
 ): Promise<Session> {
   try {
     const { token } = await getCredentials();
@@ -96,7 +94,7 @@ export async function updateSession(
       throw new Error("Token non trouvé");
     }
 
-    const body: UpdateSessionData = { sauvegarde };
+    const body: UpdateSessionData = { sauvegarde, texte };
 
     const response = await apiFetch<UpdateSessionResponse>(`session/${sessionId}`, {
       method: "PUT",
@@ -115,7 +113,6 @@ export async function updateSession(
     throw error;
   }
 }
-
 
 export async function getSession(sessionId: string): Promise<Session> {
   try {

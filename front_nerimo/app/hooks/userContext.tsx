@@ -24,7 +24,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [utilisateur, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false); 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   const fetchUser = async () => {
@@ -43,41 +43,41 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const refreshUser = async () => {
     if (utilisateur) {
-      await fetchUser(); 
+      await fetchUser();
     }
   };
 
   const resetUser = () => {
-    setUser(null); 
+    setUser(null);
   };
 
   const loginHandler = async (email: string, mdp: string) => {
     setError(null);
-    setIsLoading(true); 
+    setIsLoading(true);
     try {
       await login(email, mdp);
-      await fetchUser(); 
+      await fetchUser();
     } catch (error) {
       console.error("Erreur lors de la connexion:", error);
       setError("Erreur lors de la connexion.");
-      throw error; 
+      throw error;
     } finally {
-      setIsLoading(false); 
+      setIsLoading(false);
     }
   };
 
   const logoutHandler = async () => {
     setError(null);
     try {
-      await logout(); 
-      resetUser(); 
+      await logout();
+      resetUser();
     } catch (error) {
       console.error('Erreur lors de la déconnexion:', error);
       setError("Erreur lors de la déconnexion.");
       throw error;
     }
   };
-  
+
   return (
     <UserContext.Provider value={{ utilisateur, isLoading, error, setUser, refreshUser, resetUser, connexion: loginHandler, deconnexion: logoutHandler }}>
       {children}

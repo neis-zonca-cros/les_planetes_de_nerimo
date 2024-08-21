@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { AppState, Alert, Keyboard, AppStateStatus } from 'react-native';
 import { useUser } from './userContext';
 
-const AUTO_LOGOUT_DELAY = 2 * 60 * 1000; 
+const AUTO_LOGOUT_DELAY = 2 * 60 * 1000;
 
 export const useAutoLogout = () => {
   const { deconnexion } = useUser();
@@ -12,26 +12,26 @@ export const useAutoLogout = () => {
 
   useEffect(() => {
     const handleAppStateChange = (nextAppState: AppStateStatus) => {
-        if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
-          const currentTime = Date.now();
-          if (currentTime - lastActiveTime > AUTO_LOGOUT_DELAY) {
-            handleLogout();
-          } else {
-            setLastActiveTime(currentTime);
-          }
+      if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
+        const currentTime = Date.now();
+        if (currentTime - lastActiveTime > AUTO_LOGOUT_DELAY) {
+          handleLogout();
+        } else {
+          setLastActiveTime(currentTime);
         }
-      
-        appState.current = nextAppState; 
-      };
+      }
 
-      const handleLogout = async () => {
-        try {
-          await deconnexion();
-          Alert.alert('Déconnexion', 'Vous avez été déconnecté en raison d\'une longue période d\'inactivité.');
-        } catch (error) {
-          console.error('Erreur lors de la déconnexion automatique:', error);
-        }
-      };
+      appState.current = nextAppState;
+    };
+
+    const handleLogout = async () => {
+      try {
+        await deconnexion();
+        Alert.alert('Déconnexion', 'Vous avez été déconnecté en raison d\'une longue période d\'inactivité.');
+      } catch (error) {
+        console.error('Erreur lors de la déconnexion automatique:', error);
+      }
+    };
 
     const subscription = AppState.addEventListener('change', handleAppStateChange);
 

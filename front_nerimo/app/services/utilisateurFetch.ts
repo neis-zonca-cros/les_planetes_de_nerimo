@@ -1,9 +1,24 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import apiFetch from "./apiService";
 import { getCredentials } from "./credentials/getCredentials";
 import { Alert } from "react-native";
 
 interface UtilisateurResponse {
+  data: {
+    _id: string;
+    prenom: string;
+    email: string;
+  };
+  message: string;
+}
+
+interface CreateUserRequest {
+  prenom: string;
+  email: string;
+  mdp: string;
+  mdp_repeat: string;
+}
+
+interface CreateUserResponse {
   data: {
     _id: string;
     prenom: string;
@@ -44,22 +59,6 @@ export async function getUtilisateur(): Promise<UtilisateurResponse["data"]> {
     );
     throw error;
   }
-}
-
-interface CreateUserRequest {
-  prenom: string;
-  email: string;
-  mdp: string;
-  mdp_repeat: string;
-}
-
-interface CreateUserResponse {
-  data: {
-    _id: string;
-    prenom: string;
-    email: string;
-  };
-  message: string;
 }
 
 export async function creerUtilisateur(

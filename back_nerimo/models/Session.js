@@ -9,6 +9,10 @@ const sessionSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    texte: {
+        type: String,
+        required: false, 
+    },
     utilisateurRef: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Utilisateur',

@@ -1,7 +1,6 @@
-// sessionContext.ts
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { getSessions, deleteSession, Session } from '@/app/services/sessionFetch'; 
-import { createSession, CreateSessionData } from '@/app/services/creerSessionFetch'; 
+import { getSessions, deleteSession, Session } from '@/app/services/sessionFetch';
+import { createSession, CreateSessionData } from '@/app/services/creerSessionFetch';
 
 
 interface SessionContextType {
@@ -39,8 +38,8 @@ export const SessionProvider: React.FC<{ children: ReactNode }> = ({ children })
 
   const createNewSession = async (sessionData: CreateSessionData): Promise<Session> => {
     try {
-      const createdSession = await createSession(sessionData); 
-      await fetchSessions(); 
+      const createdSession = await createSession(sessionData);
+      await fetchSessions();
       setCurrentSession(null);
       return createdSession;
     } catch (error) {
@@ -48,7 +47,7 @@ export const SessionProvider: React.FC<{ children: ReactNode }> = ({ children })
       throw error;
     }
   };
-  
+
 
   const removeSession = async (sessionId: string) => {
     try {
@@ -61,14 +60,14 @@ export const SessionProvider: React.FC<{ children: ReactNode }> = ({ children })
   };
 
   return (
-    <SessionContext.Provider value={{ 
-      sessions, 
-      setSessions, 
-      refreshSessions, 
-      createNewSession, 
+    <SessionContext.Provider value={{
+      sessions,
+      setSessions,
+      refreshSessions,
+      createNewSession,
       removeSession,
-      currentSession, 
-      setCurrentSession 
+      currentSession,
+      setCurrentSession
     }}>
       {children}
     </SessionContext.Provider>
