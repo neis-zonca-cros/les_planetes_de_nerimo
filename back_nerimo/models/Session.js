@@ -7,7 +7,7 @@ const sessionSchema = new mongoose.Schema({
     },
     sauvegarde: {
         type: String,
-        required: true
+        required: false
     },
     utilisateurRef: {
         type: mongoose.Schema.Types.ObjectId,

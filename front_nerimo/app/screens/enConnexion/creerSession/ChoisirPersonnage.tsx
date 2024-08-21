@@ -54,21 +54,29 @@ const ChoisirPersonnage: React.FC = () => {
 
   const handleSelectPersonnage = async (personnage: Personnage) => {
     try {
-      const sauvegardeParDefaut = "oui";
 
       if (prenom && planeteRef && personnage._id) {
-        await createNewSession({
+        const newSession = await createNewSession({
           prenom,
-          sauvegarde: sauvegardeParDefaut,
-          planeteRef, 
+          planeteRef,
           personnageRef: personnage._id,
         });
-        navigation.navigate("Histoire", { histoire: personnage.histoire, personnageNom: personnage.nom, sessionPrenom: prenom});
+        if (newSession && newSession._id) {
+          navigation.navigate("Histoire", {
+            histoire: personnage.histoire,
+            personnageNom: personnage.nom,
+            sessionPrenom: prenom,
+            sessionId: newSession._id,
+          }
+          );
+
+        } else {
+          console.error("La session n'a pas été créée correctement.");
+        }
       } else {
         console.error(
           "Données de session manquantes :",
           prenom,
-          sauvegardeParDefaut,
           planeteRef,
           personnage._id
         );
@@ -78,11 +86,12 @@ const ChoisirPersonnage: React.FC = () => {
     }
   };
 
+
   const renderItem = ({ item }: { item: Personnage }) => (
     <View style={styles.buttonContainer}>
       <TouchableOpacity
         onPress={() => handleSelectPersonnage(item)}>
-        <View style={[styles.listContainer, theme.colors.effectShadow, {backgroundColor: theme.colors.background, borderColor: theme.colors.background}]}>
+        <View style={[styles.listContainer, theme.colors.effectShadow, { backgroundColor: theme.colors.background, borderColor: theme.colors.background }]}>
           <Image source={getPersonnageImageURI(item.nom)} style={styles.icon} />
           <Text style={styleTheme.text}>{item.nom}</Text>
         </View>
@@ -132,10 +141,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexGrow: 1,
   },
-  listContainer:{
-    height: screenWidth*0.23,
-    width:screenWidth*0.23,
-    borderRadius: (screenWidth*0.23)/2,
+  listContainer: {
+    height: screenWidth * 0.23,
+    width: screenWidth * 0.23,
+    borderRadius: (screenWidth * 0.23) / 2,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',

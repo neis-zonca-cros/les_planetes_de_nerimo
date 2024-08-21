@@ -65,6 +65,7 @@ const AccueilApresConnexion: React.FC = () => {
       histoire: session.personnageRef.histoire,
       personnageNom: session.personnageRef.nom,
       sessionPrenom: session.prenom,
+      sessionId: session._id
     });
   };
 

@@ -18,13 +18,14 @@ import { backgroundImages } from "@/app/components/imageHistoire";
 import { normalizeKey } from "@/app/utils/normalizeKey";
 import { ThemedStyles } from "@/app/utils/styles";
 import { BackgroundContainer } from "@/app/components/BackgroundContainer";
+import { getSession, updateSession } from "@/app/services/sessionFetch";
 
 type HistoireScreenProp = StackNavigationProp<RootStackParamList, "Histoire">;
 
 const Histoire: React.FC = () => {
   const navigation = useNavigation<HistoireScreenProp>();
   const route = useRoute<RouteProp<RootStackParamList, "Histoire">>();
-  const { histoire, personnageNom, sessionPrenom } = route.params;
+  const { histoire, personnageNom, sessionPrenom, sessionId } = route.params;
   const { theme } = useTheme();
   const styleTheme = ThemedStyles(theme);
   const [story, setStory] = useState<Story | null>(null);
@@ -37,11 +38,38 @@ const Histoire: React.FC = () => {
   const iconSize = Math.min(screenHeight * 0.10, maxSize)
 
   useEffect(() => {
-    const inkStory = new Story(histoire);
-    inkStory.variablesState["sessionPrenom"] = sessionPrenom;
-    setStory(inkStory);
-    continueStory(inkStory);
-  }, [histoire]);
+    const fetchAndLoadStory = async () => {
+      try {
+        if (sessionId) {
+          const sessionData = await getSession(sessionId);
+          const sauvegarde = sessionData?.sauvegarde;
+  
+          if (sauvegarde) {
+            const inkStory = new Story(histoire);
+            inkStory.variablesState["sessionPrenom"] = sessionPrenom;
+            inkStory.state.LoadJson(sauvegarde);
+            setStory(inkStory);
+            continueStory(inkStory);
+          } else {
+            const inkStory = new Story(histoire);
+            inkStory.variablesState["sessionPrenom"] = sessionPrenom;
+            setStory(inkStory);
+            continueStory(inkStory);
+          }
+        } else {
+          const inkStory = new Story(histoire);
+          inkStory.variablesState["sessionPrenom"] = sessionPrenom;
+          setStory(inkStory);
+          continueStory(inkStory);
+        }
+      } catch (error) {
+        console.error("Erreur lors du chargement de la sauvegarde de l'histoire:", error);
+      }
+    };
+  
+    fetchAndLoadStory();
+  }, [histoire, sessionPrenom, sessionId]);
+  
 
   const continueStory = (inkStory: Story) => {
     let text = "";
@@ -87,8 +115,25 @@ const Histoire: React.FC = () => {
   };
 
   const goToAccueil = async () => {
+    if (story) {
+      try {
+        const storyStateJson = story.state.ToJson();
+        
+        
+        if (sessionId) {
+          await updateSession(sessionId, storyStateJson); 
+          console.log("État de la story sauvegardé avec succès.", storyStateJson);
+        } else {
+          console.error("ID de la session manquant.");
+        }
+      } catch (error) {
+        console.error("Erreur lors de la sauvegarde de l'état de la story :", error);
+      }
+    }
+  
     navigation.navigate("AccueilApresConnexion", { refresh: true });
   };
+  
 
 
   return (

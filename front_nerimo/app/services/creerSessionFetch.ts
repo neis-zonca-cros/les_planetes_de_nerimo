@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import apiFetch from "./apiService";
 import { getCredentials } from "./credentials/getCredentials";
+import { Session } from "./sessionFetch";
 
 export interface Planete {
   _id: string;
@@ -17,23 +18,6 @@ export interface Personnage {
   };
 }
 
-export interface Session {
-  _id: string;
-  prenom: string;
-  utilisateurRef: {
-    _id: string;
-    prenom: string;
-  };
-  planeteRef: {
-    _id: string;
-    nom: string;
-  };
-  personnageRef: {
-    _id: string;
-    nom: string;
-  };
-}
-
 interface PlanetesResponse {
   data: Planete[];
 }
@@ -42,9 +26,9 @@ interface PersonnagesResponse {
   data: Personnage[];
 }
 
-interface CreateSessionData {
+export interface CreateSessionData {
   prenom: string;
-  sauvegarde: string;
+  sauvegarde?: string;
   planeteRef: string;
   personnageRef: string;
 }

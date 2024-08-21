@@ -1,38 +1,14 @@
 // sessionContext.ts
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { getSessions, deleteSession } from '@/app/services/sessionFetch'; 
-import { createSession } from '@/app/services/creerSessionFetch'; 
+import { getSessions, deleteSession, Session } from '@/app/services/sessionFetch'; 
+import { createSession, CreateSessionData } from '@/app/services/creerSessionFetch'; 
 
-interface CreateSessionData {
-  prenom: string;
-  sauvegarde: string;
-  planeteRef: string;
-  personnageRef: string;
-}
-
-interface Session {
-  _id: string;
-  prenom: string;
-  utilisateurRef: {
-    _id: string;
-    prenom: string;
-  };
-  planeteRef: {
-    _id: string;
-    nom: string;
-  };
-  personnageRef: {
-    _id: string;
-    nom: string;
-    histoire: string;
-  };
-}
 
 interface SessionContextType {
   sessions: Session[] | null;
   setSessions: React.Dispatch<React.SetStateAction<Session[] | null>>;
   refreshSessions: () => Promise<void>;
-  createNewSession: (sessionData: CreateSessionData) => Promise<void>;
+  createNewSession: (sessionData: CreateSessionData) => Promise<Session>;
   removeSession: (sessionId: string) => Promise<void>;
   currentSession: Partial<CreateSessionData> | null;
   setCurrentSession: React.Dispatch<React.SetStateAction<Partial<CreateSessionData> | null>>;
@@ -61,16 +37,18 @@ export const SessionProvider: React.FC<{ children: ReactNode }> = ({ children })
     await fetchSessions();
   };
 
-  const createNewSession = async (sessionData: CreateSessionData) => {
+  const createNewSession = async (sessionData: CreateSessionData): Promise<Session> => {
     try {
-      await createSession(sessionData);
-      await fetchSessions();
-      setCurrentSession(null); 
+      const createdSession = await createSession(sessionData); 
+      await fetchSessions(); 
+      setCurrentSession(null);
+      return createdSession;
     } catch (error) {
       console.error("Erreur lors de la création de la session:", error);
       throw error;
     }
   };
+  
 
   const removeSession = async (sessionId: string) => {
     try {
