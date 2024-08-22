@@ -15,10 +15,12 @@ import { useTheme } from "@/app/hooks/themeContext";
 import { Story } from "inkjs";
 import TopBar from "@/app/components/TopBar";
 import { backgroundImages } from "@/app/components/imageHistoire";
-import { normalizeKey } from "@/app/utils/normalizeKey";
 import { ThemedStyles } from "@/app/utils/styles";
 import { BackgroundContainer } from "@/app/components/BackgroundContainer";
-import { getSession, updateSession } from "@/app/services/sessionFetch";
+import { updateSession } from "@/app/services/sessionFetch";
+import { continueStory, makeChoice } from "@/app/utils/storyUtils";
+import { fetchAndLoadStory } from "@/app/services/storyService";
+
 
 type HistoireScreenProp = StackNavigationProp<RootStackParamList, "Histoire">;
 
@@ -37,108 +39,33 @@ const Histoire: React.FC = () => {
   const maxSize = 56;
   const iconSize = Math.min(screenHeight * 0.10, maxSize)
 
-  const handleBackgroundTags = (tags: string[] | null): string | null => {
-    if (!tags) return null;
-    const backgroundTagMatch = tags.find(tag => tag.startsWith("BACKGROUND:"));
-    return backgroundTagMatch ? backgroundTagMatch.split(":")[1].trim() : null;
+  const handleContinueStory = (inkStory: Story, savedText?: string) => {
+    continueStory(
+      inkStory,
+      personnageNom,
+      backgroundImages,
+      setCurrentText,
+      setChoices,
+      setBackgroundImage,
+      savedText
+    );
   };
-  
   useEffect(() => {
-    const createAndConfigureStory = (sauvegarde?: string) => {
-      const inkStory = new Story(histoire);
-      inkStory.variablesState["sessionPrenom"] = sessionPrenom;
-  
-      if (sauvegarde) {
-        inkStory.state.LoadJson(sauvegarde);
-      }
-  
-      return inkStory;
-    };
-  
-    const fetchAndLoadStory = async () => {
-      try {
-        if (sessionId) {
-          const sessionData = await getSession(sessionId);
-          const sauvegarde = sessionData?.choixSauvegarde;
-          const savedText = sessionData?.texteSauvegarde || "";
-  
-          const inkStory = createAndConfigureStory(sauvegarde);
-          setStory(inkStory);
-  
-          if (sauvegarde) {
-            const tags = inkStory.currentTags;
-            const newBackgroundImage = handleBackgroundTags(tags);
-  
-            if (savedText) {
-              setCurrentText(savedText);
-            }
-  
-            continueStory(inkStory, savedText);
-  
-            if (newBackgroundImage) {
-              const normalizedPersonnageNom = normalizeKey(personnageNom);
-              const images = backgroundImages[normalizedPersonnageNom];
-              setBackgroundImage(images[normalizeKey(newBackgroundImage)] || null);
-            }
-  
-          } else {
-            continueStory(inkStory);
-          }
-        } else {
-          const inkStory = createAndConfigureStory();
-          setStory(inkStory);
-          continueStory(inkStory);
-        }
-      } catch (error) {
-        console.error("Erreur lors du chargement de la sauvegarde de l'histoire:", error);
-      }
-    };
-  
-    fetchAndLoadStory();
+    fetchAndLoadStory(
+      histoire,
+      sessionPrenom,
+      sessionId,
+      personnageNom,
+      backgroundImages,
+      setStory,
+      setCurrentText,
+      setBackgroundImage,
+      handleContinueStory
+    );
   }, [histoire, sessionPrenom, sessionId]);
-  
-  const continueStory = (inkStory: Story, savedText?: string) => {
-    let text = savedText ?? "";
-    let newBackgroundImage: string | null = null;
-  
-    while (inkStory.canContinue) {
-      const currentText = inkStory.Continue() ?? "";
-  
-      if (currentText.trim().length > 0) {
-        text += currentText.trim();
-      }
-  
-      const tags = inkStory.currentTags;
-      const backgroundTag = handleBackgroundTags(tags);
-      if (backgroundTag) {
-        newBackgroundImage = backgroundTag;
-        console.log(`Background tag detected with value: ${newBackgroundImage}`);
-      }
-    }
-  
-    const normalizedPersonnageNom = normalizeKey(personnageNom);
-    if (newBackgroundImage && backgroundImages[normalizedPersonnageNom]) {
-      const images = backgroundImages[normalizedPersonnageNom];
-      setBackgroundImage(images[normalizeKey(newBackgroundImage)] || null);
-    } else {
-      setBackgroundImage(backgroundImages['default']);
-    }
-  
-    setCurrentText(text.trim());
-    setChoices(inkStory.currentChoices);
-  };
-  
-  
 
-
-  const makeChoice = (choiceIndex: number) => {
-    if (story) {
-      setTimeout(() => {
-        story.ChooseChoiceIndex(choiceIndex);
-        continueStory(story);
-        setModalVisible(false);
-      }, 200);
-    }
+  const handleChoice = (choiceIndex: number) => {
+    makeChoice(story, choiceIndex, handleContinueStory, setModalVisible);
   };
 
   const goToAccueil = async () => {
@@ -203,7 +130,7 @@ const Histoire: React.FC = () => {
                         borderColor: theme.colors.background,
                       },
                     ]}
-                    onPress={() => makeChoice(index)}
+                    onPress={() => handleChoice(index)}
                   >
                     <Text style={[styleTheme.text, { lineHeight: 20 }]}>
                       {choice.text}
