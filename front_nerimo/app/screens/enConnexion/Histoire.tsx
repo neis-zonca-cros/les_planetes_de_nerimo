@@ -37,32 +37,55 @@ const Histoire: React.FC = () => {
   const maxSize = 56;
   const iconSize = Math.min(screenHeight * 0.10, maxSize)
 
+  const handleBackgroundTags = (tags: string[] | null): string | null => {
+    if (!tags) return null;
+    const backgroundTagMatch = tags.find(tag => tag.startsWith("BACKGROUND:"));
+    return backgroundTagMatch ? backgroundTagMatch.split(":")[1].trim() : null;
+  };
+  
   useEffect(() => {
+    const createAndConfigureStory = (sauvegarde?: string) => {
+      const inkStory = new Story(histoire);
+      inkStory.variablesState["sessionPrenom"] = sessionPrenom;
+  
+      if (sauvegarde) {
+        inkStory.state.LoadJson(sauvegarde);
+      }
+  
+      return inkStory;
+    };
+  
     const fetchAndLoadStory = async () => {
       try {
         if (sessionId) {
           const sessionData = await getSession(sessionId);
           const sauvegarde = sessionData?.choixSauvegarde;
           const savedText = sessionData?.texteSauvegarde || "";
-
+  
+          const inkStory = createAndConfigureStory(sauvegarde);
+          setStory(inkStory);
+  
           if (sauvegarde) {
-            const inkStory = new Story(histoire);
-            inkStory.variablesState["sessionPrenom"] = sessionPrenom;
-            inkStory.state.LoadJson(sauvegarde);
-            setStory(inkStory);
+            const tags = inkStory.currentTags;
+            const newBackgroundImage = handleBackgroundTags(tags);
+  
             if (savedText) {
               setCurrentText(savedText);
             }
+  
             continueStory(inkStory, savedText);
+  
+            if (newBackgroundImage) {
+              const normalizedPersonnageNom = normalizeKey(personnageNom);
+              const images = backgroundImages[normalizedPersonnageNom];
+              setBackgroundImage(images[normalizeKey(newBackgroundImage)] || null);
+            }
+  
           } else {
-            const inkStory = new Story(histoire);
-            inkStory.variablesState["sessionPrenom"] = sessionPrenom;
-            setStory(inkStory);
             continueStory(inkStory);
           }
         } else {
-          const inkStory = new Story(histoire);
-          inkStory.variablesState["sessionPrenom"] = sessionPrenom;
+          const inkStory = createAndConfigureStory();
           setStory(inkStory);
           continueStory(inkStory);
         }
@@ -70,34 +93,29 @@ const Histoire: React.FC = () => {
         console.error("Erreur lors du chargement de la sauvegarde de l'histoire:", error);
       }
     };
-
+  
     fetchAndLoadStory();
   }, [histoire, sessionPrenom, sessionId]);
-
-
+  
   const continueStory = (inkStory: Story, savedText?: string) => {
     let text = savedText ?? "";
     let newBackgroundImage: string | null = null;
-
+  
     while (inkStory.canContinue) {
       const currentText = inkStory.Continue() ?? "";
-
+  
       if (currentText.trim().length > 0) {
         text += currentText.trim();
       }
+  
       const tags = inkStory.currentTags;
-      if (tags) {
-        tags.forEach((tag) => {
-          const backgroundTagMatch = tag.match(/^BACKGROUND:\s*(\S+)/);
-          if (backgroundTagMatch) {
-            newBackgroundImage = backgroundTagMatch[1];
-            console.log(
-              `Background tag detected with value: ${newBackgroundImage}`
-            );
-          }
-        });
+      const backgroundTag = handleBackgroundTags(tags);
+      if (backgroundTag) {
+        newBackgroundImage = backgroundTag;
+        console.log(`Background tag detected with value: ${newBackgroundImage}`);
       }
     }
+  
     const normalizedPersonnageNom = normalizeKey(personnageNom);
     if (newBackgroundImage && backgroundImages[normalizedPersonnageNom]) {
       const images = backgroundImages[normalizedPersonnageNom];
@@ -105,10 +123,12 @@ const Histoire: React.FC = () => {
     } else {
       setBackgroundImage(backgroundImages['default']);
     }
-
+  
     setCurrentText(text.trim());
     setChoices(inkStory.currentChoices);
   };
+  
+  
 
 
   const makeChoice = (choiceIndex: number) => {
@@ -117,7 +137,7 @@ const Histoire: React.FC = () => {
         story.ChooseChoiceIndex(choiceIndex);
         continueStory(story);
         setModalVisible(false);
-      }, 100);
+      }, 200);
     }
   };
 
