@@ -18,9 +18,12 @@ import { backgroundImages } from "@/app/components/imageHistoire";
 import { ThemedStyles } from "@/app/utils/styles";
 import { BackgroundContainer } from "@/app/components/BackgroundContainer";
 import { updateSession } from "@/app/services/sessionFetch";
-import { continueStory, makeChoice } from "@/app/utils/storyUtils";
+import {
+  continueStory,
+  makeChoice,
+} from "@/app/utils/storyUtils";
 import { fetchAndLoadStory } from "@/app/services/storyService";
-
+import { useSession } from "@/app/hooks/sessionContext";
 
 type HistoireScreenProp = StackNavigationProp<RootStackParamList, "Histoire">;
 
@@ -31,16 +34,18 @@ const Histoire: React.FC = () => {
   const { theme } = useTheme();
   const styleTheme = ThemedStyles(theme);
   const [story, setStory] = useState<Story | null>(null);
+  const { removeSession } = useSession();
   const [currentText, setCurrentText] = useState<string>("");
   const [choices, setChoices] = useState<any[]>([]);
   const [backgroundImage, setBackgroundImage] = useState<any>(null);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [storyEnded, setStoryEnded] = useState(false);
   const screenHeight = Dimensions.get("window").height;
   const maxSize = 56;
-  const iconSize = Math.min(screenHeight * 0.10, maxSize)
+  const iconSize = Math.min(screenHeight * 0.1, maxSize);
 
   const handleContinueStory = (inkStory: Story, savedText?: string) => {
-    continueStory(
+    const isStoryEnded = continueStory(
       inkStory,
       personnageNom,
       backgroundImages,
@@ -49,7 +54,10 @@ const Histoire: React.FC = () => {
       setBackgroundImage,
       savedText
     );
+    setStoryEnded(isStoryEnded);
+    return isStoryEnded;
   };
+
   useEffect(() => {
     fetchAndLoadStory(
       histoire,
@@ -65,7 +73,13 @@ const Histoire: React.FC = () => {
   }, [histoire, sessionPrenom, sessionId]);
 
   const handleChoice = (choiceIndex: number) => {
-    makeChoice(story, choiceIndex, handleContinueStory, setModalVisible);
+    makeChoice(
+      story,
+      choiceIndex,
+      handleContinueStory,
+      setModalVisible,
+      setStoryEnded
+    );
   };
 
   const goToAccueil = async () => {
@@ -78,10 +92,48 @@ const Histoire: React.FC = () => {
           console.error("ID de la session manquant.");
         }
       } catch (error) {
-        console.error("Erreur lors de la sauvegarde de l'état de la story :", error);
+        console.error(
+          "Erreur lors de la sauvegarde de l'état de la story :",
+          error
+        );
       }
     }
     navigation.navigate("AccueilApresConnexion", { refresh: true });
+  };
+
+  const handleDeleteSession = async () => {
+    if (sessionId) {
+      try {
+        await removeSession(sessionId);
+        navigation.navigate("AccueilApresConnexion", { refresh: true });
+      } catch (err) {
+        console.error("Failed to delete session:", err);
+      } finally {
+        setModalVisible(false);
+      }
+    } else {
+      console.error("Session ID is missing.");
+    }
+  };
+
+  const handleReplay = () => {
+    if (story) {
+      story.ResetGlobals;
+      fetchAndLoadStory(
+        histoire,
+        sessionPrenom,
+        sessionId,
+        personnageNom,
+        backgroundImages,
+        setStory,
+        setCurrentText,
+        setBackgroundImage,
+        handleContinueStory
+      );
+    }
+
+
+    setModalVisible(false);
   };
 
   return (
@@ -93,7 +145,10 @@ const Histoire: React.FC = () => {
       <View style={styles.containerHistoire}>
         <TouchableOpacity
           onPress={() => setModalVisible(true)}
-          style={[styles.modalOpenButton, { backgroundColor: theme.colors.background }]}
+          style={[
+            styles.modalOpenButton,
+            { backgroundColor: theme.colors.background },
+          ]}
         >
           <Ionicons
             name="chatbubble-ellipses-outline"
@@ -106,7 +161,7 @@ const Histoire: React.FC = () => {
           isVisible={modalVisible}
           onBackdropPress={() => setModalVisible(false)}
           animationIn="slideInUp"
-          animationOut="slideOutDown"
+
         >
           <View style={styles.modalContainer}>
             <View
@@ -119,24 +174,59 @@ const Histoire: React.FC = () => {
                 {currentText}
               </Text>
               <View style={styles.choixHistoire}>
-                {choices.map((choice, index) => (
-                  <TouchableOpacity
-                    key={index}
-                    style={[
-                      styles.choixBouttonHistoire,
-                      theme.colors.effectShadow,
-                      {
-                        backgroundColor: theme.colors.background,
-                        borderColor: theme.colors.background,
-                      },
-                    ]}
-                    onPress={() => handleChoice(index)}
-                  >
-                    <Text style={[styleTheme.text, { lineHeight: 20 }]}>
-                      {choice.text}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
+                {storyEnded ? (
+                  <>
+                    <TouchableOpacity
+                      onPress={handleDeleteSession}
+                      style={[
+                        styles.choixBouttonHistoire,
+                        theme.colors.effectShadow,
+                        {
+                          backgroundColor: theme.colors.background,
+                          borderColor: theme.colors.background,
+                        },
+                      ]}
+                    >
+                      <Text style={[styleTheme.text, { lineHeight: 20 }]}>
+                        Quitter
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={handleReplay}
+                      style={[
+                        styles.choixBouttonHistoire,
+                        theme.colors.effectShadow,
+                        {
+                          backgroundColor: theme.colors.background,
+                          borderColor: theme.colors.background,
+                        },
+                      ]}
+                    >
+                      <Text style={[styleTheme.text, { lineHeight: 20 }]}>
+                        Rejouer
+                      </Text>
+                    </TouchableOpacity>
+                  </>
+                ) : (
+                  choices.map((choice, index) => (
+                    <TouchableOpacity
+                      key={index}
+                      style={[
+                        styles.choixBouttonHistoire,
+                        theme.colors.effectShadow,
+                        {
+                          backgroundColor: theme.colors.background,
+                          borderColor: theme.colors.background,
+                        },
+                      ]}
+                      onPress={() => handleChoice(index)}
+                    >
+                      <Text style={[styleTheme.text, { lineHeight: 20 }]}>
+                        {choice.text}
+                      </Text>
+                    </TouchableOpacity>
+                  ))
+                )}
               </View>
               <TouchableOpacity
                 onPress={() => setModalVisible(false)}
@@ -153,7 +243,6 @@ const Histoire: React.FC = () => {
         </Modal>
       </View>
     </BackgroundContainer>
-
   );
 };
 
@@ -170,7 +259,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 10,
-    position: 'relative'
+    position: "relative",
   },
   choixHistoire: {
     flexDirection: "row",
@@ -216,6 +305,3 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
 });
-
-
-
