@@ -40,6 +40,7 @@ export const ThemedStyles = (theme : Theme) => StyleSheet.create({
     paddingHorizontal: 10,
     justifyContent: "center",
     paddingTop: 60,
+    marginTop: 20,
   },
   rectangleForm: {
     height: 'auto',

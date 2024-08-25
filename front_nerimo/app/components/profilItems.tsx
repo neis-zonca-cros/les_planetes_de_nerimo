@@ -18,7 +18,7 @@ const ProfilItems: React.FC<ProfilItemsProps> = ({ text, iconName, isSwitch, onS
   const styleTheme = ThemedStyles(theme);
   const screenHeight = Dimensions.get("window").height;
   const maxSize = 40;
-  const iconSize = Math.min(screenHeight * 0.10, maxSize);
+  const iconSize = Math.min(screenHeight * 0.07, maxSize);
 
   const toggleSwitch = () => {
     const newValue = !switchValue;
@@ -36,7 +36,7 @@ const ProfilItems: React.FC<ProfilItemsProps> = ({ text, iconName, isSwitch, onS
 
   return (
     <TouchableOpacity
-      onPress={isSwitch ? undefined : handlePress}
+      onPress={isSwitch ? toggleSwitch : handlePress}
       style={{ pointerEvents: 'auto', zIndex: 1 }}
     >
       <View style={[styleTheme.rectangleForm, theme.colors.effectShadow, styles.containerProfilItems]}>
