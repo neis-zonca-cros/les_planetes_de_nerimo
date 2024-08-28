@@ -24,6 +24,7 @@ import { creerUtilisateur } from "@/app/services/utilisateurFetch";
 import { useUser } from "@/app/hooks/userContext";
 import { normalizeKey } from "@/app/utils/normalizeKey";
 import { ThemedStyles } from "@/app/utils/styles";
+import PasswordInput from "@/app/utils/PasswordInput";
 
 type CreerUnCompteScreen = StackNavigationProp<
   RootStackParamList,
@@ -160,17 +161,13 @@ const CreerUnCompte: React.FC = () => {
                   <View style={[
                     theme.colors.effectShadow, styleTheme.rectangleForm
                   ]}>
-                    <TextInput
-                      style={styleTheme.text}
-                      placeholder="Mot de passe"
-                      placeholderTextColor={
-                        theme.colors.text
-                      }
-                      onChangeText={handleChange("password")}
-                      onBlur={handleBlur("password")}
-                      value={values.password}
-                      secureTextEntry
-                    />
+                  <PasswordInput 
+                    styleTheme={styleTheme}
+                    theme={theme}
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                    values={values}
+                  />
                   </View>
                   {errors.password && touched.password && (
                     <Text style={styleTheme.errorText}>{errors.password}</Text>

@@ -19,11 +19,11 @@ import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '@/app/hooks/themeContext';
 import { ConnexionIcon } from '@/app/assets/icons/connexionIcon';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { darkTheme } from '@/app/themes/dark';
 import TopBar from '@/app/components/TopBar';
 import useGoToCreerUnCompte from '@/app/navigation/useGoToCreerCompte';
 import { useUser } from '@/app/hooks/userContext';
 import { ThemedStyles } from '@/app/utils/styles';
+import PasswordInput from '@/app/utils/PasswordInput';
 
 type SeConnecterScreen = StackNavigationProp<RootStackParamList, 'SeConnecter'>;
 
@@ -109,17 +109,13 @@ const SeConnecter: React.FC = () => {
                     theme.colors.effectShadow,
 
                   ]}>
-                    <TextInput
-                      style={styleTheme.text}
-                      placeholder="Mot de passe"
-                      placeholderTextColor={
-                        theme.colors.text
-                      }
-                      onChangeText={handleChange('mdp')}
-                      onBlur={handleBlur('mdp')}
-                      value={values.mdp}
-                      secureTextEntry
-                    />
+                  <PasswordInput 
+                    styleTheme={styleTheme}
+                    theme={theme}
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                    values={values}
+                  />
                   </View>
                   {errors.mdp && touched.mdp && (
                     <Text style={styleTheme.errorText}>{errors.mdp}</Text>
