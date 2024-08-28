@@ -9,6 +9,7 @@ import MonProfil from "../screens/enConnexion/MonProfil";
 import { useAutoLogout } from "../hooks/useAutoLogOut";
 import { SessionProvider } from "../hooks/sessionContext";
 import Histoire from "@/app/screens/enConnexion/Histoire";
+import MesInformations from "../screens/enConnexion/MesInformations";
 
 const Stack = createStackNavigator();
 
@@ -47,6 +48,11 @@ const PrivateStack: React.FC = () => {
           name="MonProfil"
           component={MonProfil}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="MesInformations"
+          component={MesInformations}
+          options={{headerShown : false}}    
         />
         <Stack.Screen
           name="Histoire"
