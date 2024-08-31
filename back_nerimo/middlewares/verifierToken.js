@@ -15,10 +15,6 @@ export function verifierToken(req, res, next) {
 
   const token = divisionToken[1];
   // console.log(token);
-
-  if (!token) {
-    return res.status(401).json({ message: 'Token manquant' });
-  }
   try {
     const verifierTokenValide = jwt.verify(token, process.env.JWT_SECRET);
 

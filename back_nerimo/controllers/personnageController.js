@@ -39,10 +39,6 @@ export async function recupererPersonnagesParPlanetes(req, res) {
 
     const personnages = await Personnage.find({ "planeteRef": planeteId }).exec();
 
-    if (!personnages) {
-      return res.status(404).json({ error: "Aucun personnage trouvé pour cette planète" });
-    }
-
     res.status(200).json({ message: 'Liste des personnages pour la planète sélectionnée', data: personnages });
   } catch (error) {
     res.status(500).json({ error: error.message });

@@ -3,22 +3,23 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "start": "NODE_ENV=production nodemon index.js",
-    "test:connexion": "NODE_ENV=test vitest test/utilisateurConnexion.test.js",
-    "test:creation": "NODE_ENV=test vitest test/utilisateurCreation.test.js",
-    "test:utilisateurgud": "NODE_ENV=test vitest test/utilisateurGetUpDel.test.js",
-    "test:session": "NODE_ENV=test vitest test/session.test.js",
-    "test:planete": "NODE_ENV=test vitest test/planete.test.js",
-    "test:personnage": "NODE_ENV=test vitest test/personnage.test.js",
-    "test": "npm-run-all test:*",
-    "lint": "eslint ."
-  },
+"scripts": {
+  "start": "NODE_ENV=production nodemon index.js",
+  "test:connexion": "NODE_ENV=test vitest run --coverage test/utilisateurConnexion.test.js",
+  "test:creation": "NODE_ENV=test vitest run --coverage test/utilisateurCreation.test.js",
+  "test:utilisateurgud": "NODE_ENV=test vitest run --coverage test/utilisateurGetUpDel.test.js",
+  "test:session": "NODE_ENV=test vitest run --coverage test/session.test.js",
+  "test:planete": "NODE_ENV=test vitest run --coverage test/planete.test.js",
+  "test:personnage": "NODE_ENV=test vitest run --coverage test/personnage.test.js",
+  "test": "npm-run-all test:*",
+  "lint": "eslint ."
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "@vitest/coverage-v8": "^2.0.5",
     "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
@@ -29,7 +30,7 @@
     "mongoose": "^8.2.4",
     "sinon": "^18.0.0",
     "supertest": "^7.0.0",
-    "vitest": "^1.6.0"
+    "vitest": "^2.0.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",
