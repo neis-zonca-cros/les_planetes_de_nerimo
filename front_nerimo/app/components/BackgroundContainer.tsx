@@ -1,6 +1,6 @@
-import { ImageBackground, StyleProp, View, ViewStyle, StyleSheet } from "react-native";
-import { ThemedStyles } from "../utils/styles";
+import { ImageBackground, StyleProp, View, ViewStyle } from "react-native";
 import { useTheme } from "../hooks/themeContext";
+import { ThemedStyles } from "../utils/styles";
 
 
 type BackgroundContainerProps = {
@@ -17,7 +17,7 @@ export const BackgroundContainer: React.FC<BackgroundContainerProps> = ({ backgr
         <ImageBackground
           source={backgroundImage}
           style={style}
-          resizeMode="cover"
+          resizeMode="contain"
         >
           {children}
         </ImageBackground>
