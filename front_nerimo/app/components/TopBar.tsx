@@ -1,34 +1,28 @@
-import React from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Dimensions,
-  StyleSheet
-} from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { ComponentProps } from "react";
-import { useTheme } from "@/app/hooks/themeContext";
-import { ThemedStyles } from "../utils/styles";
+import React, { ComponentProps } from 'react';
 
-export function TabBarIcon({
-  style,
-  ...rest
-}: ComponentProps<typeof Ionicons>) {
-  const screenHeight = Dimensions.get("window").height;
+import { View, Text, TouchableOpacity, Dimensions, StyleSheet } from 'react-native';
+
+import Ionicons from '@expo/vector-icons/Ionicons';
+
+import { useTheme } from '@/app/hooks/themeContext';
+
+import { ThemedStyles } from '../utils/styles';
+
+export function TabBarIcon({ style, ...rest }: ComponentProps<typeof Ionicons>) {
+  const screenHeight = Dimensions.get('window').height;
   const maxSize = 56;
-  const iconSize = Math.min(screenHeight * 0.10, maxSize);
+  const iconSize = Math.min(screenHeight * 0.1, maxSize);
   return <Ionicons size={iconSize} style={[style]} {...rest} />;
 }
 
 interface TopBarProps {
   prenom?: string;
   titre?: string;
-  iconeGaucheNom?: ComponentProps<typeof Ionicons>["name"] | null;
+  iconeGaucheNom?: ComponentProps<typeof Ionicons>['name'] | null;
   iconeGaucheAction?: () => void;
-  iconeDroiteNom?: ComponentProps<typeof Ionicons>["name"] | null;
+  iconeDroiteNom?: ComponentProps<typeof Ionicons>['name'] | null;
   iconeDroiteAction?: () => void;
-  iconeZeroNom?: ComponentProps<typeof Ionicons>["name"] | null;
+  iconeZeroNom?: ComponentProps<typeof Ionicons>['name'] | null;
   iconeZeroAction?: () => void;
 }
 
@@ -53,7 +47,8 @@ const TopBar: React.FC<TopBarProps> = ({
             <Text style={styleTheme.textLarge}>{titre}</Text>
             <Text style={styleTheme.textLarge}>{prenom} </Text>
           </View>
-        </View></View>
+        </View>
+      </View>
       <View style={styles.directionIconsTopBar}>
         {iconeZeroNom ? (
           <TouchableOpacity onPress={iconeZeroAction}>
@@ -81,25 +76,24 @@ const styles = StyleSheet.create({
     pointerEvents: 'none',
   },
   containerTopBar: {
-    flexDirection: "row",
-    position: "absolute",
+    flexDirection: 'row',
+    position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     height: 56,
     zIndex: 1,
-    justifyContent: "space-between",
-    alignItems: "center",
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingHorizontal: 16,
     marginVertical: 15,
-
   },
   textContainerTopBar: {
-    flexDirection: "column",
-    alignItems: "center",
+    flexDirection: 'column',
+    alignItems: 'center',
     paddingTop: 10,
   },
   directionIconsTopBar: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
-})
+});

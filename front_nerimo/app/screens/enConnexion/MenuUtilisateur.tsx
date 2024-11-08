@@ -1,42 +1,43 @@
-import React from "react";
-import { View, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
-import { useTheme } from "@/app/hooks/themeContext";
-import TopBar from "@/app/components/TopBar";
-import { AProposIcon } from "@/app/assets/icons/aProposIcon";
-import useGoBack from "@/app/navigation/useGoBack";
-import { ScrollView } from "react-native-gesture-handler";
-import { ProfilRondIcon } from "@/app/assets/icons/profilRondIcon";
-import { DeconnexionRondIcon } from "@/app/assets/icons/deconnexionRondIcon";
-import { useUser } from "../../hooks/userContext";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "@/app/types";
-import { useNavigation } from "@react-navigation/native";
-import { ThemedStyles } from "@/app/utils/styles";
-import IconButton from "@/app/components/IconButton";
+import React from 'react';
 
-type MenuUtilisateurScreen = StackNavigationProp<
-  RootStackParamList,
-  "MenuUtilisateur"
->;
+import { View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { ScrollView } from 'react-native-gesture-handler';
+
+import { AProposIcon } from '@/app/assets/icons/aProposIcon';
+import { DeconnexionRondIcon } from '@/app/assets/icons/deconnexionRondIcon';
+import { ProfilRondIcon } from '@/app/assets/icons/profilRondIcon';
+import IconButton from '@/app/components/IconButton';
+import TopBar from '@/app/components/TopBar';
+import { useTheme } from '@/app/hooks/themeContext';
+import useGoBack from '@/app/navigation/useGoBack';
+import { RootStackParamList } from '@/app/types';
+import { ThemedStyles } from '@/app/utils/styles';
+
+import { useUser } from '../../hooks/userContext';
+
+type MenuUtilisateurScreen = StackNavigationProp<RootStackParamList, 'MenuUtilisateur'>;
 
 const MenuUtilisateur: React.FC = () => {
   const navigation = useNavigation<MenuUtilisateurScreen>();
   const { utilisateur, deconnexion } = useUser();
   const { theme } = useTheme();
   const goBack = useGoBack();
-  const screenHeight = Dimensions.get("window").height;
+  const screenHeight = Dimensions.get('window').height;
   const styleTheme = ThemedStyles(theme);
   const handleLogout = async () => {
     try {
       await deconnexion();
-      navigation.navigate("Bienvenue");
+      navigation.navigate('Bienvenue');
     } catch (error) {
-      console.error("Erreur lors de la déconnexion:", error);
+      console.error('Erreur lors de la déconnexion:', error);
     }
   };
 
   const goToProfil = () => {
-    navigation.navigate("MonProfil");
+    navigation.navigate('MonProfil');
   };
 
   return (
@@ -77,7 +78,7 @@ const MenuUtilisateur: React.FC = () => {
                 background={theme.colors.background}
               />
             }
-            onPress={() => console.log("A propos cliqué")}
+            onPress={() => console.log('A propos cliqué')}
           />
         </View>
       </ScrollView>
@@ -87,9 +88,9 @@ const MenuUtilisateur: React.FC = () => {
 
 const styles = StyleSheet.create({
   row: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 export default MenuUtilisateur;

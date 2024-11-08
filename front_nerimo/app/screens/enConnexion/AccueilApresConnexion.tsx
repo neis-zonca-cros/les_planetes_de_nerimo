@@ -1,28 +1,25 @@
-import React, { useState, useEffect, useCallback } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Dimensions,
-  Image,
-} from "react-native";
-import { useNavigation, useFocusEffect } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../types";
-import { useTheme } from "@/app/hooks/themeContext";
-import TopBar from "@/app/components/TopBar";
-import Sessions from "@/app/components/session";
-import ConfirmDeleteModal from "@/app/components/ConfirmDeleteModal";
-import { useUser } from "@/app/hooks/userContext";
-import { getPersonnageImageURI } from "@/app/components/imageSession";
-import { useSession } from "@/app/hooks/sessionContext";
-import { Session } from "@/app/services/sessionFetch";
-import { ThemedStyles } from "@/app/utils/styles";
+import React, { useState, useEffect, useCallback } from 'react';
+
+import { View, Text, StyleSheet, ScrollView, Dimensions, Image } from 'react-native';
+
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+
+import ConfirmDeleteModal from '@/app/components/ConfirmDeleteModal';
+import { getPersonnageImageURI } from '@/app/components/imageSession';
+import Sessions from '@/app/components/session';
+import TopBar from '@/app/components/TopBar';
+import { useSession } from '@/app/hooks/sessionContext';
+import { useTheme } from '@/app/hooks/themeContext';
+import { useUser } from '@/app/hooks/userContext';
+import { Session } from '@/app/services/sessionFetch';
+import { ThemedStyles } from '@/app/utils/styles';
+
+import { RootStackParamList } from '../../types';
 
 type AccueilApresConnexionScreenProp = StackNavigationProp<
   RootStackParamList,
-  "AccueilApresConnexion"
+  'AccueilApresConnexion'
 >;
 
 const AccueilApresConnexion: React.FC = () => {
@@ -48,29 +45,29 @@ const AccueilApresConnexion: React.FC = () => {
   useFocusEffect(
     useCallback(() => {
       if (navigation.isFocused()) {
-        refreshSessions().catch((err) => {
-          setError("Erreur lors de la récupération des données");
+        refreshSessions().catch(err => {
+          setError('Erreur lors de la récupération des données');
           console.error(err);
         });
       }
-    }, [navigation, refreshSessions])
+    }, [navigation, refreshSessions]),
   );
 
   const addSession = () => {
-    navigation.navigate("CreerSessionPrenom");
+    navigation.navigate('CreerSessionPrenom');
   };
 
   const BoutonSession = (session: Session) => {
-    navigation.navigate("Histoire", {
+    navigation.navigate('Histoire', {
       histoire: session.personnageRef.histoire,
       personnageNom: session.personnageRef.nom,
       sessionPrenom: session.prenom,
-      sessionId: session._id
+      sessionId: session._id,
     });
   };
 
   const menuUtilisateur = () => {
-    navigation.navigate("MenuUtilisateur");
+    navigation.navigate('MenuUtilisateur');
   };
   const handleCancel = () => {
     setEditMode(false);
@@ -100,7 +97,7 @@ const AccueilApresConnexion: React.FC = () => {
         await removeSession(sessionToDelete._id);
         setEditMode(false);
       } catch (err) {
-        console.error("Failed to delete session:", err);
+        console.error('Failed to delete session:', err);
       } finally {
         setModalVisible(false);
       }
@@ -115,46 +112,40 @@ const AccueilApresConnexion: React.FC = () => {
         <View style={styles.imageContainer}>
           <Image
             style={styles.backgroundImage}
-            source={require("@/app/assets/images/loader.gif")}
+            source={require('@/app/assets/images/loader.gif')}
           />
         </View>
       ) : (
         <>
           <TopBar
             titre="Bienvenue"
-            prenom={utilisateur?.prenom || ""}
-            iconeZeroNom={editMode ? null : "brush-outline"}
+            prenom={utilisateur?.prenom || ''}
+            iconeZeroNom={editMode ? null : 'brush-outline'}
             iconeZeroAction={editMode ? undefined : toggleEditMode}
-            iconeDroiteNom={editMode ? "close-outline" : "planet-outline"}
+            iconeDroiteNom={editMode ? 'close-outline' : 'planet-outline'}
             iconeDroiteAction={editMode ? toggleEditMode : menuUtilisateur}
-            iconeGaucheNom={editMode ? null : "add-outline"}
+            iconeGaucheNom={editMode ? null : 'add-outline'}
             iconeGaucheAction={editMode ? undefined : addSession}
           />
 
           <ScrollView contentContainerStyle={styleTheme.scrollViewContent}>
             {sessions && sessions.length === 0 ? (
-              <Text style={styleTheme.text}>
-                Pour commencer, ajoutez une session
-              </Text>
+              <Text style={styleTheme.text}>Pour commencer, ajoutez une session</Text>
             ) : (
               <View style={styles.gridContainer}>
                 {organizedSessions.map((column, columnIndex) => (
                   <View key={columnIndex} style={styles.column}>
-                    {column.map((session) => (
+                    {column.map(session => (
                       <View key={session._id} style={styles.sessionWrapper}>
                         <Sessions
                           prenom={session.prenom}
                           planeteNom={session.planeteRef.nom}
                           personnageNom={session.personnageRef.nom}
-                          imageSource={getPersonnageImageURI(
-                            session.personnageRef.nom
-                          )}
+                          imageSource={getPersonnageImageURI(session.personnageRef.nom)}
                           onPress={
-                            editMode
-                              ? () => openDialog(session)
-                              : () => BoutonSession(session)
+                            editMode ? () => openDialog(session) : () => BoutonSession(session)
                           }
-                          icon={editMode ? "trash-outline" : "play-outline"}
+                          icon={editMode ? 'trash-outline' : 'play-outline'}
                         />
                       </View>
                     ))}
@@ -167,7 +158,7 @@ const AccueilApresConnexion: React.FC = () => {
           <ConfirmDeleteModal
             onConfirm={handleDelete}
             onCancel={handleCancel}
-            sessionName={sessionToDelete?.prenom || ""}
+            sessionName={sessionToDelete?.prenom || ''}
             visible={modalVisible}
             onRequestClose={() => setModalVisible(false)}
           />
@@ -176,30 +167,30 @@ const AccueilApresConnexion: React.FC = () => {
     </View>
   );
 };
-const { height: screenHeight } = Dimensions.get("window");
+const { height: screenHeight } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   imageContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   backgroundImage: {
-    resizeMode: "contain",
+    resizeMode: 'contain',
     width: screenHeight * 0.5,
     height: screenHeight * 0.5,
   },
   gridContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   column: {
-    flexDirection: "column",
-    width: "30%",
+    flexDirection: 'column',
+    width: '30%',
   },
   sessionWrapper: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginBottom: 10,
   },
 });

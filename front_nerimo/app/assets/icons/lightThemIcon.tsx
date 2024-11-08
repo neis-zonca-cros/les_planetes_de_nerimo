@@ -1,14 +1,11 @@
-import * as React from "react";
-import Svg, { G, Path, Defs } from "react-native-svg";
-import { IconProps } from "./iconProps";
+import * as React from 'react';
+
+import Svg, { G, Path, Defs } from 'react-native-svg';
+
+import { IconProps } from './iconProps';
 
 const LightThemeIcon: React.FC<IconProps> = ({ width, background }) => (
-  <Svg
-    width={width}
-    height={width * (264 / 264)}
-    fill={background}
-    viewBox="0 0 264 264"
-  >
+  <Svg width={width} height={width * (264 / 264)} fill={background} viewBox="0 0 264 264">
     <G filter="url(#filter0_d_149_1103)">
       <G filter="url(#filter1_d_149_1103)">
         <Path

@@ -1,22 +1,23 @@
 import React, { useEffect } from 'react';
+
 import { NavigationContainer } from '@react-navigation/native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
-import { ThemeProvider } from '@/app/hooks/themeContext';
-import { UserProvider, useUser } from './hooks/userContext';
-import PublicStack from "./navigation/publickStack"
-import PrivateStack from './navigation/privateStack'; 
+import { useFonts } from 'expo-font';
 import * as ScreenOrientation from 'expo-screen-orientation';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { ThemeProvider } from '@/app/hooks/themeContext';
 
+import { UserProvider, useUser } from './hooks/userContext';
+import PrivateStack from './navigation/privateStack';
+import PublicStack from './navigation/publickStack';
 
 const AppNavigator: React.FC = () => {
-  const { utilisateur } = useUser(); 
+  const { utilisateur } = useUser();
   useEffect(() => {
     const lockOrientation = async () => {
-      await ScreenOrientation.unlockAsync(); 
-      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE); 
+      await ScreenOrientation.unlockAsync();
+      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
     };
 
     lockOrientation();
@@ -36,9 +37,9 @@ const Index: React.FC = () => {
   return (
     <SafeAreaProvider>
       <ThemeProvider>
-        <NavigationContainer independent={true} >
-          <UserProvider> 
-            <AppNavigator /> 
+        <NavigationContainer independent={true}>
+          <UserProvider>
+            <AppNavigator />
           </UserProvider>
         </NavigationContainer>
       </ThemeProvider>

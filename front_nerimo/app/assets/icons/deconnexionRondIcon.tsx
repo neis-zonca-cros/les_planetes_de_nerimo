@@ -1,18 +1,11 @@
-import * as React from "react";
-import Svg, { G, Circle, Path, Defs } from "react-native-svg";
-import { IconProps } from "./iconProps";
+import * as React from 'react';
 
-const DeconnexionRondIcon: React.FC<IconProps> = ({
-  width,
-  fill,
-  background,
-}) => (
-  <Svg
-    width={width}
-    height={width * (264 / 264)}
-    viewBox="0 0 264 264"
-    fill={background}
-  >
+import Svg, { G, Circle, Path, Defs } from 'react-native-svg';
+
+import { IconProps } from './iconProps';
+
+const DeconnexionRondIcon: React.FC<IconProps> = ({ width, fill, background }) => (
+  <Svg width={width} height={width * (264 / 264)} viewBox="0 0 264 264" fill={background}>
     <G filter="url(#filter0_d_197_2394)">
       <G filter="url(#filter1_d_197_2394)">
         <Circle cx={132} cy={128} r={126} stroke={fill} strokeWidth={4} />

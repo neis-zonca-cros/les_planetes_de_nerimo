@@ -1,7 +1,9 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+
 import { getUtilisateur } from '@/app/services/utilisateurFetch'; // Importez ce service seulement si nécessaire
-import { logout } from '../services/deconnexion';
+
 import login from '../services/connexionFetch';
+import { logout } from '../services/deconnexion';
 
 interface User {
   _id: string;
@@ -34,8 +36,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       const userData = await getUtilisateur();
       setUser(userData);
     } catch (error) {
-      console.error("Erreur lors de la récupération des données utilisateur:", error);
-      setError("Erreur lors de la récupération des données utilisateur.");
+      console.error('Erreur lors de la récupération des données utilisateur:', error);
+      setError('Erreur lors de la récupération des données utilisateur.');
     } finally {
       setIsLoading(false);
     }
@@ -58,8 +60,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       await login(email, mdp);
       await fetchUser();
     } catch (error) {
-      console.error("Erreur lors de la connexion:", error);
-      setError("Erreur lors de la connexion.");
+      console.error('Erreur lors de la connexion:', error);
+      setError('Erreur lors de la connexion.');
       throw error;
     } finally {
       setIsLoading(false);
@@ -73,13 +75,24 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       resetUser();
     } catch (error) {
       console.error('Erreur lors de la déconnexion:', error);
-      setError("Erreur lors de la déconnexion.");
+      setError('Erreur lors de la déconnexion.');
       throw error;
     }
   };
 
   return (
-    <UserContext.Provider value={{ utilisateur, isLoading, error, setUser, refreshUser, resetUser, connexion: loginHandler, deconnexion: logoutHandler }}>
+    <UserContext.Provider
+      value={{
+        utilisateur,
+        isLoading,
+        error,
+        setUser,
+        refreshUser,
+        resetUser,
+        connexion: loginHandler,
+        deconnexion: logoutHandler,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

@@ -1,7 +1,7 @@
+import { Story } from 'inkjs';
 
-import { Story } from 'inkjs'; 
-import { normalizeKey } from '../utils/normalizeKey';
 import { getSession } from './sessionFetch';
+import { normalizeKey } from '../utils/normalizeKey';
 import { createAndConfigureStory, handleBackgroundTags } from '../utils/storyUtils';
 
 export const fetchAndLoadStory = async (
@@ -13,13 +13,13 @@ export const fetchAndLoadStory = async (
   setStory: (story: Story) => void,
   setCurrentText: (text: string) => void,
   setBackgroundImage: (image: string | null) => void,
-  continueStory: (story: Story, savedText?: string) => void
+  continueStory: (story: Story, savedText?: string) => void,
 ) => {
   try {
     if (sessionId) {
       const sessionData = await getSession(sessionId);
       const sauvegarde = sessionData?.choixSauvegarde;
-      const savedText = sessionData?.texteSauvegarde || "";
+      const savedText = sessionData?.texteSauvegarde || '';
 
       const inkStory = createAndConfigureStory(histoire, sessionPrenom, sauvegarde);
       setStory(inkStory);
@@ -39,7 +39,6 @@ export const fetchAndLoadStory = async (
           const images = backgroundImages[normalizedPersonnageNom];
           setBackgroundImage(images[normalizeKey(newBackgroundImage)] || null);
         }
-
       } else {
         continueStory(inkStory);
       }

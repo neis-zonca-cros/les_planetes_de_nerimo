@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { Ionicons } from '@expo/vector-icons';
+
 import { View, Text, TouchableOpacity, StyleSheet, Switch, Dimensions } from 'react-native';
+
+import { Ionicons } from '@expo/vector-icons';
+
 import { useTheme } from '../hooks/themeContext';
 import { ThemedStyles } from '../utils/styles';
 
@@ -12,11 +15,17 @@ type ProfilItemsProps = {
   onPress?: () => void;
 };
 
-const ProfilItems: React.FC<ProfilItemsProps> = ({ text, iconName, isSwitch, onSwitchToggle, onPress }) => {
+const ProfilItems: React.FC<ProfilItemsProps> = ({
+  text,
+  iconName,
+  isSwitch,
+  onSwitchToggle,
+  onPress,
+}) => {
   const { theme } = useTheme();
   const [switchValue, setSwitchValue] = useState(false);
   const styleTheme = ThemedStyles(theme);
-  const screenHeight = Dimensions.get("window").height;
+  const screenHeight = Dimensions.get('window').height;
   const maxSize = 40;
   const iconSize = Math.min(screenHeight * 0.07, maxSize);
 
@@ -39,17 +48,28 @@ const ProfilItems: React.FC<ProfilItemsProps> = ({ text, iconName, isSwitch, onS
       onPress={isSwitch ? toggleSwitch : handlePress}
       style={{ pointerEvents: 'auto', zIndex: 1 }}
     >
-      <View style={[styleTheme.rectangleForm, theme.colors.effectShadow, styles.containerProfilItems]}>
+      <View
+        style={[styleTheme.rectangleForm, theme.colors.effectShadow, styles.containerProfilItems]}
+      >
         <Text style={[styleTheme.text]}>{text}</Text>
         {isSwitch ? (
           <Switch
             value={switchValue}
             onValueChange={toggleSwitch}
-            trackColor={{ false: theme.colors.switchTrackFalse, true: theme.colors.switchTrackTrue }}
+            trackColor={{
+              false: theme.colors.switchTrackFalse,
+              true: theme.colors.switchTrackTrue,
+            }}
             thumbColor={switchValue ? theme.colors.switchThumbTrue : theme.colors.switchThumbFalse}
           />
         ) : (
-          iconName && <Ionicons name={iconName} size={iconSize} style={[styleTheme.icon, { paddingLeft: 20 }]} />
+          iconName && (
+            <Ionicons
+              name={iconName}
+              size={iconSize}
+              style={[styleTheme.icon, { paddingLeft: 20 }]}
+            />
+          )
         )}
       </View>
     </TouchableOpacity>
@@ -68,7 +88,7 @@ const styles = StyleSheet.create({
   },
   iconeProfilItems: {
     paddingHorizontal: 10,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

@@ -1,11 +1,11 @@
-import apiFetch from "./apiService";
-import { getCredentials } from "./credentials/getCredentials";
+import apiFetch from './apiService';
+import { getCredentials } from './credentials/getCredentials';
 
 export interface Session {
   _id: string;
   prenom: string;
-  choixSauvegarde?: string,
-  texteSauvegarde?: string,
+  choixSauvegarde?: string;
+  texteSauvegarde?: string;
   utilisateurRef: {
     _id: string;
     prenom: string;
@@ -43,11 +43,11 @@ export async function getSessions(): Promise<Session[]> {
   try {
     const { token } = await getCredentials();
     if (!token) {
-      throw new Error("Token non trouvé");
+      throw new Error('Token non trouvé');
     }
 
-    const response = await apiFetch<SessionsResponse>("session", {
-      method: "GET",
+    const response = await apiFetch<SessionsResponse>('session', {
+      method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -55,7 +55,7 @@ export async function getSessions(): Promise<Session[]> {
 
     return response.data;
   } catch (error) {
-    console.error("Erreur lors de la récupération des sessions:", error);
+    console.error('Erreur lors de la récupération des sessions:', error);
     throw error;
   }
 }
@@ -64,21 +64,21 @@ export async function deleteSession(sessionId: string): Promise<Session> {
   try {
     const { token } = await getCredentials();
     if (!token) {
-      throw new Error("Token non trouvé");
+      throw new Error('Token non trouvé');
     }
 
     const response = await apiFetch<DeleteSessionResponse>(`session/${sessionId}`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
     });
 
-    console.log("Réponse du backend après suppression de session :", response);
+    console.log('Réponse du backend après suppression de session :', response);
     return response.data;
   } catch (error) {
-    console.error("Erreur lors de la suppression de la session:", error);
+    console.error('Erreur lors de la suppression de la session:', error);
     throw error;
   }
 }
@@ -91,25 +91,28 @@ export async function updateSession(
   try {
     const { token } = await getCredentials();
     if (!token) {
-      throw new Error("Token non trouvé");
+      throw new Error('Token non trouvé');
     }
 
-    const body: UpdateSessionData = { choixSauvegarde: choixSauvegarde, texteSauvegarde: texteSauvegarde };
+    const body: UpdateSessionData = {
+      choixSauvegarde: choixSauvegarde,
+      texteSauvegarde: texteSauvegarde,
+    };
 
     const response = await apiFetch<UpdateSessionResponse>(`session/${sessionId}`, {
-      method: "PUT",
+      method: 'PUT',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
       body,
     });
 
-    console.log("Réponse du backend après mise à jour de la session :", response);
+    console.log('Réponse du backend après mise à jour de la session :', response);
 
     return response.data;
   } catch (error) {
-    console.error("Erreur lors de la mise à jour de la session :", error);
+    console.error('Erreur lors de la mise à jour de la session :', error);
     throw error;
   }
 }
@@ -118,11 +121,11 @@ export async function getSession(sessionId: string): Promise<Session> {
   try {
     const { token } = await getCredentials();
     if (!token) {
-      throw new Error("Token non trouvé");
+      throw new Error('Token non trouvé');
     }
 
     const response = await apiFetch<{ data: Session }>(`session/${sessionId}`, {
-      method: "GET",
+      method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -130,7 +133,7 @@ export async function getSession(sessionId: string): Promise<Session> {
 
     return response.data;
   } catch (error) {
-    console.error("Erreur lors de la récupération de la session:", error);
+    console.error('Erreur lors de la récupération de la session:', error);
     throw error;
   }
 }

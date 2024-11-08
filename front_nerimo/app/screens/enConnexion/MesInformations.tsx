@@ -1,16 +1,19 @@
-import React from "react";
-import { View } from "react-native";
-import { useTheme } from "@/app/hooks/themeContext";
-import TopBar from "@/app/components/TopBar";
-import { useUser } from "../../hooks/userContext";
-import useGoBack from "@/app/navigation/useGoBack";
-import { ThemedStyles } from "@/app/utils/styles";
-import { RootStackParamList } from "@/app/types";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { useNavigation } from "@react-navigation/native";
+import React from 'react';
 
+import { View } from 'react-native';
 
-type MesInformationsScreen = StackNavigationProp<RootStackParamList, "MesInformations">;
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+
+import TopBar from '@/app/components/TopBar';
+import { useTheme } from '@/app/hooks/themeContext';
+import useGoBack from '@/app/navigation/useGoBack';
+import { RootStackParamList } from '@/app/types';
+import { ThemedStyles } from '@/app/utils/styles';
+
+import { useUser } from '../../hooks/userContext';
+
+type MesInformationsScreen = StackNavigationProp<RootStackParamList, 'MesInformations'>;
 
 const MesInformations: React.FC = () => {
   const navigation = useNavigation<MesInformationsScreen>();
@@ -18,16 +21,16 @@ const MesInformations: React.FC = () => {
   const { utilisateur } = useUser();
   const goBack = useGoBack();
   const styleTheme = ThemedStyles(theme);
-  
+
   return (
     <View style={styleTheme.container}>
-      <TopBar titre="Informations de" prenom={utilisateur?.prenom} iconeDroiteAction={goBack} iconeDroiteNom={"close-outline"} />
-  
+      <TopBar
+        titre="Informations de"
+        prenom={utilisateur?.prenom}
+        iconeDroiteAction={goBack}
+        iconeDroiteNom={'close-outline'}
+      />
     </View>
   );
 };
 export default MesInformations;
-
-
-
-

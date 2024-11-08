@@ -1,10 +1,14 @@
-import { darkTheme } from "@/app/themes/dark";
-import { useTheme } from "@/app/hooks/themeContext";
-import { Ionicons } from "@expo/vector-icons";
-import React from "react";
-import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { ThemedStyles } from "../utils/styles";
+import React from 'react';
+
+import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
+
+import { Ionicons } from '@expo/vector-icons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
+import { useTheme } from '@/app/hooks/themeContext';
+import { darkTheme } from '@/app/themes/dark';
+
+import { ThemedStyles } from '../utils/styles';
 
 interface SessionProps {
   prenom: string;
@@ -21,22 +25,27 @@ const SessionComposant: React.FC<SessionProps> = ({
   prenom,
   planeteNom,
   personnageNom,
-  textePlanet = "est sur ",
-  textePersonnage = "avec ",
+  textePlanet = 'est sur ',
+  textePersonnage = 'avec ',
   imageSource,
   onPress,
-  icon = "play-outline",
+  icon = 'play-outline',
 }) => {
   const { theme } = useTheme();
-  const { height: screenHeight } = Dimensions.get("window");
+  const { height: screenHeight } = Dimensions.get('window');
   const styleTheme = ThemedStyles(theme);
 
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.sessionCard, theme.colors.effectShadow, { borderColor: theme.colors.background, backgroundColor: theme.colors.background }]}>
-      <View style={{ flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-        {imageSource && (
-          <Image source={imageSource} style={styles.roundImage} />
-        )}
+    <TouchableOpacity
+      onPress={onPress}
+      style={[
+        styles.sessionCard,
+        theme.colors.effectShadow,
+        { borderColor: theme.colors.background, backgroundColor: theme.colors.background },
+      ]}
+    >
+      <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        {imageSource && <Image source={imageSource} style={styles.roundImage} />}
         <View style={styles.sessionContainer}>
           <Text style={styleTheme.text}>{prenom}</Text>
           <Text style={styleTheme.text}>
@@ -50,9 +59,9 @@ const SessionComposant: React.FC<SessionProps> = ({
         </View>
         <Ionicons
           name={icon}
-          size={screenHeight * 0.060}
+          size={screenHeight * 0.06}
           color={theme.colors.text}
-          style={{ alignItems: "center", justifyContent: "center", paddingBottom: 5 }}
+          style={{ alignItems: 'center', justifyContent: 'center', paddingBottom: 5 }}
         />
       </View>
     </TouchableOpacity>
@@ -61,20 +70,20 @@ const SessionComposant: React.FC<SessionProps> = ({
 
 export default SessionComposant;
 
-const { height: screenHeight, width: screenWidth } = Dimensions.get("window");
+const { height: screenHeight, width: screenWidth } = Dimensions.get('window');
 const styles = StyleSheet.create({
   roundImage: {
-    height: screenHeight * 0.10,
-    width: screenWidth * 0.10,
-    resizeMode: "contain",
+    height: screenHeight * 0.1,
+    width: screenWidth * 0.1,
+    resizeMode: 'contain',
     marginHorizontal: 10,
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: 10,
   },
   sessionContainer: {
-    flexDirection: "column",
-    textAlign: "center",
+    flexDirection: 'column',
+    textAlign: 'center',
     paddingVertical: 5,
   },
   sessionCard: {

@@ -1,6 +1,9 @@
 import * as SecureStore from 'expo-secure-store';
 
-export const getCredentials = async (): Promise<{ token: string | null, utilisateurId: string | null }> => {
+export const getCredentials = async (): Promise<{
+  token: string | null;
+  utilisateurId: string | null;
+}> => {
   try {
     const token = await SecureStore.getItemAsync('token');
     const utilisateurId = await SecureStore.getItemAsync('utilisateurId');

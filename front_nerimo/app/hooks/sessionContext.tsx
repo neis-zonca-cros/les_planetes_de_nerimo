@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { getSessions, deleteSession, Session } from '@/app/services/sessionFetch';
-import { createSession, CreateSessionData } from '@/app/services/creerSessionFetch';
 
+import { createSession, CreateSessionData } from '@/app/services/creerSessionFetch';
+import { getSessions, deleteSession, Session } from '@/app/services/sessionFetch';
 
 interface SessionContextType {
   sessions: Session[] | null;
@@ -24,7 +24,7 @@ export const SessionProvider: React.FC<{ children: ReactNode }> = ({ children })
       const sessionData = await getSessions();
       setSessions(sessionData);
     } catch (error) {
-      console.error("Erreur lors de la récupération des sessions:", error);
+      console.error('Erreur lors de la récupération des sessions:', error);
     }
   };
 
@@ -43,32 +43,33 @@ export const SessionProvider: React.FC<{ children: ReactNode }> = ({ children })
       setCurrentSession(null);
       return createdSession;
     } catch (error) {
-      console.error("Erreur lors de la création de la session:", error);
+      console.error('Erreur lors de la création de la session:', error);
       throw error;
     }
   };
-
 
   const removeSession = async (sessionId: string) => {
     try {
       await deleteSession(sessionId);
       await fetchSessions();
     } catch (error) {
-      console.error("Erreur lors de la suppression de la session:", error);
+      console.error('Erreur lors de la suppression de la session:', error);
       throw error;
     }
   };
 
   return (
-    <SessionContext.Provider value={{
-      sessions,
-      setSessions,
-      refreshSessions,
-      createNewSession,
-      removeSession,
-      currentSession,
-      setCurrentSession
-    }}>
+    <SessionContext.Provider
+      value={{
+        sessions,
+        setSessions,
+        refreshSessions,
+        createNewSession,
+        removeSession,
+        currentSession,
+        setCurrentSession,
+      }}
+    >
       {children}
     </SessionContext.Provider>
   );

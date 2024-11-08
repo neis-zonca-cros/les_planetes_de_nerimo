@@ -1,11 +1,15 @@
-import React from "react";
-import { View, Text } from "react-native";
-import Modal from "react-native-modal";
-import { ThemedStyles } from "@/app/utils/styles";
-import { useTheme } from "@/app/hooks/themeContext";
-import CloseButton from "./CloseButton";
-import ReplayOrExit from "./ReplayOrExit";
-import ChoiceButton from "./ChoiceButton";
+import React from 'react';
+
+import { View, Text } from 'react-native';
+
+import Modal from 'react-native-modal';
+
+import { useTheme } from '@/app/hooks/themeContext';
+import { ThemedStyles } from '@/app/utils/styles';
+
+import ChoiceButton from './ChoiceButton';
+import CloseButton from './CloseButton';
+import ReplayOrExit from './ReplayOrExit';
 
 interface StoryModalProps {
   visible: boolean;
@@ -34,31 +38,17 @@ const StoryModal: React.FC<StoryModalProps> = ({
   const styleTheme = ThemedStyles(theme);
 
   return (
-    <Modal
-      isVisible={visible}
-      onBackdropPress={onClose}
-      animationIn="slideInUp"
-    >
+    <Modal isVisible={visible} onBackdropPress={onClose} animationIn="slideInUp">
       <View style={styleTheme.modalContainer}>
-        <View
-          style={[
-            styleTheme.modalContent,
-            { backgroundColor: theme.colors.background },
-          ]}
-        >
-          <Text style={[styleTheme.text, { lineHeight: 25 }]}>
-            {currentText}
-          </Text>
+        <View style={[styleTheme.modalContent, { backgroundColor: theme.colors.background }]}>
+          <Text style={[styleTheme.text, { lineHeight: 25 }]}>{currentText}</Text>
           <View style={styleTheme.choixHistoire}>
             {storyEnded ? (
-              <ReplayOrExit
-                onExit={handleDeleteSession}
-                onReplay={handleReplay}
-              />
+              <ReplayOrExit onExit={handleDeleteSession} onReplay={handleReplay} />
             ) : (
               choices.map((choice, index) => (
                 <ChoiceButton
-                  key={choice.id || index} 
+                  key={choice.id || index}
                   text={choice.text}
                   onPress={() => handleChoice(index)}
                 />

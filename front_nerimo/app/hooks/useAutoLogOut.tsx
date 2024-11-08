@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
+
 import { AppState, Alert, Keyboard, AppStateStatus } from 'react-native';
+
 import { useUser } from './userContext';
 
 const AUTO_LOGOUT_DELAY = 2 * 60 * 1000;
@@ -27,7 +29,10 @@ export const useAutoLogout = () => {
     const handleLogout = async () => {
       try {
         await deconnexion();
-        Alert.alert('Déconnexion', 'Vous avez été déconnecté en raison d\'une longue période d\'inactivité.');
+        Alert.alert(
+          'Déconnexion',
+          "Vous avez été déconnecté en raison d'une longue période d'inactivité.",
+        );
       } catch (error) {
         console.error('Erreur lors de la déconnexion automatique:', error);
       }
@@ -58,5 +63,3 @@ export const useAutoLogout = () => {
 
   return null;
 };
-
-

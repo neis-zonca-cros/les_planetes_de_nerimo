@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+
 import { TextInput, View, TouchableOpacity, Dimensions } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; 
+
+import { Ionicons } from '@expo/vector-icons';
 
 const PasswordInput = ({ styleTheme, theme, handleChange, handleBlur, values }: any) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const maxSize = 40;
-  const screenHeight = Dimensions.get("window").height;
+  const screenHeight = Dimensions.get('window').height;
   const iconSize = Math.min(screenHeight * 0.06, maxSize);
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
@@ -20,10 +22,13 @@ const PasswordInput = ({ styleTheme, theme, handleChange, handleBlur, values }: 
         onChangeText={handleChange('mdp')}
         onBlur={handleBlur('mdp')}
         value={values.mdp}
-        secureTextEntry={!isPasswordVisible} 
+        secureTextEntry={!isPasswordVisible}
       />
-      <TouchableOpacity onPress={togglePasswordVisibility} style={{position: 'absolute', right: 10 }}>
-        <Ionicons 
+      <TouchableOpacity
+        onPress={togglePasswordVisibility}
+        style={{ position: 'absolute', right: 10 }}
+      >
+        <Ionicons
           name={isPasswordVisible ? 'eye-off' : 'eye'}
           size={iconSize}
           color={theme.colors.neutralButton}

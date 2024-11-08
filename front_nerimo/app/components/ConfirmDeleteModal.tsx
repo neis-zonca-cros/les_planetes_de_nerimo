@@ -1,17 +1,14 @@
-import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Dimensions
-} from "react-native";
-import { OuiIcon } from "@/app/assets/icons/ouiIcon";
-import { NonIcon } from "@/app/assets/icons/nonIcon";
-import { ThemedStyles } from "../utils/styles";
-import { useTheme } from "../hooks/themeContext";
-import Modal from "react-native-modal";
+import React from 'react';
 
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+
+import Modal from 'react-native-modal';
+
+import { NonIcon } from '@/app/assets/icons/nonIcon';
+import { OuiIcon } from '@/app/assets/icons/ouiIcon';
+
+import { useTheme } from '../hooks/themeContext';
+import { ThemedStyles } from '../utils/styles';
 
 interface ConfirmationModalProps {
   onConfirm: () => void;
@@ -29,7 +26,7 @@ const ConfirmDeleteModal: React.FC<ConfirmationModalProps> = ({
   onRequestClose,
 }) => {
   const { theme } = useTheme();
-  const screenWidth = Dimensions.get("window").width;
+  const screenWidth = Dimensions.get('window').width;
   const styleTheme = ThemedStyles(theme);
 
   return (
@@ -44,15 +41,8 @@ const ConfirmDeleteModal: React.FC<ConfirmationModalProps> = ({
       backdropOpacity={0}
     >
       <TouchableOpacity style={styles.overlay} onPress={onRequestClose}>
-        <View
-          style={[
-            styles.containerModal,
-            { backgroundColor: theme.colors.background },
-          ]}
-        >
-          <Text style={styleTheme.text}>
-            Supprimer la session de {sessionName} ?
-          </Text>
+        <View style={[styles.containerModal, { backgroundColor: theme.colors.background }]}>
+          <Text style={styleTheme.text}>Supprimer la session de {sessionName} ?</Text>
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={onCancel}>
               <NonIcon
@@ -79,15 +69,15 @@ const styles = StyleSheet.create({
   containerModal: {
     width: '100%',
     paddingTop: 20,
-    alignItems: "center",
+    alignItems: 'center',
   },
   buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    width: "50%",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '50%',
   },
   button: {
-    alignItems: "center",
+    alignItems: 'center',
     padding: 15,
   },
   overlay: {

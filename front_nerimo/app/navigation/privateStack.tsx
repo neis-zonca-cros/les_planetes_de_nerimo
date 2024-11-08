@@ -1,24 +1,26 @@
-import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
-import AccueilApresConnexion from "@/app/screens/enConnexion/AccueilApresConnexion";
-import MenuUtilisateur from "@/app/screens/enConnexion/MenuUtilisateur";
-import CreerSessionPrenom from "@/app/screens/enConnexion/creerSession/CreerSessionPrenom";
-import ChoisirPlanete from "@/app/screens/enConnexion/creerSession/ChoisirPlanete";
-import ChoisirPersonnage from "@/app/screens/enConnexion/creerSession/ChoisirPersonnage";
-import MonProfil from "../screens/enConnexion/MonProfil";
-import { useAutoLogout } from "../hooks/useAutoLogOut";
-import { SessionProvider } from "../hooks/sessionContext";
-import Histoire from "@/app/screens/enConnexion/Histoire";
-import MesInformations from "../screens/enConnexion/MesInformations";
+import React from 'react';
+
+import { createStackNavigator } from '@react-navigation/stack';
+
+import AccueilApresConnexion from '@/app/screens/enConnexion/AccueilApresConnexion';
+import ChoisirPersonnage from '@/app/screens/enConnexion/creerSession/ChoisirPersonnage';
+import ChoisirPlanete from '@/app/screens/enConnexion/creerSession/ChoisirPlanete';
+import CreerSessionPrenom from '@/app/screens/enConnexion/creerSession/CreerSessionPrenom';
+import Histoire from '@/app/screens/enConnexion/Histoire';
+import MenuUtilisateur from '@/app/screens/enConnexion/MenuUtilisateur';
+
+import { SessionProvider } from '../hooks/sessionContext';
+import { useAutoLogout } from '../hooks/useAutoLogOut';
+import MesInformations from '../screens/enConnexion/MesInformations';
+import MonProfil from '../screens/enConnexion/MonProfil';
 
 const Stack = createStackNavigator();
 
 const PrivateStack: React.FC = () => {
   useAutoLogout();
   return (
-  <SessionProvider>
-    <Stack.Navigator initialRouteName="AccueilApresConnexion">
-      
+    <SessionProvider>
+      <Stack.Navigator initialRouteName="AccueilApresConnexion">
         <Stack.Screen
           name="AccueilApresConnexion"
           component={AccueilApresConnexion}
@@ -44,23 +46,14 @@ const PrivateStack: React.FC = () => {
           component={ChoisirPersonnage}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
-          name="MonProfil"
-          component={MonProfil}
-          options={{ headerShown: false }}
-        />
+        <Stack.Screen name="MonProfil" component={MonProfil} options={{ headerShown: false }} />
         <Stack.Screen
           name="MesInformations"
           component={MesInformations}
-          options={{headerShown : false}}    
-        />
-        <Stack.Screen
-          name="Histoire"
-          component={Histoire}
           options={{ headerShown: false }}
         />
-      
-    </Stack.Navigator>
+        <Stack.Screen name="Histoire" component={Histoire} options={{ headerShown: false }} />
+      </Stack.Navigator>
     </SessionProvider>
   );
 };

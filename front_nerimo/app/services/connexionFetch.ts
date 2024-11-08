@@ -1,5 +1,6 @@
-import apiFetch from "./apiService";
 import * as SecureStore from 'expo-secure-store';
+
+import apiFetch from './apiService';
 
 interface LoginResponse {
   token: string;
@@ -8,8 +9,8 @@ interface LoginResponse {
 
 async function login(email: string, mdp: string): Promise<string> {
   try {
-    const response = await apiFetch<LoginResponse>("utilisateur/connexion", {
-      method: "POST",
+    const response = await apiFetch<LoginResponse>('utilisateur/connexion', {
+      method: 'POST',
       body: { email, mdp },
     });
 
@@ -20,7 +21,7 @@ async function login(email: string, mdp: string): Promise<string> {
 
     return token;
   } catch (error) {
-    console.error("Login error:", error);
+    console.error('Login error:', error);
     throw error;
   }
 }

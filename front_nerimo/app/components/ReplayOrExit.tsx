@@ -1,7 +1,9 @@
-import React from "react";
-import { TouchableOpacity, Text } from "react-native";
-import { useTheme } from "@/app/hooks/themeContext";
-import { ThemedStyles } from "@/app/utils/styles";
+import React from 'react';
+
+import { TouchableOpacity, Text } from 'react-native';
+
+import { useTheme } from '@/app/hooks/themeContext';
+import { ThemedStyles } from '@/app/utils/styles';
 
 interface ReplayOrExitProps {
   onReplay: () => void;

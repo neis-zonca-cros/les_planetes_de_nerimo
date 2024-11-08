@@ -1,0 +1,18 @@
+# Ignorer le fichier package.json
+package.json
+package-lock.json
+
+# Ignorer le dossier node_modules
+node_modules/
+
+# Ignorer le dossier de distribution
+dist/
+
+# Ignorer les fichiers de log
+*.log
+
+# Ignorer tous les fichiers dans le dossier 'tests'
+tests/
+
+app.json
+README.md

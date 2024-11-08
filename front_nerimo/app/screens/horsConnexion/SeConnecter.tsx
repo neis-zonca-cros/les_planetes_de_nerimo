@@ -1,5 +1,5 @@
-
 import React from 'react';
+
 import {
   View,
   TextInput,
@@ -11,19 +11,21 @@ import {
   Alert,
   Dimensions,
 } from 'react-native';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
-import { RootStackParamList } from '@/app/types';
-import { StackNavigationProp } from '@react-navigation/stack';
+
 import { useNavigation } from '@react-navigation/native';
-import { useTheme } from '@/app/hooks/themeContext';
-import { ConnexionIcon } from '@/app/assets/icons/connexionIcon';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { Formik } from 'formik';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import * as Yup from 'yup';
+
+import { ConnexionIcon } from '@/app/assets/icons/connexionIcon';
 import TopBar from '@/app/components/TopBar';
-import useGoToCreerUnCompte from '@/app/navigation/useGoToCreerCompte';
+import { useTheme } from '@/app/hooks/themeContext';
 import { useUser } from '@/app/hooks/userContext';
-import { ThemedStyles } from '@/app/utils/styles';
+import useGoToCreerUnCompte from '@/app/navigation/useGoToCreerCompte';
+import { RootStackParamList } from '@/app/types';
 import PasswordInput from '@/app/utils/PasswordInput';
+import { ThemedStyles } from '@/app/utils/styles';
 
 type SeConnecterScreen = StackNavigationProp<RootStackParamList, 'SeConnecter'>;
 
@@ -74,26 +76,14 @@ const SeConnecter: React.FC = () => {
             validationSchema={loginValidationSchema}
             onSubmit={handleLogin}
           >
-            {({
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              values,
-              errors,
-              touched,
-            }) => (
+            {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
               <>
                 <View style={styles.inputContainer}>
-                  <View style={[
-                    styleTheme.rectangleForm,
-                    theme.colors.effectShadow,
-                  ]}>
+                  <View style={[styleTheme.rectangleForm, theme.colors.effectShadow]}>
                     <TextInput
                       style={styleTheme.text}
                       placeholder="Adresse mail"
-                      placeholderTextColor={
-                        theme.colors.text
-                      }
+                      placeholderTextColor={theme.colors.text}
                       onChangeText={handleChange('email')}
                       onBlur={handleBlur('email')}
                       value={values.email}
@@ -104,18 +94,14 @@ const SeConnecter: React.FC = () => {
                     <Text style={styleTheme.errorText}>{errors.email}</Text>
                   )}
 
-                  <View style={[
-                    styleTheme.rectangleForm,
-                    theme.colors.effectShadow,
-
-                  ]}>
-                  <PasswordInput 
-                    styleTheme={styleTheme}
-                    theme={theme}
-                    handleChange={handleChange}
-                    handleBlur={handleBlur}
-                    values={values}
-                  />
+                  <View style={[styleTheme.rectangleForm, theme.colors.effectShadow]}>
+                    <PasswordInput
+                      styleTheme={styleTheme}
+                      theme={theme}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                      values={values}
+                    />
                   </View>
                   {errors.mdp && touched.mdp && (
                     <Text style={styleTheme.errorText}>{errors.mdp}</Text>
@@ -123,17 +109,12 @@ const SeConnecter: React.FC = () => {
                 </View>
                 <View style={styles.marginBottomContainer}>
                   <View style={styles.buttonContainer}>
-                    <TouchableOpacity
-                      onPress={handleSubmit as any}
-                      style={styles.icon}
-                    >
+                    <TouchableOpacity onPress={handleSubmit as any} style={styles.icon}>
                       <View style={theme.colors.effectShadow}>
                         <ConnexionIcon
                           width={screenWidth * 0.22}
                           fill={theme.colors.primaryButton}
-                          background={
-                            theme.colors.background
-                          }
+                          background={theme.colors.background}
                         />
                       </View>
                     </TouchableOpacity>
@@ -158,19 +139,19 @@ const screenWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   marginBottomContainer: {
     marginBottom: 20,
   },
   buttonContainer: {
     paddingTop: 5,
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
   },
   icon: {
-    alignItems: "center",
+    alignItems: 'center',
     paddingTop: 10,
   },
   inputContainer: {
