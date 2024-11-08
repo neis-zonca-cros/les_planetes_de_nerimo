@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 import { Story } from 'inkjs';
 
 import { getSession } from './sessionFetch';
+import { BackgroundImageMap } from '../components/imageHistoire';
 import { normalizeKey } from '../utils/normalizeKey';
 import { createAndConfigureStory, handleBackgroundTags } from '../utils/storyUtils';
 
@@ -9,7 +11,7 @@ export const fetchAndLoadStory = async (
   sessionPrenom: string,
   sessionId: string | null,
   personnageNom: string,
-  backgroundImages: any,
+  backgroundImages: BackgroundImageMap,
   setStory: (story: Story) => void,
   setCurrentText: (text: string) => void,
   setBackgroundImage: (image: string | null) => void,

@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/commonjs/src/types';
 
 import { getPlaneteImageURI } from '@/app/components/imageSession';
 import TopBar from '@/app/components/TopBar';

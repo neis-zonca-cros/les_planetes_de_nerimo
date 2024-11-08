@@ -68,21 +68,30 @@ export async function creerUtilisateur(
     console.log("Réponse du backend après création de l'utilisateur :", response);
 
     return response.data;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Erreur lors de la création de l'utilisateur:", error);
 
-    if (error.message === "L'email est déjà utilisé" || error.statusCode === 400) {
-      Alert.alert(
-        'Création de compte impossible',
-        'Cet email est déjà utilisé. Veuillez essayer avec un autre email.',
-      );
-    } else {
-      if (error.message !== "L'email est déjà utilisé" && error.statusCode === 400) {
+    if (error instanceof Error && error.message) {
+      if (error.message === "L'email est déjà utilisé") {
+        Alert.alert(
+          'Création de compte impossible',
+          'Cet email est déjà utilisé. Veuillez essayer avec un autre email.',
+        );
+      } else {
         Alert.alert(
           'Erreur',
           "Une erreur s'est produite lors de la création du compte. Veuillez réessayer.",
         );
       }
+    } else if (error instanceof Response) {
+      if (error.status === 400) {
+        Alert.alert(
+          'Erreur',
+          "Une erreur s'est produite lors de la création du compte. Veuillez réessayer.",
+        );
+      }
+    } else {
+      Alert.alert('Erreur inconnue', 'Une erreur inattendue est survenue.');
     }
 
     throw error;
@@ -130,19 +139,30 @@ export async function updateUtilisateur(
     console.log("Réponse du backend après mise à jour de l'utilisateur :", response);
 
     return response.data;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Erreur lors de la mise à jour de l'utilisateur:", error);
 
-    if (error.message === 'Les mots de passe ne correspondent pas' || error.statusCode === 400) {
-      Alert.alert(
-        'Erreur de mise à jour',
-        "Les mots de passe ne correspondent pas ou d'autres erreurs se sont produites.",
-      );
+    if (error instanceof Error && error.message) {
+      if (error.message === 'Les mots de passe ne correspondent pas') {
+        Alert.alert(
+          'Erreur de mise à jour',
+          "Les mots de passe ne correspondent pas ou d'autres erreurs se sont produites.",
+        );
+      } else {
+        Alert.alert(
+          'Erreur',
+          "Une erreur s'est produite lors de la mise à jour des informations. Veuillez réessayer.",
+        );
+      }
+    } else if (error instanceof Response) {
+      if (error.status === 400) {
+        Alert.alert(
+          'Erreur',
+          "Une erreur s'est produite lors de la mise à jour des informations. Veuillez réessayer.",
+        );
+      }
     } else {
-      Alert.alert(
-        'Erreur',
-        "Une erreur s'est produite lors de la mise à jour des informations. Veuillez réessayer.",
-      );
+      Alert.alert('Erreur inconnue', 'Une erreur inattendue est survenue.');
     }
 
     throw error;

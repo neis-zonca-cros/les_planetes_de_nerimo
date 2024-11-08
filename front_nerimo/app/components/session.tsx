@@ -6,7 +6,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { useTheme } from '@/app/hooks/themeContext';
-import { darkTheme } from '@/app/themes/dark';
 
 import { ThemedStyles } from '../utils/styles';
 

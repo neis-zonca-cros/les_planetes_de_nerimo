@@ -22,11 +22,13 @@ const ChoiceButton: React.FC<ChoiceButtonProps> = ({ text, onPress }) => {
         {
           backgroundColor: theme.colors.background,
           borderColor: theme.colors.background,
+          justifyContent: 'center',
+          alignItems: 'center',
         },
       ]}
       onPress={onPress}
     >
-      <Text style={styleTheme.text}>{text}</Text>
+      <Text style={[styleTheme.text, { lineHeight: 20 }]}>{text}</Text>
     </TouchableOpacity>
   );
 };

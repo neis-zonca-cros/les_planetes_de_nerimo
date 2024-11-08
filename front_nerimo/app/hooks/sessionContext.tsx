@@ -7,7 +7,9 @@ interface SessionContextType {
   sessions: Session[] | null;
   setSessions: React.Dispatch<React.SetStateAction<Session[] | null>>;
   refreshSessions: () => Promise<void>;
+  // eslint-disable-next-line no-unused-vars
   createNewSession: (sessionData: CreateSessionData) => Promise<Session>;
+  // eslint-disable-next-line no-unused-vars
   removeSession: (sessionId: string) => Promise<void>;
   currentSession: Partial<CreateSessionData> | null;
   setCurrentSession: React.Dispatch<React.SetStateAction<Partial<CreateSessionData> | null>>;

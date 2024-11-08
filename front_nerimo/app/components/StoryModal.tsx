@@ -4,12 +4,11 @@ import { View, Text } from 'react-native';
 
 import Modal from 'react-native-modal';
 
+import ChoiceButton from '@/app/components/ChoiceButton';
+import CloseButton from '@/app/components/CloseButton';
+import ReplayOrExit from '@/app/components/ReplayOrExit';
 import { useTheme } from '@/app/hooks/themeContext';
 import { ThemedStyles } from '@/app/utils/styles';
-
-import ChoiceButton from './ChoiceButton';
-import CloseButton from './CloseButton';
-import ReplayOrExit from './ReplayOrExit';
 
 interface StoryModalProps {
   visible: boolean;
@@ -17,6 +16,7 @@ interface StoryModalProps {
   currentText: string;
   choices: any[];
   storyEnded: boolean;
+  // eslint-disable-next-line no-unused-vars
   handleChoice: (index: number) => void;
   handleDeleteSession: () => void;
   handleReplay: () => void;

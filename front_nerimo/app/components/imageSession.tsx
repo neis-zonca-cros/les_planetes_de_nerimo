@@ -1,4 +1,4 @@
-export const getPersonnageImageURI = (personnageNom: any) => {
+export const getPersonnageImageURI = (personnageNom: string) => {
   switch (personnageNom) {
     case 'Blouki':
       return require('@/app/assets/images/escargot.png');
@@ -14,7 +14,7 @@ export const getPersonnageImageURI = (personnageNom: any) => {
   }
 };
 
-export const getPlaneteImageURI = (planeteNom: any) => {
+export const getPlaneteImageURI = (planeteNom: string) => {
   switch (planeteNom) {
     case 'Lune':
       return require('@/app/assets/images/planete_nerimo.gif');

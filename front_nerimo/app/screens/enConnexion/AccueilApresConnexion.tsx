@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, Dimensions, Image } from 'react-native';
 
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/commonjs/src/types';
 
 import ConfirmDeleteModal from '@/app/components/ConfirmDeleteModal';
 import { getPersonnageImageURI } from '@/app/components/imageSession';
@@ -13,9 +13,8 @@ import { useSession } from '@/app/hooks/sessionContext';
 import { useTheme } from '@/app/hooks/themeContext';
 import { useUser } from '@/app/hooks/userContext';
 import { Session } from '@/app/services/sessionFetch';
+import { RootStackParamList } from '@/app/types';
 import { ThemedStyles } from '@/app/utils/styles';
-
-import { RootStackParamList } from '../../types';
 
 type AccueilApresConnexionScreenProp = StackNavigationProp<
   RootStackParamList,
@@ -29,7 +28,7 @@ const AccueilApresConnexion: React.FC = () => {
   const { utilisateur } = useUser();
   const { sessions, refreshSessions, removeSession } = useSession();
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [, setError] = useState<string | null>(null);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [sessionToDelete, setSessionToDelete] = useState<Session | null>(null);
   const [modalVisible, setModalVisible] = useState<boolean>(false);

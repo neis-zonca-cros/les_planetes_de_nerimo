@@ -1,6 +1,5 @@
-// hooks/useGoToConnect.ts
 import { useNavigation, useNavigationState } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/commonjs/src/types';
 
 import { RootStackParamList } from '@/app/types';
 

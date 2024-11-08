@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation, RouteProp, useRoute } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+// eslint-disable-next-line import/named
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/commonjs/src/types';
 import { Story } from 'inkjs';
-import Modal from 'react-native-modal';
 
 import { BackgroundContainer } from '@/app/components/BackgroundContainer';
 import { backgroundImages } from '@/app/components/imageHistoire';
@@ -104,7 +104,7 @@ const Histoire: React.FC = () => {
 
   const handleReplay = () => {
     if (story) {
-      story.ResetGlobals;
+      story.ResetGlobals();
       fetchAndLoadStory(
         histoire,
         sessionPrenom,

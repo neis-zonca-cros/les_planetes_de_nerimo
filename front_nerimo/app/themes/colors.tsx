@@ -1,5 +1,27 @@
 import { Platform } from 'react-native';
 
+export type Colors = {
+  background: string;
+  text: string;
+  errorText: string;
+  primaryButton: string;
+  secondaryButton: string;
+  neutralButton: string;
+  effectShadow: EffectShadowType;
+  switchTrackTrue: string;
+  switchTrackFalse: string;
+  switchThumbFalse: string;
+  switchThumbTrue: string;
+};
+
+type EffectShadowType = {
+  shadowColor?: string;
+  shadowOffset?: { width: number; height: number };
+  shadowOpacity?: number;
+  shadowRadius?: number;
+  elevation?: number;
+};
+
 export const lightColors = {
   background: '#FAE6BB',
   text: '#23363E',

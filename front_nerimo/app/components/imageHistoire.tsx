@@ -1,6 +1,6 @@
-type BackgroundImageMap = {
+export type BackgroundImageMap = {
   [key: string]: {
-    [key: string]: any;
+    [key: string]: string;
   };
 };
 /* eslint-disable @typescript-eslint/no-require-imports */

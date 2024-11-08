@@ -1,17 +1,10 @@
 import React from 'react';
 
-import {
-  View,
-  TouchableOpacity,
-  Dimensions,
-  Image,
-  StyleSheet,
-  ImageBackground,
-} from 'react-native';
+import { View, TouchableOpacity, Dimensions, Image, StyleSheet } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/commonjs/src/types';
 
 import TopBar from '@/app/components/TopBar';
 import { useTheme } from '@/app/hooks/themeContext';

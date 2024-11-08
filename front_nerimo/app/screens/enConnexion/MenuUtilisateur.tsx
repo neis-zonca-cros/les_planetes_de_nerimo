@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, StyleSheet, Dimensions } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/commonjs/src/types';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import { AProposIcon } from '@/app/assets/icons/aProposIcon';
@@ -12,11 +12,10 @@ import { ProfilRondIcon } from '@/app/assets/icons/profilRondIcon';
 import IconButton from '@/app/components/IconButton';
 import TopBar from '@/app/components/TopBar';
 import { useTheme } from '@/app/hooks/themeContext';
+import { useUser } from '@/app/hooks/userContext';
 import useGoBack from '@/app/navigation/useGoBack';
 import { RootStackParamList } from '@/app/types';
 import { ThemedStyles } from '@/app/utils/styles';
-
-import { useUser } from '../../hooks/userContext';
 
 type MenuUtilisateurScreen = StackNavigationProp<RootStackParamList, 'MenuUtilisateur'>;
 

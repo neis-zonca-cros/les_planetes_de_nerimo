@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/commonjs/src/types';
 import { Formik } from 'formik';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as Yup from 'yup';
@@ -134,8 +134,6 @@ const SeConnecter: React.FC = () => {
   );
 };
 
-const screenHeight = Dimensions.get('window').height;
-const screenWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

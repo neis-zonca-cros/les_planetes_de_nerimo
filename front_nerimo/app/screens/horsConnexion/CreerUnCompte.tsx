@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/commonjs/src/types';
 import { Formik } from 'formik';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as Yup from 'yup';
@@ -23,7 +23,6 @@ import { useTheme } from '@/app/hooks/themeContext';
 import { useUser } from '@/app/hooks/userContext';
 import useGoToConnect from '@/app/navigation/useGoToConnect';
 import { creerUtilisateur } from '@/app/services/utilisateurFetch';
-import { darkTheme } from '@/app/themes/dark';
 import { RootStackParamList } from '@/app/types';
 import { normalizeKey } from '@/app/utils/normalizeKey';
 import PasswordInput from '@/app/utils/PasswordInput';
@@ -59,7 +58,7 @@ const CreerUnCompte: React.FC = () => {
     confirmPassword: string;
   }) => {
     try {
-      const response = await creerUtilisateur({
+      await creerUtilisateur({
         prenom: values.firstName,
         email: normalizeKey(values.email),
         mdp: values.password,
@@ -184,8 +183,6 @@ const CreerUnCompte: React.FC = () => {
     </View>
   );
 };
-const screenHeight = Dimensions.get('window').height;
-const screenWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {

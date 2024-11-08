@@ -1,10 +1,10 @@
+/* eslint-disable react/prop-types */
 import { ImageBackground, StyleProp, View, ViewStyle } from 'react-native';
 
-import { useTheme } from '../hooks/themeContext';
-import { ThemedStyles } from '../utils/styles';
+import { BackgroundImageMap } from './imageHistoire';
 
 type BackgroundContainerProps = {
-  backgroundImage: any;
+  backgroundImage: BackgroundImageMap;
   style?: StyleProp<ViewStyle>;
   children: React.ReactNode;
 };
@@ -14,7 +14,6 @@ export const BackgroundContainer: React.FC<BackgroundContainerProps> = ({
   style,
   children,
 }) => {
-  const { theme } = useTheme();
   if (backgroundImage) {
     return (
       <ImageBackground source={backgroundImage} style={style} resizeMode="contain">

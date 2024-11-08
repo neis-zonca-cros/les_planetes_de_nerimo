@@ -1,9 +1,9 @@
+/* eslint-disable no-unused-vars */
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-import { getUtilisateur } from '@/app/services/utilisateurFetch'; // Importez ce service seulement si nécessaire
-
-import login from '../services/connexionFetch';
-import { logout } from '../services/deconnexion';
+import login from '@/app/services/connexionFetch';
+import { logout } from '@/app/services/deconnexion';
+import { getUtilisateur } from '@/app/services/utilisateurFetch';
 
 interface User {
   _id: string;
@@ -56,8 +56,10 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const loginHandler = async (email: string, mdp: string) => {
     setError(null);
     setIsLoading(true);
+    const mail = email;
+    const password = mdp;
     try {
-      await login(email, mdp);
+      await login(mail, password);
       await fetchUser();
     } catch (error) {
       console.error('Erreur lors de la connexion:', error);

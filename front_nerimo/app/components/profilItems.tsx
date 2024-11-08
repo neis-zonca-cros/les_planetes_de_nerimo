@@ -11,6 +11,7 @@ type ProfilItemsProps = {
   text: string;
   iconName?: keyof typeof Ionicons.glyphMap;
   isSwitch?: boolean;
+  // eslint-disable-next-line no-unused-vars
   onSwitchToggle?: (value: boolean) => void;
   onPress?: () => void;
 };

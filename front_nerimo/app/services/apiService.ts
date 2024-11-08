@@ -27,12 +27,29 @@ async function apiFetch<T>(endpoint: string, options: FetchOptions = {}): Promis
       const errorData = await response.json();
       const errorMessage = errorData.error || 'Network response was not ok';
       const error = new Error(errorMessage);
-      (error as any).statusCode = response.status;
+
+      // Ajout du statusCode à l'erreur après avoir confirmé qu'il s'agit d'une erreur valide
+      if (response.status) {
+        const errorWithStatusCode = error as { statusCode?: number }; // Conversion sécurisée
+        errorWithStatusCode.statusCode = response.status;
+      }
+
       throw error;
     }
     return await response.json();
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('API fetch error:', error);
+
+    if (error instanceof Error) {
+      const errorWithStatusCode = error as { statusCode?: number };
+      if (errorWithStatusCode.statusCode) {
+        console.error(`Status Code: ${errorWithStatusCode.statusCode}`);
+      }
+      console.error(error.message);
+    } else {
+      console.error('An unknown error occurred');
+    }
+
     throw error;
   }
 }

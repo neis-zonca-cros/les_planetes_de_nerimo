@@ -4,13 +4,12 @@ import { View, TextInput, TouchableOpacity, StyleSheet, Dimensions } from 'react
 
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/commonjs/src/types';
 
 import TopBar from '@/app/components/TopBar';
 import { useSession } from '@/app/hooks/sessionContext';
 import { useTheme } from '@/app/hooks/themeContext';
 import useGoBack from '@/app/navigation/useGoBack';
-import { darkTheme } from '@/app/themes/dark';
 import { RootStackParamList } from '@/app/types';
 import { ThemedStyles } from '@/app/utils/styles';
 
@@ -75,8 +74,6 @@ const CreerSessionPrenom: React.FC = () => {
     </View>
   );
 };
-const screenHeight = Dimensions.get('window').height;
-const screenWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   bottomIconsContainer: {
     position: 'absolute',
