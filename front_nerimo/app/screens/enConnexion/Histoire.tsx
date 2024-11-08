@@ -7,9 +7,9 @@ import {
   Dimensions,
 } from "react-native";
 import Modal from "react-native-modal";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { useNavigation, RouteProp, useRoute } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation, RouteProp, useRoute } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "@/app/types";
 import { useTheme } from "@/app/hooks/themeContext";
 import { Story } from "inkjs";
@@ -24,6 +24,7 @@ import {
 } from "@/app/utils/storyUtils";
 import { fetchAndLoadStory } from "@/app/services/storyService";
 import { useSession } from "@/app/hooks/sessionContext";
+import StoryModal from "@/app/components/StoryModal";
 
 type HistoireScreenProp = StackNavigationProp<RootStackParamList, "Histoire">;
 
@@ -44,20 +45,6 @@ const Histoire: React.FC = () => {
   const maxSize = 56;
   const iconSize = Math.min(screenHeight * 0.1, maxSize);
 
-  const handleContinueStory = (inkStory: Story, savedText?: string) => {
-    const isStoryEnded = continueStory(
-      inkStory,
-      personnageNom,
-      backgroundImages,
-      setCurrentText,
-      setChoices,
-      setBackgroundImage,
-      savedText
-    );
-    setStoryEnded(isStoryEnded);
-    return isStoryEnded;
-  };
-
   useEffect(() => {
     fetchAndLoadStory(
       histoire,
@@ -71,6 +58,20 @@ const Histoire: React.FC = () => {
       handleContinueStory
     );
   }, [histoire, sessionPrenom, sessionId]);
+
+  const handleContinueStory = (inkStory: Story, savedText?: string) => {
+    const isStoryEnded = continueStory(
+      inkStory,
+      personnageNom,
+      backgroundImages,
+      setCurrentText,
+      setChoices,
+      setBackgroundImage,
+      savedText
+    );
+    setStoryEnded(isStoryEnded);
+    return isStoryEnded;
+  };
 
   const handleChoice = (choiceIndex: number) => {
     makeChoice(
@@ -92,10 +93,7 @@ const Histoire: React.FC = () => {
           console.error("ID de la session manquant.");
         }
       } catch (error) {
-        console.error(
-          "Erreur lors de la sauvegarde de l'état de la story :",
-          error
-        );
+        console.error("Erreur lors de la sauvegarde de l'état de la story :", error);
       }
     }
     navigation.navigate("AccueilApresConnexion", { refresh: true });
@@ -131,116 +129,31 @@ const Histoire: React.FC = () => {
         handleContinueStory
       );
     }
-
-
     setModalVisible(false);
   };
 
   return (
-    <BackgroundContainer
-      backgroundImage={backgroundImage}
-      style={styleTheme.container}
-    >
+    <BackgroundContainer backgroundImage={backgroundImage} style={styleTheme.container}>
       <TopBar iconeDroiteNom="close-outline" iconeDroiteAction={goToAccueil} />
       <View style={styles.containerHistoire}>
         <TouchableOpacity
           onPress={() => setModalVisible(true)}
-          style={[
-            styles.modalOpenButton,
-            { backgroundColor: theme.colors.background },
-          ]}
+          style={[styles.modalOpenButton, { backgroundColor: theme.colors.background }]}
         >
-          <Ionicons
-            name="chatbubble-ellipses-outline"
-            size={iconSize}
-            color={theme.colors.neutralButton}
-          />
+          <Ionicons name="chatbubble-ellipses-outline" size={iconSize} color={theme.colors.neutralButton} />
         </TouchableOpacity>
-
-        <Modal
-          isVisible={modalVisible}
-          onBackdropPress={() => setModalVisible(false)}
-          animationIn="slideInUp"
-
-        >
-          <View style={styles.modalContainer}>
-            <View
-              style={[
-                styles.modalContent,
-                { backgroundColor: theme.colors.background },
-              ]}
-            >
-              <Text style={[styleTheme.text, { lineHeight: 25 }]}>
-                {currentText}
-              </Text>
-              <View style={styles.choixHistoire}>
-                {storyEnded ? (
-                  <>
-                    <TouchableOpacity
-                      onPress={handleDeleteSession}
-                      style={[
-                        styles.choixBouttonHistoire,
-                        theme.colors.effectShadow,
-                        {
-                          backgroundColor: theme.colors.background,
-                          borderColor: theme.colors.background,
-                        },
-                      ]}
-                    >
-                      <Text style={[styleTheme.text, { lineHeight: 20 }]}>
-                        Quitter
-                      </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={handleReplay}
-                      style={[
-                        styles.choixBouttonHistoire,
-                        theme.colors.effectShadow,
-                        {
-                          backgroundColor: theme.colors.background,
-                          borderColor: theme.colors.background,
-                        },
-                      ]}
-                    >
-                      <Text style={[styleTheme.text, { lineHeight: 20 }]}>
-                        Rejouer
-                      </Text>
-                    </TouchableOpacity>
-                  </>
-                ) : (
-                  choices.map((choice, index) => (
-                    <TouchableOpacity
-                      key={index}
-                      style={[
-                        styles.choixBouttonHistoire,
-                        theme.colors.effectShadow,
-                        {
-                          backgroundColor: theme.colors.background,
-                          borderColor: theme.colors.background,
-                        },
-                      ]}
-                      onPress={() => handleChoice(index)}
-                    >
-                      <Text style={[styleTheme.text, { lineHeight: 20 }]}>
-                        {choice.text}
-                      </Text>
-                    </TouchableOpacity>
-                  ))
-                )}
-              </View>
-              <TouchableOpacity
-                onPress={() => setModalVisible(false)}
-                style={styles.modalCloseButton}
-              >
-                <Ionicons
-                  name="close-outline"
-                  size={iconSize}
-                  color={theme.colors.neutralButton}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
+        
+        <StoryModal
+          visible={modalVisible}
+          onClose={() => setModalVisible(false)}
+          currentText={currentText}
+          choices={choices}
+          storyEnded={storyEnded}
+          handleChoice={handleChoice}
+          handleDeleteSession={handleDeleteSession}
+          handleReplay={handleReplay}
+          iconSize={iconSize}
+        />
       </View>
     </BackgroundContainer>
   );
@@ -249,11 +162,6 @@ const Histoire: React.FC = () => {
 export default Histoire;
 
 const styles = StyleSheet.create({
-  imageHistoire: {
-    flex: 1,
-    resizeMode: "cover",
-    justifyContent: "center",
-  },
   containerHistoire: {
     flex: 1,
     justifyContent: "center",
@@ -261,47 +169,11 @@ const styles = StyleSheet.create({
     padding: 10,
     position: "relative",
   },
-  choixHistoire: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    width: "100%",
-    marginTop: 20,
-  },
-  choixBouttonHistoire: {
-    padding: 2,
-    marginHorizontal: 5,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    width: "40%",
-    borderWidth: 5,
-  },
   modalOpenButton: {
     position: "absolute",
     borderRadius: 100,
     padding: 10,
     bottom: 30,
     right: 30,
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalContent: {
-    borderRadius: 10,
-    paddingHorizontal: 60,
-    paddingVertical: 50,
-    width: "80%",
-    height: "auto",
-    position: "relative",
-  },
-  modalCloseButton: {
-    position: "absolute",
-    margin: 5,
-    top: 10,
-    right: 10,
-    zIndex: 1,
   },
 });

@@ -1,6 +1,6 @@
-import { IconProps } from "@/themes/icones/iconProps";
 import * as React from "react";
 import Svg, { G, Rect, Path, Defs } from "react-native-svg";
+import { IconProps } from "./iconProps";
 
 const CompteIcon: React.FC<IconProps> = ({ width, fill, background }) => (
   <Svg

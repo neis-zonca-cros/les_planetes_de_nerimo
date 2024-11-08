@@ -47,10 +47,37 @@ export const ThemedStyles = (theme : Theme) => StyleSheet.create({
     borderRadius: 10,
     borderWidth: 5,
     marginBottom: 10,
+    marginHorizontal: 5,
     backgroundColor: theme.colors.background,
     borderColor: theme.colors.background,
-    
-  }
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContent: {
+    borderRadius: 10,
+    paddingHorizontal: 60,
+    paddingVertical: 50,
+    width: "80%",
+    height: "auto",
+    position: "relative",
+  },
+  modalCloseButton: {
+    position: "absolute",
+    margin: 5,
+    top: 10,
+    right: 10,
+    zIndex: 1,
+  },
+  choixHistoire: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    width: "100%",
+    marginTop: 20,
+  },
 
 
 });
