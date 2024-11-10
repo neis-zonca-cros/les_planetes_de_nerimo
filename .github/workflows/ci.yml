@@ -41,12 +41,10 @@ jobs:
 
       - name: 🧪 Lancement des tests
         run: 
-          cd back_nerimo
           npm run test
 
       - name: 🔍 Lancement des Linters
         run: 
-          cd back_nerimo
           npm run lint
 
 
@@ -69,6 +67,5 @@ jobs:
 
       - name: 🔍 Installation et lancement des Linters en front_nerimo
         run: |
-          cd front_nerimo
           npm run lint
           npm run prettier
