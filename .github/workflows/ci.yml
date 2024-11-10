@@ -26,45 +26,30 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: 🔐 Création d'une adresse IP temporaire pour l'accès à MongoDB
-        run: |
-          response=$(curl -u "${{ secrets.ATLAS_USERNAME }}:${{ secrets.ATLAS_PASSWORD }}" --digest \
-            -H "Content-Type: application/json" \
-            -X POST "https://cloud.mongodb.com/api/atlas/v1.0/groups/${{ secrets.ATLAS_GROUP_ID }}/accessList" \
-            --data '[
-              { "ipAddress": "0.0.0.0/0", "comment": "Accès temporaire pour la CI" }
-            ]')
-          accessListId=$(echo $response | jq -r '.results[] | select(.comment == "Accès temporaire pour la CI") | .links[0].href | split("/") | .[-1]')
-          echo "Access list ID: $accessListId"
-          echo "accessListId=$accessListId" >> $GITHUB_ENV
+      - name: 📂 Aller dans le dossier back_nerimo
+        run: cd back_nerimo
 
-      - name: 📄 Création d'un fichier .env.test dans back_nerimo
-        working-directory: back_nerimo
+      - name: 📄 Création d'un fichier .env.test
         run: |
           echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> back_nerimo/.env.test
           echo "NODE_ENV=test" >> back_nerimo/.env.test
           echo "PORT=3001" >> back_nerimo/.env.test
           echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> back_nerimo/.env.test
 
-      - name: ⚙️ Installation des dépendances dans back_nerimo
+      - name: ⚙️ Installation des dépendances
         run: |
+          cd back_nerimo
           npm install
           npm i npm-run-all
 
-      - name: 🧪 Lancement des tests dans back_nerimo
+      - name: 🧪 Lancement des tests
         run: |
+          cd back_nerimo
           npm run test
 
-      - name: 🗑️ Suppression de l'adresse IP temporaire créée
-        if: always()
+      - name: 🔍 Lancement des Linters
         run: |
-          curl -v -u "${{ secrets.ATLAS_USERNAME }}:${{ secrets.ATLAS_PASSWORD }}" --digest \
-            --header "Accept: application/json" \
-            --header "Content-Type: application/json" \
-            --request DELETE "https://cloud.mongodb.com/api/atlas/v1.0/groups/${{ secrets.ATLAS_GROUP_ID }}/accessList/${accessListId}"
-
-      - name: 🔍 Lancement des Linters dans back_nerimo
-        run: |
+          cd back_nerimo
           npm run lint
 
   front_nerimo:
