@@ -26,28 +26,28 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: 📂 Aller dans le dossier back_nerimo
-        run: cd back_nerimo
-
-      - name: 📄 Création d'un fichier .env.test
+      - name: 📄 Création d'un fichier .env.test dans back_nerimo
+        working-directory: back_nerimo
         run: |
-          echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> back_nerimo/.env.test
-          echo "NODE_ENV=test" >> back_nerimo/.env.test
-          echo "PORT=3001" >> back_nerimo/.env.test
-          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> back_nerimo/.env.test
+          echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> .env.test
+          echo "NODE_ENV=test" >> .env.test
+          echo "PORT=3001" >> .env.test
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env.test
 
       - name: ⚙️ Installation des dépendances
+        working-directory: back_nerimo
         run: |
           npm install
           npm i npm-run-all
 
       - name: 🧪 Lancement des tests
-        run: |
-          npm run test
+        working-directory: back_nerimo
+        run: npm run test
 
       - name: 🔍 Lancement des Linters
-        run: |
-          npm run lint
+        working-directory: back_nerimo
+        run: npm run lint
+
 
   front_nerimo:
     runs-on: ubuntu-latest
@@ -61,10 +61,8 @@ jobs:
         with:
           node-version: 20
 
-      - name: 📂 Aller dans le dossier front_nerimo
-        run: cd front_nerimo
-
       - name: ⚙️ Installation des dépendances
+        working-directory: front_nerimo
         run: |
           npm install
 
