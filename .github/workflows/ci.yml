@@ -7,8 +7,8 @@ on:
       - develop
   pull_request:
     branches:
-      - main
       - develop
+      - main
 
 jobs:
   back_nerimo:
