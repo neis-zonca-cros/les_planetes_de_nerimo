@@ -102,9 +102,20 @@ const Histoire: React.FC = () => {
     }
   };
 
-  const handleReplay = () => {
+  const handleReplay = async () => {
     if (story) {
+      story.ResetState();
       story.ResetGlobals();
+      try {
+        if (sessionId) {
+          const storyStateJson = story.state.ToJson();
+          await updateSession(sessionId, storyStateJson, ' ');
+        } else {
+          console.error('ID de la session manquant.');
+        }
+      } catch (error) {
+        console.error("Erreur lors de la sauvegarde de l'état réinitialisé de la story :", error);
+      }
       fetchAndLoadStory(
         histoire,
         sessionPrenom,
