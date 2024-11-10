@@ -1,4 +1,4 @@
-name: 🚀 CI Pipeline Nérimo
+name: CI Pipeline Nérimo
 
 on:
   push:
@@ -18,19 +18,13 @@ jobs:
         node-version: [20]
 
     steps:
-      - name: 📂 Check du code
+      - name: Check du code
         uses: actions/checkout@v2
 
-      - name: 📥 Installation Node
+      - name: Installation Node
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      
-      - name: ⚙️ Installation des dépendances
-        working-directory: back_nerimo
-        run: |
-          npm install
-          npm i npm-run-all
 
       - name: Création d'une adresse IP temporaire pour l'accès à MongoDB
         run: |
@@ -44,48 +38,49 @@ jobs:
           echo "Access list ID: $accessListId"
           echo "accessListId=$accessListId" >> $GITHUB_ENV
 
-      - name: 📄 Création d'un fichier .env.test dans back_nerimo
+      - name: Création d'un fichier .env.test dans back_nerimo
         run: |
-          echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> .env.test
-          echo "NODE_ENV=test" >> .env.test
-          echo "PORT=3001" >> .env.test
-          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env.test
-      
-      - name: 🧪 Lancement des tests
+          echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> back_nerimo/.env.test
+          echo "NODE_ENV=test" >> back_nerimo/.env.test
+          echo "PORT=3001" >> back_nerimo/.env.test
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> back_nerimo/.env.test
+
+      - name: Installation des dépendances et lancement des tests back_nerimo
         run: |
+          cd back_nerimo 
+          npm install 
+          npm i npm-run-all
           npm run test
-    
-      - name: Suppression de l'adresse IP temporaire créee
+
+      - name: Suppression de l'adresse IP temporaire créée
         if: always()
         run: |
           curl -v -u "${{ secrets.ATLAS_USERNAME }}:${{ secrets.ATLAS_PASSWORD }}" --digest \
             --header "Accept: application/json" \
             --header "Content-Type: application/json" \
-            --request DELETE "https://cloud.mongodb.com/api/atlas/v1.0/groups/${{ secrets.ATLAS_GROUP_ID }}/accessList/${accessListId}"  
+            --request DELETE "https://cloud.mongodb.com/api/atlas/v1.0/groups/${{ secrets.ATLAS_GROUP_ID }}/accessList/${accessListId}"
 
-      - name: 🔍 Lancement des Linters
-        run: 
+      - name: Installation et lancement des Linters en back_nerimo
+        run: |
+          cd back_nerimo
+          npm install
           npm run lint
-
 
   front_nerimo:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📂 Check du code
+      - name: Check du code
         uses: actions/checkout@v2
 
-      - name: 📥 Installation Node
+      - name: Installation Node
         uses: actions/setup-node@v2
         with:
           node-version: 20
 
-      - name: ⚙️ Installation des dépendances
+      - name: Installation et lancement des Linters en front_nerimo
         run: |
           cd front_nerimo
           npm install
-
-      - name: 🔍 Installation et lancement des Linters en front_nerimo
-        run: |
           npm run lint
           npm run prettier
