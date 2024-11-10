@@ -17,7 +17,7 @@ const ChoiceButton: React.FC<ChoiceButtonProps> = ({ text, onPress }) => {
   return (
     <TouchableOpacity
       style={[
-        styleTheme.rectangleForm,
+        styleTheme.BUTTON_FORM,
         theme.colors.effectShadow,
         {
           backgroundColor: theme.colors.background,
@@ -28,7 +28,7 @@ const ChoiceButton: React.FC<ChoiceButtonProps> = ({ text, onPress }) => {
       ]}
       onPress={onPress}
     >
-      <Text style={[styleTheme.text, { lineHeight: 20 }]}>{text}</Text>
+      <Text style={[styleTheme.TEXT, { lineHeight: 20 }]}>{text}</Text>
     </TouchableOpacity>
   );
 };

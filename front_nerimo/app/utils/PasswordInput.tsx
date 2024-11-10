@@ -16,7 +16,7 @@ const PasswordInput = ({ styleTheme, theme, handleChange, handleBlur, values }: 
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       <TextInput
-        style={[styleTheme.text, { flex: 1 }]}
+        style={[styleTheme.TEXT, { flex: 1 }]}
         placeholder="Mot de passe"
         placeholderTextColor={theme.colors.text}
         onChangeText={handleChange('password')}

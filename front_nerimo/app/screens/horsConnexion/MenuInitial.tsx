@@ -31,14 +31,14 @@ const MenuInitial: React.FC = () => {
   const screenHeight = Dimensions.get('window').height;
 
   return (
-    <View style={styleTheme.container}>
+    <View style={styleTheme.CONTAINER}>
       <TopBar
         titre="Menu d'embarcation"
         prenom="sur Nérimo"
         iconeDroiteNom="close-outline"
         iconeDroiteAction={goBackToAccueil}
       />
-      <ScrollView contentContainerStyle={styleTheme.scrollViewContent}>
+      <ScrollView contentContainerStyle={styleTheme.SCROLL_VIEW_CONTENT}>
         <View style={styles.row}>
           <IconButton
             icon={

@@ -65,7 +65,7 @@ const CreerUnCompte: React.FC = () => {
   };
 
   return (
-    <View style={styleTheme.container}>
+    <View style={styleTheme.CONTAINER}>
       <TopBar
         titre="Créer un compte"
         prenom="Nérimo"

@@ -45,7 +45,7 @@ const MonProfil: React.FC = () => {
   };
 
   return (
-    <View style={styleTheme.container}>
+    <View style={styleTheme.CONTAINER}>
       <TopBar
         titre="Profil de"
         prenom={utilisateur?.prenom}

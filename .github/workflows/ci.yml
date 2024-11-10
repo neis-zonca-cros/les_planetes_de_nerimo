@@ -61,6 +61,14 @@ jobs:
           cd back_nerimo
           npm install
           npm run lint
+      
+      - name: Installation et lancement des Linters en front_nerimo
+        run: |
+          cd front_nerimo
+          npm install
+          npm run lint
+          npm run prettier
+
 
 
 

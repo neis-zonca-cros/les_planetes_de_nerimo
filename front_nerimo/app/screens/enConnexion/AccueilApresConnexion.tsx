@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 
 import { View, Text, StyleSheet, ScrollView, Dimensions, Image } from 'react-native';
 
@@ -36,7 +36,7 @@ const AccueilApresConnexion: React.FC = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -106,7 +106,7 @@ const AccueilApresConnexion: React.FC = () => {
   const organizedSessions = organizeSessionsInColumns(sessions || []);
 
   return (
-    <View style={styleTheme.container}>
+    <View style={styleTheme.CONTAINER}>
       {loading ? (
         <View style={styles.imageContainer}>
           <Image
@@ -127,9 +127,9 @@ const AccueilApresConnexion: React.FC = () => {
             iconeGaucheAction={editMode ? undefined : addSession}
           />
 
-          <ScrollView contentContainerStyle={styleTheme.scrollViewContent}>
+          <ScrollView contentContainerStyle={styleTheme.SCROLL_VIEW_CONTENT}>
             {sessions && sessions.length === 0 ? (
-              <Text style={styleTheme.text}>Pour commencer, ajoutez une session</Text>
+              <Text style={styleTheme.TEXT}>Pour commencer, ajoutez une session</Text>
             ) : (
               <View style={styles.gridContainer}>
                 {organizedSessions.map((column, columnIndex) => (

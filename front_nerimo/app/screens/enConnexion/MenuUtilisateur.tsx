@@ -40,14 +40,14 @@ const MenuUtilisateur: React.FC = () => {
   };
 
   return (
-    <View style={styleTheme.container}>
+    <View style={styleTheme.CONTAINER}>
       <TopBar
         titre="Menu de"
         prenom={utilisateur?.prenom}
         iconeDroiteNom="close-outline"
         iconeDroiteAction={goBack}
       />
-      <ScrollView contentContainerStyle={styleTheme.scrollViewContent}>
+      <ScrollView contentContainerStyle={styleTheme.SCROLL_VIEW_CONTENT}>
         <View style={styles.row}>
           <IconButton
             icon={

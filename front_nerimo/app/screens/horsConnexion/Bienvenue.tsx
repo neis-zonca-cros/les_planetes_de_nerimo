@@ -22,7 +22,7 @@ const Bienvenue: React.FC = () => {
   const styleTheme = ThemedStyles(theme);
 
   return (
-    <View style={styleTheme.container}>
+    <View style={styleTheme.CONTAINER}>
       <TopBar titre="Bienvenue sur les" prenom="planètes de Nérimo !" />
       <View style={styles.contentContainer}>
         <Image style={styles.image} source={require('@/app/assets/images/planete_nerimo.gif')} />

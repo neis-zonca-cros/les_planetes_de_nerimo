@@ -33,7 +33,7 @@ const AccueilAvantConnexion: React.FC = () => {
   };
 
   return (
-    <View style={styleTheme.container}>
+    <View style={styleTheme.CONTAINER}>
       <TopBar titre="" iconeDroiteNom="planet-outline" iconeDroiteAction={iconeDroitePress} />
 
       <View style={styles.bottomIconsContainer}>
@@ -56,7 +56,7 @@ const AccueilAvantConnexion: React.FC = () => {
           </View>
         </TouchableOpacity>
         <View style={styles.buttonContainer}>
-          <Text onPress={mdpOublie} style={styleTheme.text}>
+          <Text onPress={mdpOublie} style={styleTheme.TEXT}>
             Mot de passe oublié ?
           </Text>
         </View>

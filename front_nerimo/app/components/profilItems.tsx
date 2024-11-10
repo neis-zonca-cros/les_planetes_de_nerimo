@@ -50,9 +50,9 @@ const ProfilItems: React.FC<ProfilItemsProps> = ({
       style={{ pointerEvents: 'auto', zIndex: 1 }}
     >
       <View
-        style={[styleTheme.rectangleForm, theme.colors.effectShadow, styles.containerProfilItems]}
+        style={[styleTheme.BUTTON_FORM, theme.colors.effectShadow, styles.containerProfilItems]}
       >
-        <Text style={[styleTheme.text]}>{text}</Text>
+        <Text style={[styleTheme.TEXT]}>{text}</Text>
         {isSwitch ? (
           <Switch
             value={switchValue}
@@ -68,7 +68,7 @@ const ProfilItems: React.FC<ProfilItemsProps> = ({
             <Ionicons
               name={iconName}
               size={iconSize}
-              style={[styleTheme.icon, { paddingLeft: 20 }]}
+              style={[styleTheme.ICON, { paddingLeft: 20 }]}
             />
           )
         )}

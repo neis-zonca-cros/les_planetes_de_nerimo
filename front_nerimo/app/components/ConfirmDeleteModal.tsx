@@ -42,7 +42,7 @@ const ConfirmDeleteModal: React.FC<ConfirmationModalProps> = ({
     >
       <TouchableOpacity style={styles.overlay} onPress={onRequestClose}>
         <View style={[styles.containerModal, { backgroundColor: theme.colors.background }]}>
-          <Text style={styleTheme.text}>Supprimer la session de {sessionName} ?</Text>
+          <Text style={styleTheme.TEXT}>Supprimer la session de {sessionName} ?</Text>
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={onCancel}>
               <NonIcon

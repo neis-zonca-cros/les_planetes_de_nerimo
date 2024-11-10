@@ -1,19 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-  Dimensions,
-} from 'react-native';
+import { View, FlatList, StyleSheet, Dimensions } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/commonjs/src/types';
 
 import { getPlaneteImageURI } from '@/app/components/imageSession';
+import ListItem from '@/app/components/ListItem';
 import TopBar from '@/app/components/TopBar';
 import { useSession } from '@/app/hooks/sessionContext';
 import { useTheme } from '@/app/hooks/themeContext';
@@ -53,24 +46,15 @@ const ChoisirPlanete: React.FC = () => {
   };
 
   const renderItem = ({ item }: { item: Planete }) => (
-    <View style={styles.buttonContainer}>
-      <TouchableOpacity onPress={() => handleSelectPlanete(item._id)}>
-        <View
-          style={[
-            styles.listContainer,
-            theme.colors.effectShadow,
-            { backgroundColor: theme.colors.background, borderColor: theme.colors.background },
-          ]}
-        >
-          <Image source={getPlaneteImageURI(item.nom)} style={styles.icon} />
-          <Text style={styleTheme.text}>{item.nom}</Text>
-        </View>
-      </TouchableOpacity>
-    </View>
+    <ListItem
+      imageURI={getPlaneteImageURI(item.nom)}
+      text={item.nom}
+      onPress={() => handleSelectPlanete(item._id)}
+    />
   );
 
   return (
-    <View style={styleTheme.container}>
+    <View style={styleTheme.CONTAINER}>
       <TopBar
         titre="Choisir une"
         prenom="planète"

@@ -39,7 +39,7 @@ const CreerSessionPrenom: React.FC = () => {
   };
 
   return (
-    <View style={styleTheme.container}>
+    <View style={styleTheme.CONTAINER}>
       <TopBar
         titre="Créer une"
         prenom="session"
@@ -50,9 +50,9 @@ const CreerSessionPrenom: React.FC = () => {
       />
 
       <View style={styles.bottomIconsContainer}>
-        <View style={[styleTheme.rectangleForm, theme.colors.effectShadow]}>
+        <View style={[styleTheme.BUTTON_FORM, theme.colors.effectShadow]}>
           <TextInput
-            style={styleTheme.text}
+            style={styleTheme.TEXT}
             value={prenom}
             onChangeText={setPrenom}
             placeholder="Écris ton surnom ici"

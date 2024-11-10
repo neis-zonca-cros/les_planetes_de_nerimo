@@ -44,25 +44,25 @@ const TopBar: React.FC<TopBarProps> = ({
       <View style={styles.pointerEvent}>
         <View style={styles.directionIconsTopBar}>
           <View style={styles.textContainerTopBar}>
-            <Text style={styleTheme.textLarge}>{titre}</Text>
-            <Text style={styleTheme.textLarge}>{prenom} </Text>
+            <Text style={styleTheme.TEXT_LARGE}>{titre}</Text>
+            <Text style={styleTheme.TEXT_LARGE}>{prenom} </Text>
           </View>
         </View>
       </View>
       <View style={styles.directionIconsTopBar}>
         {iconeZeroNom ? (
           <TouchableOpacity onPress={iconeZeroAction}>
-            <TabBarIcon name={iconeZeroNom} style={styleTheme.icon} />
+            <TabBarIcon name={iconeZeroNom} style={styleTheme.ICON} />
           </TouchableOpacity>
         ) : null}
         {iconeGaucheNom ? (
           <TouchableOpacity onPress={iconeGaucheAction}>
-            <TabBarIcon name={iconeGaucheNom} style={styleTheme.icon} />
+            <TabBarIcon name={iconeGaucheNom} style={styleTheme.ICON} />
           </TouchableOpacity>
         ) : null}
         {iconeDroiteNom ? (
           <TouchableOpacity onPress={iconeDroiteAction}>
-            <TabBarIcon name={iconeDroiteNom} style={styleTheme.icon} />
+            <TabBarIcon name={iconeDroiteNom} style={styleTheme.ICON} />
           </TouchableOpacity>
         ) : null}
       </View>

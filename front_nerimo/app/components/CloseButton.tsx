@@ -17,7 +17,7 @@ const CloseButton: React.FC<CloseButtonProps> = ({ onClose, iconSize }) => {
   const styleTheme = ThemedStyles(theme);
 
   return (
-    <TouchableOpacity onPress={onClose} style={styleTheme.modalCloseButton}>
+    <TouchableOpacity onPress={onClose} style={styleTheme.BUTTON_CLOSE}>
       <Ionicons name="close-outline" size={iconSize} color={theme.colors.neutralButton} />
     </TouchableOpacity>
   );

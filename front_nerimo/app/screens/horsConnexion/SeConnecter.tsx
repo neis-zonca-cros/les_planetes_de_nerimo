@@ -46,7 +46,7 @@ const SeConnecter: React.FC = () => {
   });
 
   return (
-    <View style={styleTheme.container}>
+    <View style={styleTheme.CONTAINER}>
       <TopBar
         titre="Rentrer dans le "
         prenom="monde de Nérimo"

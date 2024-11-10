@@ -132,7 +132,7 @@ const Histoire: React.FC = () => {
   };
 
   return (
-    <BackgroundContainer backgroundImage={backgroundImage} style={styleTheme.container}>
+    <BackgroundContainer backgroundImage={backgroundImage} style={styleTheme.CONTAINER}>
       <TopBar iconeDroiteNom="close-outline" iconeDroiteAction={goToAccueil} />
       <View style={styles.containerHistoire}>
         <TouchableOpacity

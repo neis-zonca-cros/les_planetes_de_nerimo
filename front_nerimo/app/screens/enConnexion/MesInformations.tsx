@@ -16,7 +16,7 @@ const MesInformations: React.FC = () => {
   const styleTheme = ThemedStyles(theme);
 
   return (
-    <View style={styleTheme.container}>
+    <View style={styleTheme.CONTAINER}>
       <TopBar
         titre="Informations de"
         prenom={utilisateur?.prenom}

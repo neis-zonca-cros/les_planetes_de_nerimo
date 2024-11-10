@@ -19,7 +19,7 @@ const ReplayOrExit: React.FC<ReplayOrExitProps> = ({ onReplay, onExit }) => {
       <TouchableOpacity
         onPress={onExit}
         style={[
-          styleTheme.rectangleForm,
+          styleTheme.BUTTON_FORM,
           theme.colors.effectShadow,
           {
             backgroundColor: theme.colors.background,
@@ -27,12 +27,12 @@ const ReplayOrExit: React.FC<ReplayOrExitProps> = ({ onReplay, onExit }) => {
           },
         ]}
       >
-        <Text style={styleTheme.text}>Quitter</Text>
+        <Text style={styleTheme.TEXT}>Quitter</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={onReplay}
         style={[
-          styleTheme.rectangleForm,
+          styleTheme.BUTTON_FORM,
           theme.colors.effectShadow,
           {
             backgroundColor: theme.colors.background,
@@ -40,7 +40,7 @@ const ReplayOrExit: React.FC<ReplayOrExitProps> = ({ onReplay, onExit }) => {
           },
         ]}
       >
-        <Text style={styleTheme.text}>Rejouer</Text>
+        <Text style={styleTheme.TEXT}>Rejouer</Text>
       </TouchableOpacity>
     </>
   );

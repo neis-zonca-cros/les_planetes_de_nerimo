@@ -43,12 +43,12 @@ const FormulaireAuth: React.FC<FormulaireAuthProps> = ({
   const styleTheme = ThemedStyles(theme);
 
   return (
-    <View style={styleTheme.container}>
+    <View style={styleTheme.CONTAINER}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
-        <ScrollView contentContainerStyle={styleTheme.scrollViewContent}>
+        <ScrollView contentContainerStyle={styleTheme.SCROLL_VIEW_CONTENT}>
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -57,9 +57,9 @@ const FormulaireAuth: React.FC<FormulaireAuthProps> = ({
             {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
               <>
                 <View style={styles.inputContainer}>
-                  <View style={[styleTheme.rectangleForm, theme.colors.effectShadow]}>
+                  <View style={[styleTheme.BUTTON_FORM, theme.colors.effectShadow]}>
                     <TextInput
-                      style={styleTheme.text}
+                      style={styleTheme.TEXT}
                       placeholder="Adresse mail"
                       placeholderTextColor={theme.colors.text}
                       onChangeText={handleChange('email')}
@@ -69,13 +69,13 @@ const FormulaireAuth: React.FC<FormulaireAuthProps> = ({
                     />
                   </View>
                   {errors.email && touched.email && (
-                    <Text style={styleTheme.errorText}>{errors.email}</Text>
+                    <Text style={styleTheme.ERROR_TEXT}>{errors.email}</Text>
                   )}
 
                   {isSignup && (
-                    <View style={[styleTheme.rectangleForm, theme.colors.effectShadow]}>
+                    <View style={[styleTheme.BUTTON_FORM, theme.colors.effectShadow]}>
                       <TextInput
-                        style={styleTheme.text}
+                        style={styleTheme.TEXT}
                         placeholder="Prénom"
                         placeholderTextColor={theme.colors.text}
                         onChangeText={handleChange('firstName')}
@@ -85,10 +85,10 @@ const FormulaireAuth: React.FC<FormulaireAuthProps> = ({
                     </View>
                   )}
                   {isSignup && errors.firstName && touched.firstName && (
-                    <Text style={styleTheme.errorText}>{errors.firstName}</Text>
+                    <Text style={styleTheme.ERROR_TEXT}>{errors.firstName}</Text>
                   )}
 
-                  <View style={[styleTheme.rectangleForm, theme.colors.effectShadow]}>
+                  <View style={[styleTheme.BUTTON_FORM, theme.colors.effectShadow]}>
                     <PasswordInput
                       styleTheme={styleTheme}
                       theme={theme}
@@ -98,13 +98,13 @@ const FormulaireAuth: React.FC<FormulaireAuthProps> = ({
                     />
                   </View>
                   {errors.mdp && touched.mdp && (
-                    <Text style={styleTheme.errorText}>{errors.mdp}</Text>
+                    <Text style={styleTheme.ERROR_TEXT}>{errors.mdp}</Text>
                   )}
 
                   {isSignup && (
-                    <View style={[styleTheme.rectangleForm, theme.colors.effectShadow]}>
+                    <View style={[styleTheme.BUTTON_FORM, theme.colors.effectShadow]}>
                       <TextInput
-                        style={styleTheme.text}
+                        style={styleTheme.TEXT}
                         placeholder="Répétez le mot de passe"
                         placeholderTextColor={theme.colors.text}
                         onChangeText={handleChange('confirmPassword')}
@@ -115,7 +115,7 @@ const FormulaireAuth: React.FC<FormulaireAuthProps> = ({
                     </View>
                   )}
                   {isSignup && errors.confirmPassword && touched.confirmPassword && (
-                    <Text style={styleTheme.errorText}>{errors.confirmPassword}</Text>
+                    <Text style={styleTheme.ERROR_TEXT}>{errors.confirmPassword}</Text>
                   )}
                 </View>
 
@@ -133,14 +133,14 @@ const FormulaireAuth: React.FC<FormulaireAuthProps> = ({
                   </View>
                   {isLogin && (
                     <View style={styles.buttonContainer}>
-                      <Text onPress={goToCreerUnCompte} style={styleTheme.text}>
+                      <Text onPress={goToCreerUnCompte} style={styleTheme.TEXT}>
                         Pas inscrit ?
                       </Text>
                     </View>
                   )}
                   {isSignup && (
                     <View style={styles.buttonContainer}>
-                      <Text onPress={goToCreerUnCompte} style={styleTheme.text}>
+                      <Text onPress={goToCreerUnCompte} style={styleTheme.TEXT}>
                         Déjà un compte ?
                       </Text>
                     </View>

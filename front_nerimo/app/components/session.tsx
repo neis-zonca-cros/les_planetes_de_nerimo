@@ -6,8 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { useTheme } from '@/app/hooks/themeContext';
-
-import { ThemedStyles } from '../utils/styles';
+import { ThemedStyles } from '@/app/utils/styles';
 
 interface SessionProps {
   prenom: string;
@@ -46,12 +45,12 @@ const SessionComposant: React.FC<SessionProps> = ({
       <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
         {imageSource && <Image source={imageSource} style={styles.roundImage} />}
         <View style={styles.sessionContainer}>
-          <Text style={styleTheme.text}>{prenom}</Text>
-          <Text style={styleTheme.text}>
+          <Text style={styleTheme.TEXT}>{prenom}</Text>
+          <Text style={styleTheme.TEXT}>
             {textePlanet}
             {planeteNom}
           </Text>
-          <Text style={styleTheme.text}>
+          <Text style={styleTheme.TEXT}>
             {textePersonnage}
             {personnageNom}
           </Text>

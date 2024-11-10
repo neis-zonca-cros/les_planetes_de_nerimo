@@ -1,19 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-  Dimensions,
-} from 'react-native';
+import { View, FlatList, StyleSheet, Dimensions } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/commonjs/src/types';
 
 import { getPersonnageImageURI } from '@/app/components/imageSession';
+import ListItem from '@/app/components/ListItem';
 import TopBar from '@/app/components/TopBar';
 import { useSession } from '@/app/hooks/sessionContext';
 import { useTheme } from '@/app/hooks/themeContext';
@@ -76,24 +69,15 @@ const ChoisirPersonnage: React.FC = () => {
   };
 
   const renderItem = ({ item }: { item: Personnage }) => (
-    <View style={styles.buttonContainer}>
-      <TouchableOpacity onPress={() => handleSelectPersonnage(item)}>
-        <View
-          style={[
-            styles.listContainer,
-            theme.colors.effectShadow,
-            { backgroundColor: theme.colors.background, borderColor: theme.colors.background },
-          ]}
-        >
-          <Image source={getPersonnageImageURI(item.nom)} style={styles.icon} />
-          <Text style={styleTheme.text}>{item.nom}</Text>
-        </View>
-      </TouchableOpacity>
-    </View>
+    <ListItem
+      imageURI={getPersonnageImageURI(item.nom)}
+      text={item.nom}
+      onPress={() => handleSelectPersonnage(item)}
+    />
   );
 
   return (
-    <View style={styleTheme.container}>
+    <View style={styleTheme.CONTAINER}>
       <TopBar
         titre="Choisir un"
         prenom="personnage"

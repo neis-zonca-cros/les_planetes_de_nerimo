@@ -39,10 +39,10 @@ const StoryModal: React.FC<StoryModalProps> = ({
 
   return (
     <Modal isVisible={visible} onBackdropPress={onClose} animationIn="slideInUp">
-      <View style={styleTheme.modalContainer}>
-        <View style={[styleTheme.modalContent, { backgroundColor: theme.colors.background }]}>
-          <Text style={[styleTheme.text, { lineHeight: 25 }]}>{currentText}</Text>
-          <View style={styleTheme.choixHistoire}>
+      <View style={styleTheme.MODAL_CONTAINER}>
+        <View style={[styleTheme.MODAL_CONTENT, { backgroundColor: theme.colors.background }]}>
+          <Text style={[styleTheme.TEXT, { lineHeight: 25 }]}>{currentText}</Text>
+          <View style={styleTheme.STORY_CHOICE}>
             {storyEnded ? (
               <ReplayOrExit onExit={handleDeleteSession} onReplay={handleReplay} />
             ) : (
