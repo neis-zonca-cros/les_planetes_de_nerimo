@@ -38,18 +38,15 @@ jobs:
 
       - name: ⚙️ Installation des dépendances
         run: |
-          cd back_nerimo
           npm install
           npm i npm-run-all
 
       - name: 🧪 Lancement des tests
         run: |
-          cd back_nerimo
           npm run test
 
       - name: 🔍 Lancement des Linters
         run: |
-          cd back_nerimo
           npm run lint
 
   front_nerimo:
@@ -64,9 +61,14 @@ jobs:
         with:
           node-version: 20
 
+      - name: 📂 Aller dans le dossier front_nerimo
+        run: cd front_nerimo
+
+      - name: ⚙️ Installation des dépendances
+        run: |
+          npm install
+
       - name: 🔍 Installation et lancement des Linters en front_nerimo
         run: |
-          cd front_nerimo
-          npm install
           npm run lint
           npm run prettier
