@@ -3,8 +3,8 @@ name: 🚀 CI Pipeline Nérimo
 on:
   pull_request:
     branches:
-      - develop
       - main
+      - develop
 
 jobs:
   back_nerimo:
