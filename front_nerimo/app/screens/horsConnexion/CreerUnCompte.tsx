@@ -1,31 +1,19 @@
 import React from 'react';
 
-import {
-  View,
-  TextInput,
-  StyleSheet,
-  Text,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  Dimensions,
-} from 'react-native';
+import { Dimensions, View } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/commonjs/src/types';
-import { Formik } from 'formik';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+// eslint-disable-next-line import/named
+import { StackNavigationProp } from '@react-navigation/stack';
 import * as Yup from 'yup';
 
-import { CompteIcon } from '@/app/assets/icons/compteIcon';
+import FormulaireAuth from '@/app/components/FormulaireAuth';
 import TopBar from '@/app/components/TopBar';
 import { useTheme } from '@/app/hooks/themeContext';
 import { useUser } from '@/app/hooks/userContext';
-import useGoToConnect from '@/app/navigation/useGoToConnect';
 import { creerUtilisateur } from '@/app/services/utilisateurFetch';
 import { RootStackParamList } from '@/app/types';
 import { normalizeKey } from '@/app/utils/normalizeKey';
-import PasswordInput from '@/app/utils/PasswordInput';
 import { ThemedStyles } from '@/app/utils/styles';
 
 type CreerUnCompteScreen = StackNavigationProp<RootStackParamList, 'CreerUnCompte'>;
@@ -38,7 +26,7 @@ const CreerUnCompte: React.FC = () => {
     navigation.navigate('AccueilAvantConnexion');
   };
   const styleTheme = ThemedStyles(theme);
-  const seConnecter = useGoToConnect();
+
   const screenWidth = Dimensions.get('window').width;
   const signUpValidationSchema = Yup.object().shape({
     firstName: Yup.string().required('Oups, tu as oublié de mettre ton prénom !'),
@@ -47,8 +35,8 @@ const CreerUnCompte: React.FC = () => {
       .required('Oups, tu as oublié de mettre ton email !'),
     password: Yup.string().required('Oups, tu as oublié de mettre ton mot de passe !'),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password'), undefined], 'Les mots de passe ne correspondent pas')
-      .required('Oups, tu as oublié de répéter ton mot de passe !'),
+      .required('La confirmation du mot de passe est requise')
+      .oneOf([Yup.ref('password')], 'Les mots de passe ne correspondent pas'),
   });
 
   const handleSignUp = async (values: {
@@ -84,129 +72,17 @@ const CreerUnCompte: React.FC = () => {
         iconeDroiteNom="close-outline"
         iconeDroiteAction={goBackToAccueil}
       />
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.container}
-      >
-        <ScrollView contentContainerStyle={styleTheme.scrollViewContent}>
-          <Formik
-            initialValues={{
-              firstName: '',
-              email: '',
-              password: '',
-              confirmPassword: '',
-            }}
-            validationSchema={signUpValidationSchema}
-            onSubmit={handleSignUp}
-          >
-            {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
-              <>
-                <View style={styles.inputContainer}>
-                  <View style={[styleTheme.rectangleForm, theme.colors.effectShadow]}>
-                    <TextInput
-                      style={[styleTheme.text]}
-                      placeholder="Prénom"
-                      pointerEvents="auto"
-                      placeholderTextColor={theme.colors.text}
-                      onChangeText={handleChange('firstName')}
-                      onBlur={handleBlur('firstName')}
-                      value={values.firstName}
-                    />
-                  </View>
-                  {errors.firstName && touched.firstName && (
-                    <Text style={styleTheme.errorText}>{errors.firstName}</Text>
-                  )}
-                  <View style={[styleTheme.rectangleForm, theme.colors.effectShadow]}>
-                    <TextInput
-                      style={styleTheme.text}
-                      placeholder="Adresse mail"
-                      placeholderTextColor={theme.colors.text}
-                      onChangeText={handleChange('email')}
-                      onBlur={handleBlur('email')}
-                      value={values.email}
-                      keyboardType="email-address"
-                    />
-                  </View>
-                  {errors.email && touched.email && (
-                    <Text style={styleTheme.errorText}>{errors.email}</Text>
-                  )}
-                  <View style={[theme.colors.effectShadow, styleTheme.rectangleForm]}>
-                    <PasswordInput
-                      styleTheme={styleTheme}
-                      theme={theme}
-                      handleChange={handleChange}
-                      handleBlur={handleBlur}
-                      values={values}
-                    />
-                  </View>
-                  {errors.password && touched.password && (
-                    <Text style={styleTheme.errorText}>{errors.password}</Text>
-                  )}
-                  <View style={[styleTheme.rectangleForm, theme.colors.effectShadow]}>
-                    <TextInput
-                      style={styleTheme.text}
-                      placeholder="Répétez le mot de passe"
-                      placeholderTextColor={theme.colors.text}
-                      onChangeText={handleChange('confirmPassword')}
-                      onBlur={handleBlur('confirmPassword')}
-                      value={values.confirmPassword}
-                      secureTextEntry
-                    />
-                  </View>
-                  {errors.confirmPassword && touched.confirmPassword && (
-                    <Text style={styleTheme.errorText}>{errors.confirmPassword}</Text>
-                  )}
-                </View>
-                <View style={styles.marginBottomContainer}>
-                  <View style={styles.buttonContainer}>
-                    <TouchableOpacity onPress={handleSubmit as any} style={styles.icon}>
-                      <View style={theme.colors.effectShadow}>
-                        <CompteIcon
-                          width={screenWidth * 0.22}
-                          fill={theme.colors.secondaryButton}
-                          background={theme.colors.background}
-                        />
-                      </View>
-                    </TouchableOpacity>
-                  </View>
-                  <View style={styles.buttonContainer}>
-                    <Text onPress={seConnecter} style={styleTheme.text}>
-                      Déjà un compte ?
-                    </Text>
-                  </View>
-                </View>
-              </>
-            )}
-          </Formik>
-        </ScrollView>
-      </KeyboardAvoidingView>
+      <FormulaireAuth
+        theme={theme}
+        initialValues={{ email: '', firstName: '', password: '', confirmPassword: '' }}
+        validationSchema={signUpValidationSchema}
+        onSubmit={handleSignUp}
+        screenWidth={screenWidth}
+        isSignup={true}
+        goToCreerUnCompte={() => navigation.navigate('SeConnecter')}
+      />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  marginBottomContainer: {
-    marginBottom: 20,
-  },
-  buttonContainer: {
-    paddingTop: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-  },
-  icon: {
-    alignItems: 'center',
-    paddingTop: 10,
-  },
-  inputContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-});
 
 export default CreerUnCompte;

@@ -19,8 +19,8 @@ const PasswordInput = ({ styleTheme, theme, handleChange, handleBlur, values }: 
         style={[styleTheme.text, { flex: 1 }]}
         placeholder="Mot de passe"
         placeholderTextColor={theme.colors.text}
-        onChangeText={handleChange('mdp')}
-        onBlur={handleBlur('mdp')}
+        onChangeText={handleChange('password')}
+        onBlur={handleBlur('password')}
         value={values.mdp}
         secureTextEntry={!isPasswordVisible}
       />
