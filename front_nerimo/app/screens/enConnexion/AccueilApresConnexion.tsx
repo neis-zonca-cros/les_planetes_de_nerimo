@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 
-import { View, Text, StyleSheet, ScrollView, Dimensions, Image } from 'react-native';
+import { View, StyleSheet, ScrollView, Dimensions, Image } from 'react-native';
 
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/commonjs/src/types';
@@ -109,17 +109,14 @@ const AccueilApresConnexion: React.FC = () => {
     <View style={styleTheme.CONTAINER}>
       {loading ? (
         <View style={styles.imageContainer}>
-          <Image
-            style={styles.backgroundImage}
-            source={require('@/app/assets/images/loader.gif')}
-          />
+          <Image style={styles.image} source={require('@/app/assets/images/loader.gif')} />
         </View>
       ) : (
         <>
           <TopBar
             titre="Bienvenue"
             prenom={utilisateur?.prenom || ''}
-            iconeZeroNom={editMode ? null : 'brush-outline'}
+            iconeZeroNom={editMode || (sessions && sessions.length === 0) ? null : 'brush-outline'}
             iconeZeroAction={editMode ? undefined : toggleEditMode}
             iconeDroiteNom={editMode ? 'close-outline' : 'planet-outline'}
             iconeDroiteAction={editMode ? toggleEditMode : menuUtilisateur}
@@ -129,7 +126,12 @@ const AccueilApresConnexion: React.FC = () => {
 
           <ScrollView contentContainerStyle={styleTheme.SCROLL_VIEW_CONTENT}>
             {sessions && sessions.length === 0 ? (
-              <Text style={styleTheme.TEXT}>Pour commencer, ajoutez une session</Text>
+              <View style={styles.imageContainer}>
+                <Image
+                  style={styles.backgroundImage}
+                  source={require('@/app/assets/images/loader_session.gif')}
+                />
+              </View>
             ) : (
               <View style={styles.gridContainer}>
                 {organizedSessions.map((column, columnIndex) => (
@@ -167,17 +169,18 @@ const AccueilApresConnexion: React.FC = () => {
   );
 };
 const { height: screenHeight } = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   imageContainer: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   backgroundImage: {
-    resizeMode: 'contain',
-    width: screenHeight * 0.5,
-    height: screenHeight * 0.5,
+    resizeMode: 'cover',
+    width: screenWidth,
+    height: screenHeight * 0.9,
   },
   gridContainer: {
     flexDirection: 'row',
@@ -191,6 +194,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 10,
+  },
+  contentContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  image: {
+    resizeMode: 'contain',
+    height: screenHeight * 0.5,
+  },
+  iconButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    alignSelf: 'flex-end',
   },
 });
 

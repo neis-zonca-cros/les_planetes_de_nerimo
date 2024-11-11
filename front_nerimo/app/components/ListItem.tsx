@@ -28,7 +28,7 @@ const ListItem: React.FC<ListItemProps> = ({ imageURI, text, onPress }) => {
           ]}
         >
           <Image source={imageURI} style={styles.icon} />
-          <Text style={styleTheme.TEXT}>{text}</Text>
+          <Text style={[styleTheme.TEXT, { marginTop: 5 }]}>{text}</Text>
         </View>
       </TouchableOpacity>
     </View>

@@ -1,7 +1,7 @@
 export const getPersonnageImageURI = (personnageNom: string) => {
   switch (personnageNom) {
-    case 'Blouki':
-      return require('@/app/assets/images/escargot.png');
+    case 'Timi':
+      return require('@/app/assets/images/timi_nerimo.png');
     case 'Klouki':
       return require('@/app/assets/images/klouki.png');
     case 'Rourk':
@@ -10,7 +10,7 @@ export const getPersonnageImageURI = (personnageNom: string) => {
       return require('@/app/assets/images/gloumars.png');
 
     default:
-      return require('@/app/assets/images/escargot.png');
+      return require('@/app/assets/images/timi_nerimo.png');
   }
 };
 

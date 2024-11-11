@@ -18,25 +18,21 @@ const Bienvenue: React.FC = () => {
   const { theme } = useTheme();
   const screenHeight = Dimensions.get('window').height;
   const maxSize = 150;
-  const iconSize = Math.min(screenHeight * 0.2, maxSize);
+  const iconSize = Math.min(screenHeight * 0.1, maxSize);
   const styleTheme = ThemedStyles(theme);
 
   return (
     <View style={styleTheme.CONTAINER}>
-      <TopBar titre="Bienvenue sur les" prenom="planètes de Nérimo !" />
-      <View style={styles.contentContainer}>
-        <Image style={styles.image} source={require('@/app/assets/images/planete_nerimo.gif')} />
-      </View>
       <TouchableOpacity
         onPress={() => navigation.replace('AccueilAvantConnexion')}
-        style={styles.iconButton}
+        style={styles.contentContainer}
       >
-        <View style={theme.colors.effectShadow}>
-          <Ionicons
-            name="arrow-forward-circle"
-            size={iconSize}
-            color={theme.colors.neutralButton}
-          />
+        <TopBar titre="Bienvenue sur les" prenom="planètes de Nérimo !" />
+
+        <Image style={styles.image} source={require('@/app/assets/images/planete_nerimo.gif')} />
+
+        <View style={styles.iconButton}>
+          <Ionicons name="chevron-forward" size={iconSize} color={theme.colors.neutralButton} />
         </View>
       </TouchableOpacity>
     </View>
@@ -44,22 +40,21 @@ const Bienvenue: React.FC = () => {
 };
 
 export default Bienvenue;
-
-const { height: screenHeight } = Dimensions.get('window');
+const screenHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
   contentContainer: {
-    flex: 0.75,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   image: {
-    width: screenHeight * 0.6,
-    height: screenHeight * 0.6,
     resizeMode: 'contain',
+    height: screenHeight * 0.9,
   },
   iconButton: {
     position: 'absolute',
     bottom: 20,
-    alignSelf: 'center',
+    right: 20,
+    alignSelf: 'flex-end',
   },
 });
